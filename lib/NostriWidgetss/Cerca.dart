@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-
 import 'package:adobe_xd/page_link.dart';
 import 'package:everstream/Ridimensiona.dart';
-
 import 'package:image_picker/image_picker.dart';
-
 import '../main.dart';
 import 'package:everstream/ProfiloAzienda.dart';
 import 'package:everstream/Controller.dart';

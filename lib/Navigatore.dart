@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'NostriWidgetss/Menu.dart';
 import 'ProfiloUtente.dart';
 import 'ProfiloUtenteInfo.dart';
-import 'Cerca.dart';
+import 'PaginaCerca.dart';
 import 'main.dart';
 
 class Navigatore extends StatelessWidget {
@@ -36,7 +36,7 @@ BuildContext context;
     int current_active = menu.getCurrentActive();
     switch (current_active) {
       case 1:
-        return ProvaCerca();break;
+        return PaginaCerca();break;
       case 4:
         return Profiloutente();break;
     }

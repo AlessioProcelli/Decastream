@@ -1,4 +1,4 @@
-import 'package:everstream/NostriWidgetss/cercaGV.dart';
+import 'package:everstream/NostriWidgetss/Visualizzatore_Ricerca.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,12 +22,12 @@ import 'package:everstream/NostriWidgetss/Cerca.dart';
 
 import 'NostriWidgetss/BarraCercaFiltra.dart';
 
-class ProvaCerca extends StatelessWidget{
+class PaginaCerca extends StatelessWidget{
 
   //prova con widget GridView
 
 
-  ProvaCerca({
+  PaginaCerca({
     Key key,
   }) : super(key: key);
 
@@ -47,7 +47,7 @@ class ProvaCerca extends StatelessWidget{
               Expanded(
                 flex: 11,
                 //griglia aziende
-                child: Griglia(),
+                child: Visualizzatore_Ricerca(),
               ),
             ],
           ),

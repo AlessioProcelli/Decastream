@@ -1,12 +1,10 @@
-
-
 import 'package:everstream/CallUtente.dart';
 import 'package:everstream/LiveDoppia.dart';
 import 'package:everstream/LiveUtente.dart';
 import 'package:everstream/ProfiloAzienda.dart';
 import 'package:everstream/ProfiloUtente.dart';
 import 'package:everstream/ProfiloUtenteInfo.dart';
-import 'package:everstream/Cerca.dart';
+import 'package:everstream/PaginaCerca.dart';
 import 'package:everstream/SceltaAccount.dart';
 import 'package:everstream/Tipi/Chiamata.dart';
 import 'package:everstream/pages/call.dart';
@@ -18,213 +16,233 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:everstream/Ridimensiona.dart';
 import 'package:everstream/main.dart';
 import 'LiveAzienda.dart';
-import 'Navigator.dart';
+import 'Navigatore.dart';
 import 'da Lavorarci/Cerca.dart';
 import 'Registrati.dart';
 import 'provaDipi.dart';
 
 
-//commento prova§!!
-//ciao Dipi
-
-//commento per branch
-
-//commento vittoria
-
 class Accedi extends StatelessWidget {
   /*sono i controller delle TEXTEDITFORM servono per avere riferimenti ai campi e prenderci il testo */
-  final controllerPassword=TextEditingController(text:"Password");
-  final controllerUser=TextEditingController(text:"Nome utente o email");
- bool pressPassword=false;
- bool pressUser=false;
+  final controllerPassword = TextEditingController(text: "Password");
+  final controllerUser = TextEditingController(text: "Nome utente o email");
+  bool pressPassword = false;
+  bool pressUser = false;
+
   Accedi({
     Key key,
-  }
-  ) : super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
 
-        child: Scaffold(
-      backgroundColor: const Color(0xffffffff),
+      child: Scaffold(
+        backgroundColor: const Color(0xffffffff),
 
-      body: Stack(
-        children: <Widget>[
-          Container(
-            width: RicalcoloWidth(375.0, context),
-            height: RicalcoloHeight(348.0, context),
-            decoration: BoxDecoration(
-              color: const Color(0xffe00a17),
-            ),
-          ),
-          Transform.translate(
-            offset: Offset(0.0,  RicalcoloHeight(192.0, context)),
-            child: Container(
-              width: RicalcoloWidth(529.0, context),
-              height:RicalcoloHeight(419.0, context),
+        body: Stack(
+          children: <Widget>[
+            Container(
+              width: RicalcoloWidth(375.0, context),
+              height: RicalcoloHeight(348.0, context),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(78.0),
-                color: const Color(0xffffffff),
+                color: const Color(0xffe00a17),
               ),
             ),
-          ),
-
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(143.0, context), RicalcoloHeight(279.0, context)),
-            child: Text(
-              'Accedi',
-              style: TextStyle(
-                fontFamily: 'SF Pro Display',
-                fontSize: RicalcoloWidth(30.0, context),
-                color: const Color(0xff0e1116),
-                fontWeight: FontWeight.w500,
+            Transform.translate(
+              offset: Offset(0.0, RicalcoloHeight(192.0, context)),
+              child: Container(
+                width: RicalcoloWidth(529.0, context),
+                height: RicalcoloHeight(419.0, context),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(78.0),
+                  color: const Color(0xffffffff),
+                ),
               ),
-              textAlign: TextAlign.left,
             ),
-          ),
 
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(131.0, context),RicalcoloHeight(151.0, context)),
-            child: Text(
-              'the best fast shop',
-              style: TextStyle(
-                fontFamily: 'SF Pro Display',
-                fontSize:RicalcoloWidth(15.0, context),
-                color: const Color(0xffffffff),
-                fontWeight: FontWeight.w500,
-              ),
-              textAlign: TextAlign.left,
-            ),
-          ),
-
-    Container(
-         margin:  EdgeInsets.only(left:RicalcoloWidth(88.0, context),top:RicalcoloHeight(715.0, context)),
-
-            child:TextButton(
-              onPressed: (){Registrazione(context);;},
-              child:Text.rich(
-              TextSpan(
+            Transform.translate(
+              offset: Offset(RicalcoloWidth(143.0, context),
+                  RicalcoloHeight(279.0, context)),
+              child: Text(
+                'Accedi',
                 style: TextStyle(
                   fontFamily: 'SF Pro Display',
-                  fontSize:RicalcoloWidth(13.0, context),
+                  fontSize: RicalcoloWidth(30.0, context),
                   color: const Color(0xff0e1116),
+                  fontWeight: FontWeight.w500,
                 ),
-                children: [
+                textAlign: TextAlign.left,
+              ),
+            ),
+
+            Transform.translate(
+              offset: Offset(RicalcoloWidth(131.0, context),
+                  RicalcoloHeight(151.0, context)),
+              child: Text(
+                'the best fast shop',
+                style: TextStyle(
+                  fontFamily: 'SF Pro Display',
+                  fontSize: RicalcoloWidth(15.0, context),
+                  color: const Color(0xffffffff),
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ),
+
+            Container(
+              margin: EdgeInsets.only(left: RicalcoloWidth(88.0, context),
+                  top: RicalcoloHeight(715.0, context)),
+
+              child: TextButton(
+                onPressed: () {
+                  Registrazione(context);
+                  ;
+                },
+                child: Text.rich(
                   TextSpan(
-                    text: 'Non hai ancora l’account? ',
                     style: TextStyle(
-                      fontWeight: FontWeight.w500,
+                      fontFamily: 'SF Pro Display',
+                      fontSize: RicalcoloWidth(13.0, context),
+                      color: const Color(0xff0e1116),
                     ),
-                  ),
-              TextSpan(
-                    text: 'Registrati',
-                    style: TextStyle(
-                      color: const Color(0xffe00a17),
-                      fontWeight: FontWeight.w500,
-                      decoration: TextDecoration.underline,
+                    children: [
+                      TextSpan(
+                        text: 'Non hai ancora l’account? ',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Registrati',
+                        style: TextStyle(
+                          color: const Color(0xffe00a17),
+                          fontWeight: FontWeight.w500,
+                          decoration: TextDecoration.underline,
 
-                    ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              textHeightBehavior:
+                  textHeightBehavior:
                   TextHeightBehavior(applyHeightToFirstAscent: false),
-              textAlign: TextAlign.left,
-            ),
-          ),),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(128.0, context),  RicalcoloHeight(507.0, context)),
-            child: Text(
-              'Ti sei dimenticato la password?',
-              style: TextStyle(
-                fontFamily: 'SF Pro Display',
-                fontSize:RicalcoloWidth(10.0, context),
-                color: const Color(0xff0e1116),
-                fontWeight: FontWeight.w500,
+                  textAlign: TextAlign.left,
+                ),
+              ),),
+            Transform.translate(
+              offset: Offset(RicalcoloWidth(128.0, context),
+                  RicalcoloHeight(507.0, context)),
+              child: Text(
+                'Ti sei dimenticato la password?',
+                style: TextStyle(
+                  fontFamily: 'SF Pro Display',
+                  fontSize: RicalcoloWidth(10.0, context),
+                  color: const Color(0xff0e1116),
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.left,
               ),
-              textAlign: TextAlign.left,
             ),
-          ),
 
 
-           // Bottone e Accedi
-           Container(
-             margin:EdgeInsets.only(left:RicalcoloWidth(125.0, context),top:RicalcoloHeight(601.0, context)),
-            child: SizedBox(
-              width: RicalcoloWidth(126.0, context),
-              height:RicalcoloHeight(42.0, context),
-              child: Stack(
-                children: <Widget>[
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(0.0, 0.0,126.0,42.0),
-                    size: Size(126.0, 42.0),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinTop: true,
-                    pinBottom: true,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14.0),
-                        color: const Color(0xffe00a17),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0x43000000),
-                            offset: Offset(0, RicalcoloHeight(3.0, context)),
-                            blurRadius: 6,
+            // Bottone e Accedi
+            Container(
+              margin: EdgeInsets.only(left: RicalcoloWidth(125.0, context),
+                  top: RicalcoloHeight(601.0, context)),
+              child: SizedBox(
+                width: RicalcoloWidth(126.0, context),
+                height: RicalcoloHeight(42.0, context),
+                child: Stack(
+                  children: <Widget>[
+                    Pinned.fromSize(
+                        bounds: Rect.fromLTWH(0.0, 0.0, 126.0, 42.0),
+                        size: Size(126.0, 42.0),
+                        pinLeft: true,
+                        pinRight: true,
+                        pinTop: true,
+                        pinBottom: true,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(14.0),
+                            color: const Color(0xffe00a17),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0x43000000),
+                                offset: Offset(
+                                    0, RicalcoloHeight(3.0, context)),
+                                blurRadius: 6,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: Container(
-                        child:TextButton(
-                          onPressed: (){
-                            Login(context);
-                          },
+                          child: Container(
+                            child: TextButton(
+                              onPressed: () {
+                                Login(context);
+                              },
 
-                          child:SizedBox(
-                            width: RicalcoloWidth(126.0, context),
-                            height:RicalcoloHeight(42.0, context),
-                          child:Container(
-                            margin:EdgeInsets.only(left:RicalcoloWidth(29.0, context),top:RicalcoloWidth(5.0, context)),
-                            child:Text(
-                            'ACCEDI',
-                            style: TextStyle(
-                              fontFamily: 'SF Pro Display',
-                              fontSize:RicalcoloWidth(16.0, context),
-                              color: const Color(0xffffffff),
+                              child: SizedBox(
+                                width: RicalcoloWidth(126.0, context),
+                                height: RicalcoloHeight(42.0, context),
+                                child: Container(
+                                  margin: EdgeInsets.only(
+                                      left: RicalcoloWidth(29.0, context),
+                                      top: RicalcoloWidth(5.0, context)),
+                                  child: Text(
+                                    'ACCEDI',
+                                    style: TextStyle(
+                                      fontFamily: 'SF Pro Display',
+                                      fontSize: RicalcoloWidth(16.0, context),
+                                      color: const Color(0xffffffff),
 
-                              fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ),
                             ),
-                            textAlign: TextAlign.left,
                           ),
-                          ),
-                          ),
-                        ),
-                      ),
 
-                      )
+                        )
                     ),
 
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
 
-          Container(
-            margin:EdgeInsets.only(top:RicalcoloWidth(125.0, context),left:RicalcoloHeight(601.0, context)),
-            child: SizedBox(
-              width: RicalcoloWidth(126.0, context),
-              height:RicalcoloHeight(42.0, context),
-              child: Stack(
-                children: <Widget>[
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(0.0, 0.0, 126.0, 42.0),
-                    size: Size(126.0, 42.0),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinTop: true,
-                    pinBottom: true,
-                    child: Container(
+            Container(
+              margin: EdgeInsets.only(top: RicalcoloWidth(125.0, context),
+                  left: RicalcoloHeight(601.0, context)),
+              child: SizedBox(
+                width: RicalcoloWidth(126.0, context),
+                height: RicalcoloHeight(42.0, context),
+                child: Stack(
+                  children: <Widget>[
+                    Pinned.fromSize(
+                      bounds: Rect.fromLTWH(0.0, 0.0, 126.0, 42.0),
+                      size: Size(126.0, 42.0),
+                      pinLeft: true,
+                      pinRight: true,
+                      pinTop: true,
+                      pinBottom: true,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14.0),
+                          color: const Color(0xffe00a17),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0x43000000),
+                              offset: Offset(0, RicalcoloHeight(3.0, context)),
+                              blurRadius: 6,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Container(
+
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14.0),
                         color: const Color(0xffe00a17),
@@ -236,92 +254,80 @@ class Accedi extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                  Container(
+                      child: Text(
+                        'ACCEDI',
+                        style: TextStyle(
+                          fontFamily: 'SF Pro Display',
+                          fontSize: RicalcoloWidth(15.0, context),
+                          color: const Color(0xffffffff),
 
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14.0),
-                      color: const Color(0xffe00a17),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0x43000000),
-                          offset: Offset(0, RicalcoloHeight(3.0, context)),
-                          blurRadius: 6,
+                          fontWeight: FontWeight.w600,
                         ),
-                      ],
-                    ),
-                    child:Text(
-                      'ACCEDI',
-                      style: TextStyle(
-                        fontFamily: 'SF Pro Display',
-                        fontSize:RicalcoloWidth(15.0, context),
-                        color: const Color(0xffffffff),
-
-                        fontWeight: FontWeight.w600,
+                        textAlign: TextAlign.left,
                       ),
-                      textAlign: TextAlign.left,
-                    ),
 
-                  ),
-                ],),),),
-          // Username Campo
-          Container(
-            margin: EdgeInsets.only(left: RicalcoloWidth(61.0, context), top: RicalcoloHeight(363.0, context)),
+                    ),
+                  ],),),),
+            // Username Campo
+            Container(
+              margin: EdgeInsets.only(left: RicalcoloWidth(61.0, context),
+                  top: RicalcoloHeight(363.0, context)),
               width: RicalcoloWidth(261.0, context),
-              height:RicalcoloHeight(42.0, context),
+              height: RicalcoloHeight(42.0, context),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
                 color: const Color(0xffe00a17),
               ),
 
-          child:Container(
-            margin: EdgeInsets.only(left: RicalcoloWidth(3.0, context), top: RicalcoloHeight(3.0, context)),
-            child: Container(
-              width: RicalcoloWidth(261.0, context),
-              height: RicalcoloHeight(42.0, context),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: const Color(0xffffffff),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0x43000000),
-                    offset: Offset(0,  RicalcoloHeight(3.0, context)),
-                    blurRadius: 6,
+              child: Container(
+                margin: EdgeInsets.only(left: RicalcoloWidth(3.0, context),
+                    top: RicalcoloHeight(3.0, context)),
+                child: Container(
+                  width: RicalcoloWidth(261.0, context),
+                  height: RicalcoloHeight(42.0, context),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: const Color(0xffffffff),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0x43000000),
+                        offset: Offset(0, RicalcoloHeight(3.0, context)),
+                        blurRadius: 6,
+                      ),
+                    ],
                   ),
-                ],
-              ),
 
 
-
-         child: Container(
-            margin: EdgeInsets.only(left: RicalcoloWidth(14.0, context), top: RicalcoloHeight(4.0, context)),
-            child: TextFormField(
-              controller:controllerUser,
-              onTap:(){
-                ClearText(controllerUser);
-                if(!pressUser) {
-                  pressUser = true;
-                  rebuildAllChildren(context);
-                }
-                },
-              decoration: InputDecoration(
-                border: InputBorder.none,
+                  child: Container(
+                    margin: EdgeInsets.only(left: RicalcoloWidth(14.0, context),
+                        top: RicalcoloHeight(4.0, context)),
+                    child: TextFormField(
+                      controller: controllerUser,
+                      onTap: () {
+                        ClearText(controllerUser);
+                        if (!pressUser) {
+                          pressUser = true;
+                          rebuildAllChildren(context);
+                        }
+                      },
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                      style: TextStyle(
+                        fontFamily: 'SF Pro Display',
+                        fontSize: RicalcoloWidth(15.0, context),
+                        color: pressUser ? Color(0xff0e1116) : Color(
+                            0x3a0e1116),
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                ),
               ),
-              style: TextStyle(
-                fontFamily: 'SF Pro Display',
-                fontSize:RicalcoloWidth(15.0, context),
-                color: pressUser ?Color(0xff0e1116) : Color(0x3a0e1116),
-                fontWeight: FontWeight.w500,
-              ),
-              textAlign: TextAlign.left,
             ),
-          ),
-          ),
-          ),
-          ),
 
-          //Riquadro Password
+            //Riquadro Password
             Container(
               margin: EdgeInsets.only(
                   left: RicalcoloWidth(60.0, context),
@@ -358,18 +364,19 @@ class Accedi extends StatelessWidget {
                     controller: controllerPassword,
                     onTap: () {
                       ClearText(controllerPassword);
-                      if(!pressPassword) {
+                      if (!pressPassword) {
                         pressPassword = true;
                         rebuildAllChildren(context);
                       }
-                      },
+                    },
                     decoration: InputDecoration(
                       border: InputBorder.none,
                     ),
                     style: new TextStyle(
                       fontFamily: 'SF Pro Display',
                       fontSize: RicalcoloWidth(15.0, context),
-                      color: pressPassword ?  Color(0xff0e1116) : Color(0x3a0e1116) ,
+                      color: pressPassword ? Color(0xff0e1116) : Color(
+                          0x3a0e1116),
                       fontWeight: FontWeight.w500,
                     ),
                     textAlign: TextAlign.left,
@@ -378,87 +385,86 @@ class Accedi extends StatelessWidget {
               ),
             ),
 
-          //Azione Accedi
+            //Azione Accedi
 
 
+            Transform.translate(
+              offset: Offset(RicalcoloWidth(291.0, context),
+                  RicalcoloHeight(459.0, context)),
+              child:
+              // Adobe XD layer: 'visibility' (group)
+              SizedBox(
+                width: RicalcoloWidth(21.0, context),
+                height: RicalcoloHeight(42.0, context),
+                child: Stack(
 
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(291.0, context),  RicalcoloHeight(459.0, context)),
-            child:
-                // Adobe XD layer: 'visibility' (group)
-                SizedBox(
-              width: RicalcoloWidth(21.0, context),
-              height:RicalcoloHeight(42.0, context),
-              child: Stack(
-
-              ),
-            ),
-          ),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(127.0, context),  RicalcoloHeight(42.0, context)),
-            child:
-                // Adobe XD layer: 'logo_bianco-traccia…' (shape)
-                Container(
-              width:RicalcoloWidth(122.0, context),
-              height: RicalcoloHeight(92.0, context),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage("assets/image/logo.png"),
-                  fit: BoxFit.fill,
                 ),
               ),
             ),
-          ),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(291.0, context),RicalcoloHeight(459.0, context)),
-            child:
-            // Adobe XD layer: 'visibility' (shape)
-            Container(
-              width: RicalcoloWidth(21.0, context),
-              height:RicalcoloHeight(16.0, context),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage('assets/image/visibility.png'),
-                  fit: BoxFit.fill,
+            Transform.translate(
+              offset: Offset(RicalcoloWidth(127.0, context),
+                  RicalcoloHeight(42.0, context)),
+              child:
+              // Adobe XD layer: 'logo_bianco-traccia…' (shape)
+              Container(
+                width: RicalcoloWidth(122.0, context),
+                height: RicalcoloHeight(92.0, context),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: const AssetImage("assets/image/logo.png"),
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
-      ),
+            Transform.translate(
+              offset: Offset(RicalcoloWidth(291.0, context),
+                  RicalcoloHeight(459.0, context)),
+              child:
+              // Adobe XD layer: 'visibility' (shape)
+              Container(
+                width: RicalcoloWidth(21.0, context),
+                height: RicalcoloHeight(16.0, context),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: const AssetImage('assets/image/visibility.png'),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
+      ),
     );
   }
 
   Future<void> Login(BuildContext context) async {
-
-    bool correct=await controller.LoginIsCorrect( controllerUser.text,controllerPassword.text);
-    if(correct) {
+    bool correct = await controller.LoginIsCorrect(
+        controllerUser.text, controllerPassword.text);
+    if (correct) {
       Route route;
-      if(controller.database.isAzienda){
-      route = MaterialPageRoute(builder: (context) => ProfiloAzienda());
-      controller.database.ListenChiamate();
-      debugPrint("okked");
+      if (controller.database.isAzienda) {
+        route = MaterialPageRoute(builder: (context) => ProfiloAzienda());
+        controller.database.ListenChiamate();
       }
-      else{
+      else {
         route = MaterialPageRoute(builder: (context) => Navigatore());
       }
       Navigator.push(context, route);
-      /*controllerUser.dispose();
-      controllerPassword.dispose();*/
 
     }
 
 
-   /*Route route = MaterialPageRoute(builder: (context) => Profiloutente());
+    /*Route route = MaterialPageRoute(builder: (context) => Profiloutente());
     Navigator.push(context, route);*/
   }
-  void Registrazione(BuildContext context){
+
+  void Registrazione(BuildContext context) {
     Route route = MaterialPageRoute(builder: (context) => SceltaAccount());
     Navigator.push(context, route);
   }
 
-  
 
 }
 

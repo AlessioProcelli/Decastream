@@ -24,6 +24,7 @@ import 'dart:core';
 
 import 'Call.dart';
 import 'CallUtente.dart';
+import 'ProfiloAzienda_Vista_Utente.dart';
 import 'Tipi/Offerta.dart';
 
 class Controller {
@@ -85,6 +86,7 @@ class Controller {
 
   Future<bool> LoginIsCorrect(String username, String password) async {
     bool trovato=false;
+    database.isAzienda=false;
     List<Utente> listuser= await database.getUserList();
     listuser.forEach((element) { //ricerca tra gli utenti
       if(element.username.compareTo(username)==0 && element.password.compareTo(password)==0){
@@ -282,7 +284,24 @@ print(listofferte.length);
         }
       }
 
-
+Future<void> VisualizzaProfiloAzienda(int id,BuildContext context ) async {
+  List<Azienda> aziende = await database.getAziendaList();
+  List<Hashtag> hashtag_list = await database.getHashtagList();
+  List<Hashtag> azienda_hash_list = [];
+  Azienda currentAzienda;
+  aziende.forEach((element) {
+    if (element.id == id) {
+      currentAzienda = element;
+    }
+  });
+  hashtag_list.forEach((element) {
+    if(element.id_azienda==id){
+      azienda_hash_list.add(new Hashtag(element.id_azienda, element.nome,element.immagine_hashtag));
+    }
+  });
+  Route route = MaterialPageRoute(builder: (context) => ProfiloAzienda_VistaUtente(currentAzienda, azienda_hash_list));
+    Navigator.push(context, route);
+}
 
 
 }

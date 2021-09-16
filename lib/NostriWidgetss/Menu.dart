@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:everstream/Ridimensiona.dart';
 import 'package:everstream/Accedi.dart';
 
-import '../Navigator.dart';
+import '../Navigatore.dart';
 
 //0xffffffff
 //Colors.blue  const Color(0xffffffff)
@@ -17,7 +17,7 @@ class Menu extends StatelessWidget {
   double icon_dimension=40;
   Menu(Navigatore padre ,{Key key,}) : super(key: key)
 {
-  print("ok");
+
   this.padre=padre;
 
 }

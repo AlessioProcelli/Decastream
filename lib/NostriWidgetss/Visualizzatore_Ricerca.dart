@@ -16,13 +16,12 @@ import '../main.dart';
 //snapshot.data.docs[index]['Nome_Azienda']
 //if(snapshot.data.docs[index]['id'] == aziende.id)
 
-class Griglia extends StatelessWidget {
+class Visualizzatore_Ricerca extends StatelessWidget {
 
-  List<Azienda> listA ;
-
+  List<Azienda> listA;
 
   @override
-  Griglia() {}
+  Visualizzatore_Ricerca() {}
 
   Widget build(BuildContext context) {
     CollectionReference aziende = FirebaseFirestore.instance.collection("Aziende");
@@ -51,6 +50,7 @@ class Griglia extends StatelessWidget {
         itemCount: snapshot.data.docs.length,
         itemBuilder: (BuildContext ctx, index) {
           //2 row
+
           //contorno rosso
           return Container(
             width: RicalcoloWidth(169.0, context),
@@ -89,12 +89,16 @@ class Griglia extends StatelessWidget {
                   ),
 
                   //box i
-                  child: Container(
-                    margin: EdgeInsets.only(left: RicalcoloWidth(150.0,
+                  child:TextButton(onPressed: (){
+
+                    Visualizza_ProfiloAzienda(index,context);
+
+                  }, child: Container(
+                    margin: EdgeInsets.only(left: RicalcoloWidth(140.0,
                         context),
-                        top: RicalcoloHeight(5.0, context),
-                        right: RicalcoloWidth(9.0, context),
-                        bottom: RicalcoloHeight(74.0, context)),
+                        top: RicalcoloHeight(0.0, context),
+                        right: RicalcoloWidth(0.0, context),
+                        bottom: RicalcoloHeight(65.0, context)),
                     width: RicalcoloWidth(11.0, context),
                     height: RicalcoloHeight(11.0, context),
                     decoration: BoxDecoration(
@@ -118,7 +122,7 @@ class Griglia extends StatelessWidget {
                     ),
                   ),
                 ),
-
+),
                 Row( // prima row per nome azienda e stelle
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -389,6 +393,10 @@ class Griglia extends StatelessWidget {
   }
   void Chiama(int id,BuildContext context){
     controller.ChiamaAzienda(id,context);
+  }
+
+  void Visualizza_ProfiloAzienda(int index,BuildContext context) {
+    controller.VisualizzaProfiloAzienda(index, context);
   }
 }
 
