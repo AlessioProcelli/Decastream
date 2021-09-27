@@ -14,3 +14,9 @@ void ClearText(TextEditingController textedit) {
 void rebuildAllChildren(BuildContext context) {
   (context as Element).reassemble();
 }
+double MaxScreenWidht(BuildContext context){
+  return MediaQuery.of(context).size.width;
+}
+double MaxScreenHeight(BuildContext context){
+  return MediaQuery.of(context).size.height;
+}

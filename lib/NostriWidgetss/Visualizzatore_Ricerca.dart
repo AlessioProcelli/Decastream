@@ -91,7 +91,7 @@ class Visualizzatore_Ricerca extends StatelessWidget {
                   //box i
                   child:TextButton(onPressed: (){
 
-                    Visualizza_ProfiloAzienda(index,context);
+                    Visualizza_ProfiloAzienda(snapshot.data.docs[index]['id'],context);
 
                   }, child: Container(
                     margin: EdgeInsets.only(left: RicalcoloWidth(140.0,

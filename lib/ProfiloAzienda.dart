@@ -6,11 +6,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:everstream/Ridimensiona.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
+import 'VideoPlayerPpUp.dart';
 import 'main.dart';
 
 class ProfiloAzienda extends StatelessWidget {
-  VideoPlayerController _controller=VideoPlayerController.network(
-      'https://firebasestorage.googleapis.com/v0/b/prova-24d5b.appspot.com/o/Prova.mp4?alt=media&token=60a18d6b-44fd-4f60-b54f-13a5fe46bb2f');
+  VideoPlayerScreen popup=VideoPlayerScreen();
+  bool watchVideo=false;
+
   File new_foto_profilo=null; //foto di appoggio
   File new_foto_copertina=null;//nuova foto caricata
   File new_hashtag_1=null;
@@ -41,7 +43,7 @@ class ProfiloAzienda extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-
+popup.init();
 controller.setCurrentContext(context);
 
     return Scaffold(
@@ -980,17 +982,35 @@ controller.setCurrentContext(context);
               child: TextButton( onPressed:(){
 
 
-    print("ok");
-     _controller.initialize();
-    print(_controller.value.isInitialized);
-    print(_controller.value.isPlaying);
+
+
+    popup.ActivePopUp();
+
 
     },
 
-                child:VideoPlayer(_controller),)
+                child:Container(
+                    width: RicalcoloWidth(129.0, context),
+                  height: RicalcoloHeight(129.0, context),
+                  decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(22.0),
+                  image: DecorationImage(
+                  image: NetworkImage('https://firebasestorage.googleapis.com/v0/b/prova-24d5b.appspot.com/o/secondariaGenerico.jpg?alt=media&token=2d2ef207-f5b4-4637-8eca-c0ac15e00022'),
+                  fit: BoxFit.cover,
+                  ),
+                  boxShadow: [
+                  BoxShadow(
+                  color: const Color(0x39000000),
+                  offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
+                  blurRadius: 6,
+                  ),
+                  ],
+                  ),
+                  ),
 
             ),
          ),
+          ),
           Transform.translate(
             offset: Offset(RicalcoloWidth(28.0, context), RicalcoloHeight(190.0, context)),
             child: Container(
@@ -1202,6 +1222,10 @@ controller.setCurrentContext(context);
               ),
             ),
           ),
+
+
+      popup,
+
         ],
       ),
     );

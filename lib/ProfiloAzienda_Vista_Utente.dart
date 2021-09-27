@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 
 import 'Tipi/Hashtag.dart';
 import 'Tipi/Indirizzo.dart';
+import 'VideoPlayerPpUp.dart';
 import 'main.dart';
 
 class ProfiloAzienda_VistaUtente extends StatelessWidget {
@@ -19,7 +20,7 @@ class ProfiloAzienda_VistaUtente extends StatelessWidget {
   String foto_copertina;
   List<Hashtag> hashtag_list;
   double icon_dimension=40;
-
+  VideoPlayerScreen popup=VideoPlayerScreen();
   ProfiloAzienda_VistaUtente(Azienda azienda,List<Hashtag> hashtagList){
     view_azienda=azienda;
     foto_profilo=azienda.img_profilo;
@@ -28,7 +29,7 @@ class ProfiloAzienda_VistaUtente extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-
+    popup.init();
 controller.setCurrentContext(context);
 
     return Scaffold(
@@ -876,10 +877,6 @@ controller.setCurrentContext(context);
               height: RicalcoloHeight(129.0, context),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(22.0),
-                image: DecorationImage(
-                  image: NetworkImage(view_azienda.img_secondaria),
-                  fit: BoxFit.cover,
-                ),
                 boxShadow: [
                   BoxShadow(
                     color: const Color(0x39000000),
@@ -887,6 +884,36 @@ controller.setCurrentContext(context);
                     blurRadius: 6,
                   ),
                 ],
+              ),
+              child: TextButton( onPressed:(){
+
+
+
+
+                popup.ActivePopUp();
+
+
+              },
+
+                child:Container(
+                  width: RicalcoloWidth(129.0, context),
+                  height: RicalcoloHeight(129.0, context),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(22.0),
+                    image: DecorationImage(
+                      image: NetworkImage('https://firebasestorage.googleapis.com/v0/b/prova-24d5b.appspot.com/o/secondariaGenerico.jpg?alt=media&token=2d2ef207-f5b4-4637-8eca-c0ac15e00022'),
+                      fit: BoxFit.cover,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0x39000000),
+                        offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
+                        blurRadius: 6,
+                      ),
+                    ],
+                  ),
+                ),
+
               ),
             ),
           ),
@@ -1027,6 +1054,7 @@ controller.setCurrentContext(context);
               ),
             ),
           ),
+          popup,
         ],
       ),
     );
