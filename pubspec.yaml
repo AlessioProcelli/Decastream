@@ -40,6 +40,11 @@ dependencies:
   firebase_database: ^7.1.1
   video_player: ^2.2.3
 
+
+flutter_icons:
+  image_path: assets/icone/icon.png
+  Android: true
+  ios: true
 dev_dependencies:
   flutter_test:
     sdk: flutter

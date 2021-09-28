@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:everstream/Popup_chiamataappuntamento.dart';
 import 'package:everstream/Tipi/Azienda.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,15 +21,18 @@ class ProfiloAzienda_VistaUtente extends StatelessWidget {
   String foto_copertina;
   List<Hashtag> hashtag_list;
   double icon_dimension=40;
+  Popup_chiamataappuntamento popup_chiamata;
   VideoPlayerScreen popup=VideoPlayerScreen();
   ProfiloAzienda_VistaUtente(Azienda azienda,List<Hashtag> hashtagList){
     view_azienda=azienda;
     foto_profilo=azienda.img_profilo;
     foto_copertina=azienda.img_copertina;
     hashtag_list=hashtagList;
+    popup_chiamata=Popup_chiamataappuntamento(view_azienda);
   }
   @override
   Widget build(BuildContext context) {
+
     popup.init();
 controller.setCurrentContext(context);
 
@@ -456,9 +460,12 @@ controller.setCurrentContext(context);
                     pinRight: true,
                     pinTop: true,
                     pinBottom: true,
-                    child:
+                    child:TextButton(
+                      onPressed:(){
+                       popup_chiamata.ActivePopup();
+                       },
                     // Adobe XD layer: 'profilo' (shape)
-                    Container(
+                    child:Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(21.0),
                         image: DecorationImage(
@@ -475,6 +482,7 @@ controller.setCurrentContext(context);
                           ),
                         ],
                       ),
+                    ),
                     ),
                   ),
                 ],
@@ -1055,6 +1063,7 @@ controller.setCurrentContext(context);
             ),
           ),
           popup,
+          popup_chiamata,
         ],
       ),
     );

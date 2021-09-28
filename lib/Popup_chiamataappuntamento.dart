@@ -1,16 +1,22 @@
+import 'package:everstream/Tipi/Azienda.dart';
+import 'package:everstream/main.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:everstream/Ridimensiona.dart';
 
 class Popup_chiamataappuntamento extends StatelessWidget {
-  Popup_chiamataappuntamento({
-    Key key,
-  }) : super(key: key);
+  bool active=false;
+  BuildContext context;
+  Azienda current_azienda;
+  Popup_chiamataappuntamento(Azienda azienda){
+    current_azienda=azienda;
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xffffffff),
+    this.context=context;
+    return  active ?Scaffold(
+      backgroundColor: const Color(0x88000000),
       body: Stack(
         children: <Widget>[
           Transform.translate(
@@ -19,16 +25,22 @@ class Popup_chiamataappuntamento extends StatelessWidget {
               width: RicalcoloWidth(416.0, context),
             height: RicalcoloHeight(858.0, context),
               decoration: BoxDecoration(
-                color: const Color(0xc0000000),
+                color: const Color(0x88000000),
                 border: Border.all(width: RicalcoloWidth(1.0, context), color: const Color(0xc0707070)),
               ),
             ),
           ),
-          Transform.translate(
-              offset: Offset(RicalcoloWidth(7.0, context), RicalcoloHeight(9.0, context)),
+            Container(
+            margin: EdgeInsets.only(left: RicalcoloWidth(15.0, context),top:RicalcoloHeight(45.6, context)),
+    child:TextButton(
+    onPressed: (){
+    active=false;
+    rebuildAllChildren(context);
+    },
+
             child: Container(
-              width: 23.0,
-              height: 23.0,
+              width: 30.0,
+              height: 30.0,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6.0),
                 color: const Color(0xffffffff),
@@ -40,62 +52,16 @@ class Popup_chiamataappuntamento extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
+
+
+       child: Icon(
+         Icons.arrow_back,
+         color: Colors.black,
+         size: 30.0,
+       ),
           ),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(15.0, context), RicalcoloHeight(15.6, context)),
-            child:
-                // Adobe XD layer: 'indietro' (group)
-                SizedBox(
-width: RicalcoloWidth(7.0, context),
-            height: RicalcoloHeight(10.0, context),
-              child: Stack(
-                children: <Widget>[
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(0.0, 0.0, 6.7, 9.5),
-                    size: Size(6.7, 9.5),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinTop: true,
-                    pinBottom: true,
-                    child: Transform.rotate(
-                      angle: 3.1416,
-                      child: Stack(
-                        children: <Widget>[
-                          Pinned.fromSize(
-                            bounds: Rect.fromLTWH(0.0, 0.0, 6.7, 4.8),
-                            size: Size(6.7, 9.5),
-                            pinLeft: true,
-                            pinRight: true,
-                            pinTop: true,
-                            fixedHeight: true,
-                            child: SvgPicture.string(
-                              _svg_bmqaen,
-                              allowDrawingOutsideViewBox: true,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          Pinned.fromSize(
-                            bounds: Rect.fromLTWH(0.0, 4.8, 6.7, 4.8),
-                            size: Size(6.7, 9.5),
-                            pinLeft: true,
-                            pinRight: true,
-                            pinBottom: true,
-                            fixedHeight: true,
-                            child: SvgPicture.string(
-                              _svg_ngbwws,
-                              allowDrawingOutsideViewBox: true,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ),
+            ),
           Transform.translate(
               offset: Offset(RicalcoloWidth(29.0, context), RicalcoloHeight(248.0, context)),
             child: Container(
@@ -136,7 +102,7 @@ width: RicalcoloWidth(7.0, context),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25.0),
                         image: DecorationImage(
-                          image: const AssetImage("assets/image/copertina.jpeg"),
+                          image: new NetworkImage(current_azienda.img_copertina),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -174,7 +140,12 @@ width: RicalcoloWidth(7.0, context),
           ),
           Transform.translate(
               offset: Offset(RicalcoloWidth(71.0, context), RicalcoloHeight(430.0, context)),
-            child: SizedBox(
+            child:Container(
+    child:TextButton(
+    onPressed: (){
+      controller.ChiamaAzienda(current_azienda.id,context);
+    },
+    child: SizedBox(
               width: RicalcoloWidth(212.0, context),
             height: RicalcoloHeight(65.0, context),
               child: Stack(
@@ -258,9 +229,16 @@ width: RicalcoloWidth(7.0, context),
               ),
             ),
           ),
+            ),
+          ),
           Transform.translate(
               offset: Offset(RicalcoloWidth(71.0, context), RicalcoloHeight(530.0, context)),
-            child: SizedBox(
+            child: Container(
+    child:TextButton(
+      onPressed: (){
+        print("magic");
+      },
+    child:SizedBox(
               width: RicalcoloWidth(212.0, context),
             height: RicalcoloHeight(65.0, context),
               child: Stack(
@@ -344,6 +322,8 @@ width: RicalcoloWidth(7.0, context),
               ),
             ),
           ),
+                ),
+          ),
           Transform.translate(
               offset: Offset(RicalcoloWidth(145.0, context), RicalcoloHeight(318.0, context)),
             child:
@@ -354,7 +334,7 @@ width: RicalcoloWidth(7.0, context),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(21.0),
                 image: DecorationImage(
-                  image: const AssetImage("assets/image/profilo.jpeg"),
+                  image: new NetworkImage(current_azienda.img_profilo),
                   fit: BoxFit.cover,
                 ),
                 border: Border.all(width: RicalcoloWidth(1.5, context), color: const Color(0xff0e1116)),
@@ -377,16 +357,10 @@ width: RicalcoloWidth(70.0, context),
             height: RicalcoloHeight(71.0, context),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: const AssetImage("assets/image/telecamerablack.png"),
+                  image: const AssetImage("assets/image/telecameraBLACK 2.png"),
                   fit: BoxFit.fill,
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0x29000000),
-                    offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                    blurRadius: 6,
-                  ),
-                ],
+
               ),
             ),
           ),
@@ -407,7 +381,13 @@ width: RicalcoloWidth(50.0, context),
           ),
         ],
       ),
-    );
+
+    ):
+    Container();
+  }
+ void ActivePopup(){
+    active=true;
+    rebuildAllChildren(context);
   }
 }
 

@@ -30,6 +30,7 @@ class VideoPlayerScreen extends StatelessWidget {
 
   }
   Widget build(BuildContext context) {
+
     this.context=context;
     return active? Container(
       width: MaxScreenWidht(context),
