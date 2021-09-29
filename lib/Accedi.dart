@@ -7,6 +7,7 @@ import 'package:everstream/ProfiloUtenteInfo.dart';
 import 'package:everstream/PaginaCerca.dart';
 import 'package:everstream/SceltaAccount.dart';
 import 'package:everstream/Tipi/Chiamata.dart';
+import 'package:everstream/Widget_Grafici/Input_Box.dart';
 import 'package:everstream/pages/call.dart';
 import 'package:everstream/pages/index.dart';
 import 'package:everstream/prova.dart';
@@ -24,8 +25,9 @@ import 'provaDipi.dart';
 
 class Accedi extends StatelessWidget {
   /*sono i controller delle TEXTEDITFORM servono per avere riferimenti ai campi e prenderci il testo */
-  final controllerPassword = TextEditingController(text: "Password");
-  final controllerUser = TextEditingController(text: "Nome utente o email");
+   Input_Box input_username=Input_Box(261.0, 41.0, "Nome utente o email");
+   Input_Box input_password=Input_Box(261.0, 41.0, "Password",true);
+
   bool pressPassword = false;
   bool pressUser = false;
 
@@ -42,13 +44,49 @@ class Accedi extends StatelessWidget {
 
         body: Stack(
           children: <Widget>[
+
+        Column(
+        children: <Widget>[
+
+            ///Parte  Rossa in  Alto
             Container(
-              width: RicalcoloWidth(375.0, context),
-              height: RicalcoloHeight(348.0, context),
-              decoration: BoxDecoration(
-                color: const Color(0xffe00a17),
+            width: RicalcoloWidth(375.0, context),
+        height: RicalcoloHeight(348.0, context),
+        decoration: BoxDecoration(
+          color: const Color(0xffe00a17),
+        ),
+
+        child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+
+              Container(
+                margin: EdgeInsets.only(top: RicalcoloHeight(42.0, context)),
+                width: RicalcoloWidth(92.0, context),
+                height: RicalcoloHeight(102.0, context),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: const AssetImage("assets/image/logo.png"),
+                    fit: BoxFit.fill,
+                  ),
+                ),
               ),
-            ),
+              Container(
+                margin: EdgeInsets.only(top: RicalcoloHeight(10.0, context)),
+              child: Text(
+              'the best fast shop',
+              style: TextStyle(
+              fontFamily: 'SF Pro Display',
+              fontSize: RicalcoloWidth(15.0, context),
+              color: const Color(0xffffffff),
+              fontWeight: FontWeight.w500,
+              ),
+              textAlign: TextAlign.left,
+              ),
+              ),
+            ]
+        ),
+      ),]),
             Transform.translate(
               offset: Offset(0.0, RicalcoloHeight(192.0, context)),
               child: Container(
@@ -76,20 +114,7 @@ class Accedi extends StatelessWidget {
               ),
             ),
 
-            Transform.translate(
-              offset: Offset(RicalcoloWidth(131.0, context),
-                  RicalcoloHeight(151.0, context)),
-              child: Text(
-                'the best fast shop',
-                style: TextStyle(
-                  fontFamily: 'SF Pro Display',
-                  fontSize: RicalcoloWidth(15.0, context),
-                  color: const Color(0xffffffff),
-                  fontWeight: FontWeight.w500,
-                ),
-                textAlign: TextAlign.left,
-              ),
-            ),
+
 
             Container(
               margin: EdgeInsets.only(left: RicalcoloWidth(88.0, context),
@@ -268,122 +293,20 @@ class Accedi extends StatelessWidget {
 
                     ),
                   ],),),),
-            // Username Campo
+            /// Username Campo
             Container(
               margin: EdgeInsets.only(left: RicalcoloWidth(61.0, context),
                   top: RicalcoloHeight(363.0, context)),
-              width: RicalcoloWidth(261.0, context),
-              height: RicalcoloHeight(42.0, context),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: const Color(0xffe00a17),
-              ),
 
-              child: Container(
-                margin: EdgeInsets.only(left: RicalcoloWidth(3.0, context),
-                    top: RicalcoloHeight(3.0, context)),
-                child: Container(
-                  width: RicalcoloWidth(261.0, context),
-                  height: RicalcoloHeight(42.0, context),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: const Color(0xffffffff),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0x43000000),
-                        offset: Offset(0, RicalcoloHeight(3.0, context)),
-                        blurRadius: 6,
-                      ),
-                    ],
-                  ),
-
-
-                  child: Container(
-                    margin: EdgeInsets.only(left: RicalcoloWidth(14.0, context),
-                        top: RicalcoloHeight(4.0, context)),
-                    child: TextFormField(
-                      controller: controllerUser,
-                      onTap: () {
-                        ClearText(controllerUser);
-                        if (!pressUser) {
-                          pressUser = true;
-                          rebuildAllChildren(context);
-                        }
-                      },
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                      ),
-                      style: TextStyle(
-                        fontFamily: 'SF Pro Display',
-                        fontSize: RicalcoloWidth(15.0, context),
-                        color: pressUser ? Color(0xff0e1116) : Color(
-                            0x3a0e1116),
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ),
-              ),
+              child: input_username,
             ),
 
-            //Riquadro Password
+            /// Campo Password
             Container(
               margin: EdgeInsets.only(
                   left: RicalcoloWidth(60.0, context),
                   top: RicalcoloHeight(443.0, context)),
-              width: RicalcoloWidth(261.0, context),
-              height: RicalcoloHeight(42.0, context),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: const Color(0xffe00a17),
-              ),
-              child: Container(
-                margin: EdgeInsets.only(
-                    left: RicalcoloWidth(3.0, context),
-                    top: RicalcoloHeight(3.0, context)),
-                width: RicalcoloWidth(261.0, context),
-                height: RicalcoloHeight(42.0, context),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  color: const Color(0xffffffff),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0x43000000),
-                      offset: Offset(0, RicalcoloHeight(3.0, context)),
-                      blurRadius: 6,
-                    ),
-                  ],
-                ),
-                child: Container(
-                  margin: EdgeInsets.only(
-                      left: RicalcoloWidth(14.0, context),
-                      top: RicalcoloHeight(4.0, context)),
-                  child: TextFormField(
-                    obscureText: true,
-                    controller: controllerPassword,
-                    onTap: () {
-                      ClearText(controllerPassword);
-                      if (!pressPassword) {
-                        pressPassword = true;
-                        rebuildAllChildren(context);
-                      }
-                    },
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                    ),
-                    style: new TextStyle(
-                      fontFamily: 'SF Pro Display',
-                      fontSize: RicalcoloWidth(15.0, context),
-                      color: pressPassword ? Color(0xff0e1116) : Color(
-                          0x3a0e1116),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.left,
-                  ),
-                ),
-              ),
-            ),
+              child:input_password,),
 
             //Azione Accedi
 
@@ -401,22 +324,7 @@ class Accedi extends StatelessWidget {
                 ),
               ),
             ),
-            Transform.translate(
-              offset: Offset(RicalcoloWidth(127.0, context),
-                  RicalcoloHeight(42.0, context)),
-              child:
-              // Adobe XD layer: 'logo_bianco-traccia…' (shape)
-              Container(
-                width: RicalcoloWidth(122.0, context),
-                height: RicalcoloHeight(92.0, context),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: const AssetImage("assets/image/logo.png"),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-            ),
+
             Transform.translate(
               offset: Offset(RicalcoloWidth(291.0, context),
                   RicalcoloHeight(459.0, context)),
@@ -441,7 +349,7 @@ class Accedi extends StatelessWidget {
 
   Future<void> Login(BuildContext context) async {
     bool correct = await controller.LoginIsCorrect(
-        controllerUser.text, controllerPassword.text);
+       input_username.getText(), input_password.getText());
     if (correct) {
       Route route;
       if (controller.database.isAzienda) {
