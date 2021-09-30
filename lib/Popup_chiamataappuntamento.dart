@@ -1,4 +1,5 @@
 import 'package:everstream/Tipi/Azienda.dart';
+import 'package:everstream/appuntamento1.dart';
 import 'package:everstream/main.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
@@ -237,6 +238,8 @@ class Popup_chiamataappuntamento extends StatelessWidget {
     child:TextButton(
       onPressed: (){
         print("magic");
+        Route route = MaterialPageRoute(builder: (context) => appuntamento1());
+        Navigator.push(context, route);
       },
     child:SizedBox(
               width: RicalcoloWidth(212.0, context),

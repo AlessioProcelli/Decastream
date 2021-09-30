@@ -18,7 +18,7 @@ import 'package:everstream/pages/call.dart';
 import 'package:everstream/prova.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:everstream/Accedi.dart';
+import 'package:everstream/Pagine_Accesso/Accedi.dart';
 //import 'package:agora_rtc_engine/agora_rtc_engine_web.dart';
 //import 'package:agora_rtc_engine/rtc_channel.dart';
 //import 'package:agora_rtc_engine/rtc_engine.dart';

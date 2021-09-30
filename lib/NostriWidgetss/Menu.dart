@@ -1,21 +1,21 @@
 import 'package:everstream/da%20Lavorarci/Cerca.dart';
 import 'package:flutter/material.dart';
 import 'package:everstream/Ridimensiona.dart';
-import 'package:everstream/Accedi.dart';
+import 'package:everstream/Pagine_Accesso/Accedi.dart';
 
-import '../Navigatore.dart';
+import '../Main_Page.dart';
 
 //0xffffffff
 //Colors.blue  const Color(0xffffffff)
 
 class Menu extends StatelessWidget {
-  Navigatore padre;
+  Main_Page padre;
   bool cerca=false;
   bool acquisti=false;
   bool messaggi=false;
   bool profilo=true;
   double icon_dimension=40;
-  Menu(Navigatore padre ,{Key key,}) : super(key: key)
+  Menu(Main_Page padre ,{Key key,}) : super(key: key)
 {
 
   this.padre=padre;

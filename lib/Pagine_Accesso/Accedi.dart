@@ -8,6 +8,7 @@ import 'package:everstream/PaginaCerca.dart';
 import 'package:everstream/SceltaAccount.dart';
 import 'package:everstream/Tipi/Chiamata.dart';
 import 'package:everstream/Widget_Grafici/Input_Box.dart';
+import 'package:everstream/Widget_Grafici/Metodi_Grafici.dart';
 import 'package:everstream/pages/call.dart';
 import 'package:everstream/pages/index.dart';
 import 'package:everstream/prova.dart';
@@ -16,11 +17,11 @@ import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:everstream/Ridimensiona.dart';
 import 'package:everstream/main.dart';
-import 'LiveAzienda.dart';
-import 'Navigatore.dart';
-import 'da Lavorarci/Cerca.dart';
-import 'Registrati.dart';
-import 'provaDipi.dart';
+import '../LiveAzienda.dart';
+import '../Main_Page.dart';
+import '../da Lavorarci/Cerca.dart';
+import '../Registrati.dart';
+import '../provaDipi.dart';
 
 class Accedi extends StatelessWidget {
   /*sono i controller delle TEXTEDITFORM servono per avere riferimenti ai campi e prenderci il testo */
@@ -39,7 +40,7 @@ class Accedi extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xffffffff),
-        body: Stack(
+        body: SingleChildScrollView(child:Stack(
           children: <Widget>[
             ///Parte  Rossa in  Alto
             Container(
@@ -69,12 +70,7 @@ class Accedi extends StatelessWidget {
                           EdgeInsets.only(top: RicalcoloHeight(10.0, context)),
                       child: Text(
                         'the best fast shop',
-                        style: TextStyle(
-                          fontFamily: 'SF Pro Display',
-                          fontSize: RicalcoloWidth(15.0, context),
-                          color: const Color(0xffffffff),
-                          fontWeight: FontWeight.w500,
-                        ),
+                        style:My_Text_Style(RicalcoloWidth(15.0, context), Color(0xffffffff)) ,
                         textAlign: TextAlign.left,
                       ),
                     ),
@@ -98,12 +94,8 @@ class Accedi extends StatelessWidget {
                         EdgeInsets.only(top: RicalcoloHeight(87.0, context)),
                     child: Text(
                       'Accedi',
-                      style: TextStyle(
-                        fontFamily: 'SF Pro Display',
-                        fontSize: RicalcoloWidth(30.0, context),
-                        color: const Color(0xff0e1116),
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style: My_Text_Style(RicalcoloWidth(30.0, context), Color(0xff0e1116))
+
                     ),
                   ),
 
@@ -126,12 +118,7 @@ class Accedi extends StatelessWidget {
                         EdgeInsets.only(top: RicalcoloHeight(15.0, context)),
                     child: Text(
                       'Ti sei dimenticato la password?',
-                      style: TextStyle(
-                        fontFamily: 'SF Pro Display',
-                        fontSize: RicalcoloWidth(10.2, context),
-                        color: const Color(0xff0e1116),
-                        fontWeight: FontWeight.w500,
-                      ),
+                      style:My_Text_Style(RicalcoloWidth(10.2, context),  Color(0xff0e1116)),
                       textAlign: TextAlign.left,
                     ),
                   ),
@@ -144,24 +131,10 @@ class Accedi extends StatelessWidget {
                       onPressed: () {
                         Login(context);
                       },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        primary: Color(0xffe00a17),
-                        onPrimary: Colors.white,
-                        fixedSize: Size(RicalcoloWidth(126.0, context),
-                            RicalcoloHeight(42.0, context)),
-                        elevation: 8,
-                      ),
+                      style: My_Button_Style(Size(RicalcoloWidth(126.0, context), RicalcoloHeight(42.0, context))),
                       child: Text(
                         'ACCEDI',
-                        style: TextStyle(
-                          fontFamily: 'SF Pro Display',
-                          fontSize: RicalcoloWidth(16.0, context),
-                          color: const Color(0xffffffff),
-                          fontWeight: FontWeight.w600,
-                        ),
+                        style: My_Text_Style(RicalcoloWidth(16.0, context),  Color(0xffffffff)),
                         textAlign: TextAlign.left,
                       ),
                     ),
@@ -170,7 +143,7 @@ class Accedi extends StatelessWidget {
                   ///Invito Registrazione
                   Container(
                     margin:
-                        EdgeInsets.only(top: RicalcoloHeight(130.0, context)),
+                        EdgeInsets.only(top: RicalcoloHeight(70.0, context)),
                     child: TextButton(
                       onPressed: () {
                         Registrazione(context);
@@ -212,6 +185,7 @@ class Accedi extends StatelessWidget {
           ],
         ),
       ),
+      ),
     );
   }
 
@@ -224,13 +198,11 @@ class Accedi extends StatelessWidget {
         route = MaterialPageRoute(builder: (context) => ProfiloAzienda());
         controller.database.ListenChiamate();
       } else {
-        route = MaterialPageRoute(builder: (context) => Navigatore());
+        route = MaterialPageRoute(builder: (context) => Main_Page());
       }
       Navigator.push(context, route);
     }
 
-    /*Route route = MaterialPageRoute(builder: (context) => Profiloutente());
-    Navigator.push(context, route);*/
   }
 
   void Registrazione(BuildContext context) {

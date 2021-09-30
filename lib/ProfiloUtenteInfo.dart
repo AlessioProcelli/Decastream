@@ -1,5 +1,5 @@
 
-import 'package:everstream/Accedi.dart';
+import 'package:everstream/Pagine_Accesso/Accedi.dart';
 import 'package:everstream/ProfiloUtente.dart';
 import 'package:everstream/da%20Lavorarci/callSpettatore.dart';
 import 'package:everstream/pages/index.dart';

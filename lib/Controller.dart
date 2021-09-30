@@ -85,34 +85,41 @@ class Controller {
   }
 
   Future<bool> LoginIsCorrect(String username, String password) async {
-    bool trovato=false;
-    database.isAzienda=false;
-    List<Utente> listuser= await database.getUserList();
-    listuser.forEach((element) { //ricerca tra gli utenti
-      if(element.username.compareTo(username)==0 && element.password.compareTo(password)==0){
-        trovato=true;
-        database.setCurrentUser(element);
-      }
-    });//se esito negativo cerca tra le aziende
-    if(trovato==false){
-      List<Azienda> listaziende= await database.getAziendaList();
-      List<Hashtag> list= await database.getHashtagList(); //prende list hashtag per recuperare quelli aziendali
-       listaziende.forEach((element) {
-        if(element.username.compareTo(username)==0 && element.password.compareTo(password)==0){
-          trovato=true;
-          database.currentAzienda=element;
-          database.isAzienda=true;
+    bool trovato = false;
+    database.isAzienda = false;
+    List<Utente> listuser = await database.getUserList();
 
-           list.forEach((hashtag) {
-            if(hashtag.id_azienda==element.id){
+    ///Ricerca User Per nome e cognome
+    for (Utente element in listuser) {
+      //ricerca tra gli utenti
+      if (element.username.compareTo(username) == 0 &&
+          element.password.compareTo(password) == 0) {
+        trovato = true;
+        database.setCurrentUser(element);
+        break;
+      }
+    };
+
+    ///se esito negativo cerca tra le aziende
+    if (trovato == false) {
+      List<Azienda> listaziende = await database.getAziendaList();
+      List<Hashtag> list = await database
+          .getHashtagList(); //prende list hashtag per recuperare quelli aziendali
+
+      for (Azienda element in listaziende) {
+        if (element.username.compareTo(username) == 0 &&
+            element.password.compareTo(password) == 0) {
+          trovato = true;
+          database.currentAzienda = element;
+          database.isAzienda = true;
+          list.forEach((hashtag) {
+            if (hashtag.id_azienda == element.id) {
               database.aziendaHashtagList.add(hashtag);
             }
           });
-
-
+          break;
         }
-      });
-
+      };
     }
     return trovato;
   }

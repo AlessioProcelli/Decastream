@@ -9,10 +9,10 @@ import 'ProfiloUtenteInfo.dart';
 import 'PaginaCerca.dart';
 import 'main.dart';
 
-class Navigatore extends StatelessWidget {
+class Main_Page extends StatelessWidget {
 BuildContext context;
   Menu menu;
-  Navigatore({
+  Main_Page({
     Key key,
   }) : super(key: key){
     menu= new Menu(this);
