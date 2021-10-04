@@ -4,31 +4,39 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'NostriWidgetss/Menu.dart';
-import 'ProfiloUtente.dart';
-import 'ProfiloUtenteInfo.dart';
+import 'Pagine_Home/Profilo_Utente/ProfiloUtente.dart';
+import 'Pagine_Home/Profilo_Utente/ProfiloUtente_Modifica.dart';
 import 'PaginaCerca.dart';
 import 'main.dart';
 
 class Main_Page extends StatelessWidget {
-BuildContext context;
+  BuildContext context;
   Menu menu;
+
   Main_Page({
     Key key,
-  }) : super(key: key){
-    menu= new Menu(this);
+  }) : super(key: key) {
+    menu = new Menu(this);
   }
 
   @override
   Widget build(BuildContext context) {
-   this.context=context;
-    return Scaffold(
+    this.context = context;
+    return SafeArea(child: Scaffold(
       backgroundColor: const Color(0xffffffff),
-      body: Stack(
-          children: <Widget>[
-           ReturnActiveSchermata(),
-            menu,
-          ]
-      ),
+      body: Stack(children: <Widget>[
+        ReturnActiveSchermata(),
+        Align(
+            alignment: Alignment.bottomCenter,
+            child:
+            Container(
+                padding: EdgeInsets.fromLTRB(12, 12, 12, 12),
+                color: Colors.white,
+                child:menu
+            ),
+        ),
+      ]),
+    ),
     );
   }
 
@@ -36,17 +44,15 @@ BuildContext context;
     int current_active = menu.getCurrentActive();
     switch (current_active) {
       case 1:
-        return PaginaCerca();break;
+        return PaginaCerca();
+        break;
       case 4:
-        return Profiloutente();break;
+        return Profiloutente();
+        break;
     }
   }
-  void Change(){
+
+  void Change() {
     rebuildAllChildren(context);
-
   }
-
-
-
-
 }
