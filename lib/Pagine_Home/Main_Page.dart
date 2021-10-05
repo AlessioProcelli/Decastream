@@ -3,11 +3,11 @@ import 'package:everstream/Ridimensiona.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'NostriWidgetss/Menu.dart';
-import 'Pagine_Home/Profilo_Utente/ProfiloUtente.dart';
-import 'Pagine_Home/Profilo_Utente/ProfiloUtente_Modifica.dart';
-import 'PaginaCerca.dart';
-import 'main.dart';
+import '../NostriWidgetss/Menu.dart';
+import 'Profilo_Utente/ProfiloUtente.dart';
+import 'Profilo_Utente/ProfiloUtente_Modifica.dart';
+import '../PaginaCerca.dart';
+import '../main.dart';
 
 class Main_Page extends StatelessWidget {
   BuildContext context;
@@ -22,21 +22,21 @@ class Main_Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     this.context = context;
-    return SafeArea(child: Scaffold(
-      backgroundColor: const Color(0xffffffff),
-      body: Stack(children: <Widget>[
-        ReturnActiveSchermata(),
-        Align(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: const Color(0xffffffff),
+        body: Column(children: <Widget>[
+          Expanded(child: ReturnActiveSchermata()),
+          Align(
             alignment: Alignment.bottomCenter,
-            child:
-            Container(
-                padding: EdgeInsets.fromLTRB(12, 12, 12, 12),
-                color: Colors.white,
-                child:menu
+            child: Container(
+              color: Colors.white,
+              padding: EdgeInsets.fromLTRB(12, 12, 12, 12),
+              child: menu,
             ),
-        ),
-      ]),
-    ),
+          ),
+        ]),
+      ),
     );
   }
 

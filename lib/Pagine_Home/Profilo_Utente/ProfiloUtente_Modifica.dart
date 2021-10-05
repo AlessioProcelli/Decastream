@@ -1,7 +1,7 @@
-
 import 'package:everstream/Pagine_Accesso/Accedi.dart';
 import 'package:everstream/Pagine_Home/Profilo_Utente/ProfiloUtente.dart';
 import 'package:everstream/Tipi/Utente.dart';
+import 'package:everstream/Widget_Grafici/Input_Row_Box.dart';
 import 'package:everstream/Widget_Grafici/Metodi_Grafici.dart';
 import 'package:everstream/da%20Lavorarci/callSpettatore.dart';
 import 'package:everstream/pages/index.dart';
@@ -18,294 +18,149 @@ import 'package:everstream/NostriWidgetss/Menu.dart';
 
 class Profiloutentemodifica extends StatelessWidget {
   Profiloutente profilo;
-  Divider row_divider=Divider(color: Colors.black);
-  Utente current_user=controller.database.currentUser;
-  String url=controller.database.currentUser.foto_profilo;
-  File NuovaFoto=null;
-  bool changed=false;
-  final controllerNumero=TextEditingController(text: controller.database.currentUser.cellulare);
-  final controllerNome=TextEditingController(text: controller.database.currentUser.nome);
-  final controllerCognome=TextEditingController(text: controller.database.currentUser.cognome);
-  final controllerUsername=TextEditingController(text:"@"+ controller.database.currentUser.username);
-  final controllerEmail=TextEditingController(text: controller.database.currentUser.email);
-
-
+  Divider row_divider = Divider(color: Colors.black);
+  Utente current_user = controller.database.currentUser;
+  String url = controller.database.currentUser.foto_profilo;
+  File NuovaFoto = null;
+  bool changed = false;
+  Input_Row_Box input_cognome;
+  Input_Row_Box input_nome;
+  Input_Row_Box input_username;
+  Input_Row_Box input_numero;
+  Input_Row_Box input_email;
 
   Profiloutentemodifica(Profiloutente profilo) {
-    this.profilo=profilo;
+    this.profilo = profilo;
+    input_cognome = Input_Row_Box(current_user.cognome);
+    input_nome = Input_Row_Box(current_user.nome);
+    input_username = Input_Row_Box(current_user.username);
+    input_numero = Input_Row_Box(current_user.cellulare);
+    input_email = Input_Row_Box(current_user.email);
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-
-        child: Scaffold(
+      child: Scaffold(
         backgroundColor: const Color(0xffffffff),
-    body:SingleChildScrollView(child:Stack(
-        children: <Widget>[
-          Container(
-            width: RicalcoloWidth(375.0, context),
-            height: RicalcoloHeight(812.0, context),
-            decoration: BoxDecoration(
-              color: const Color(0x0e000000),
-            ),
+        body: SingleChildScrollView(
+          child: Stack(
+            children: <Widget>[
+              Container(
+                width: RicalcoloWidth(375.0, context),
+                height: RicalcoloHeight(812.0, context),
+                decoration: BoxDecoration(
+                  color: const Color(0x0e000000),
+                ),
+                child: Column(children: <Widget>[
+                  ///Bottoni  Annulla e Fatto
+                  Container(
+                    margin: EdgeInsets.only(
+                        left: RicalcoloWidth(12.0, context),
+                        right: RicalcoloWidth(12.0, context),
+                        top: RicalcoloHeight(15.0, context)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        ///Annulla
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          style: My_Button_Style(Size(
+                              RicalcoloWidth(64.0, context),
+                              RicalcoloHeight(21.0, context))),
+                          child: Text(
+                            'Annulla',
+                            style: My_Text_Style(RicalcoloWidth(10.5, context),
+                                Color(0xffffffff)),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
 
+                        ///Fatto
+                        ElevatedButton(
+                          onPressed: () {
+                            ChangeConfirmed(context);
+                          },
+                          style: My_Button_Style(Size(
+                              RicalcoloWidth(64.0, context),
+                              RicalcoloHeight(21.0, context))),
+                          child: Text(
+                            'Fatto',
+                            style: My_Text_Style(RicalcoloWidth(10.5, context),
+                                Color(0xffffffff)),
+                            textAlign: TextAlign.left,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
 
-        child:Column(
-      children: <Widget>[
-        ///Bottoni  Annulla e Fatto
-        Container(
-        margin: EdgeInsets.only( left:RicalcoloWidth(12.0, context),right:RicalcoloWidth(12.0, context),top:RicalcoloHeight(15.0, context)),
-        child:Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children:<Widget> [
-            ///Annulla
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              style: My_Button_Style(Size(RicalcoloWidth(64.0, context),
-                  RicalcoloHeight(21.0, context))),
-              child: Text(
-                'Annulla',
-                style: My_Text_Style(
-                    RicalcoloWidth(10.5, context), Color(0xffffffff)),
-                textAlign: TextAlign.left,
-              ),
-            ),
-///Fatto
-            ElevatedButton(
-              onPressed: () {
-                ChangeConfirmed(context);
-              },
-              style: My_Button_Style(Size(RicalcoloWidth(64.0, context),
-                  RicalcoloHeight(21.0, context))),
-              child: Text(
-                'Fatto',
-                style: My_Text_Style(
-                    RicalcoloWidth(10.5, context), Color(0xffffffff)),
-                textAlign: TextAlign.left,
-              ),
-            ),
-          ],
+                  ///Foto
+                  Container(
+                    margin:
+                        EdgeInsets.only(top: RicalcoloHeight(15.0, context)),
+                    width: RicalcoloWidth(116.0, context),
+                    height: RicalcoloHeight(116.0, context),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(27.0),
+                      image: DecorationImage(
+                        image:
+                            changed ? FileImage(NuovaFoto) : NetworkImage(url),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
 
-        ),),
+                  TextButton(
+                    onPressed: () {
+                      Change(context);
+                    },
+                    child: Text(
+                      'Inserisci nuova foto',
+                      style: My_Text_Style(
+                          RicalcoloWidth(11.0, context), Color(0xffe00a17)),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
 
-        ///Foto
-        Container(
-        margin: EdgeInsets.only(top: RicalcoloHeight(15.0, context)),
+                  Padding(
+                      padding:
+                          EdgeInsets.only(top: RicalcoloHeight(25.0, context))),
 
-            width: RicalcoloWidth(116.0, context),
-            height: RicalcoloHeight(116.0, context),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(27.0),
-              image: DecorationImage(
-                image: changed ?FileImage(NuovaFoto)
-                    : NetworkImage(url),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
+                  /// Nome
+                  row_divider,
 
-          TextButton(
-            onPressed: (){
-              Change(context);
-            },
-            child: Text(
-              'Inserisci nuova foto',
-              style:  My_Text_Style(
-                  RicalcoloWidth(11.0, context), Color(0xffe00a17)),
-              textAlign: TextAlign.left,
-            ),
-          ),
+                  input_nome,
+                  row_divider,
 
-        Padding(padding: EdgeInsets.only(top: RicalcoloHeight(25.0, context))),
-/// Nome
-        row_divider,
+                  /// Cognome
 
-        Container(
-          margin: EdgeInsets.only(left:RicalcoloWidth(44.0, context)),
-          child:  TextFormField(
-            controller:controllerNome,
-            onTap:(){ClearText(controllerNome);},
-            decoration: InputDecoration(
-              border: InputBorder.none,
-            ),
-            style:My_Bold_Text( RicalcoloWidth(19.0, context), Color(0xff0e1116)) ,
-            textAlign: TextAlign.left,
-          ),
-        ),
-row_divider,
-        /// Cognome
-        Container(
-          margin: EdgeInsets.only(left:RicalcoloWidth(44.0, context)),
-          child:TextFormField(
-            controller:controllerCognome,
-            onTap:(){ClearText(controllerCognome);},
-            decoration: InputDecoration(
-              border: InputBorder.none,
-            ),
-            style: My_Bold_Text( RicalcoloWidth(19.0, context), Color(0xff0e1116)),
-            textAlign: TextAlign.left,
-          ),),
-        row_divider,
+                  input_cognome,
 
-        ///Username
-        Container(
-          margin: EdgeInsets.only(left:RicalcoloWidth(44.0, context)),
-          child:TextFormField(
-            controller:controllerUsername,
-            onTap:(){
-              ClearText(controllerUsername);
-              controllerUsername.text="@";
-            },
-            decoration: InputDecoration(
-              border: InputBorder.none,
-            ),
-            style:My_Bold_Text( RicalcoloWidth(19.0, context), Color(0xff0e1116)),
-            textAlign: TextAlign.left,
-          ),),
-        Divider(color: Colors.black),
-      ]),),
+                  row_divider,
 
+                  ///Username
+                  input_username,
+                  row_divider,
 
+                  ///Cellulare
+                  input_numero,
+                  row_divider,
 
-          // Cambio Numero di telefono e Email
-
-          Container(
-            margin: EdgeInsets.only(left: RicalcoloWidth(46.0, context),top: RicalcoloHeight(469.0, context)),
-
-
-            child:Column(
-    children:<Widget>[
-
-
-                //Numero di Telefono
-            Row(
-    children:<Widget>[
-    Container(
-    margin: EdgeInsets.only(top: RicalcoloHeight(7.0, context)),
-     child: Text(
-              'Cambia Numero',
-              style: TextStyle(
-                fontFamily: 'MADE TOMMY',
-                fontSize: RicalcoloWidth(15.0, context),
-                color: const Color(0xff000000),
-                fontWeight: FontWeight.w500,
-              ),
-              textAlign: TextAlign.left,
-            ),
-    ),
-       Container(
-            margin: EdgeInsets.only(left: RicalcoloWidth(14.0, context)),
-          width: RicalcoloWidth(125.0, context),
-          height: RicalcoloHeight(32.0, context),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-            color: const Color(0xffffffff),
-            boxShadow: [
-              BoxShadow(
-                color: const Color(0x29000000),
-                offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                blurRadius: 6,
+                  ///Email
+                  input_email,
+                  row_divider,
+                ]),
               ),
             ],
           ),
-         child:Container(
-    margin: EdgeInsets.only(left: RicalcoloWidth(7.0, context),top: RicalcoloHeight(7.0, context)),
-    child:TextFormField(
-           controller:controllerNumero,
-           onTap:(){
-             ClearText(controllerNumero);
-             },
-           decoration: InputDecoration(
-             border: InputBorder.none,
-           ),
-           style: TextStyle(
-             fontFamily: 'MADE TOMMY',
-             fontSize: RicalcoloWidth(13.0, context),
-             color: const Color(0xff000000),
-           ),
-           textAlign: TextAlign.left,
-         ),
         ),
-       ),
-
-            ],
-            ),
-
-      Padding(padding: EdgeInsets.only(top:RicalcoloHeight(20.0, context))),
-
-      //Email
-      Row(
-        children:<Widget>[
-          Container(
-            margin: EdgeInsets.only(top: RicalcoloHeight(7.0, context)),
-            child: Text(
-              'Cambia Email',
-              style: TextStyle(
-                fontFamily: 'MADE TOMMY',
-                fontSize: RicalcoloWidth(15.0, context),
-                color: const Color(0xff000000),
-                fontWeight: FontWeight.w500,
-              ),
-              textAlign: TextAlign.left,
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: RicalcoloWidth(28.0, context)),
-            width: RicalcoloWidth(125.0, context),
-            height: RicalcoloHeight(32.0, context),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-              color: const Color(0xffffffff),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0x29000000),
-                  offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                  blurRadius: 6,
-                ),
-              ],
-            ),
-            child:Container(
-              margin: EdgeInsets.only(left: RicalcoloWidth(7.0, context),top: RicalcoloHeight(7.0, context)),
-              child:TextFormField(
-                controller:controllerEmail,
-                onTap:(){ClearText(controllerEmail);},
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                ),
-                style: TextStyle(
-                  fontFamily: 'MADE TOMMY',
-                  fontSize: RicalcoloWidth(13.0, context),
-                  color: const Color(0xff000000),
-                ),
-                textAlign: TextAlign.left,
-              ),
-            ),
-          ),
-
-        ],
       ),
-
-
-
-          ],),),
-
-
-
-
-
-
-
-
-
-
-
-
-        ],
-    ),),
-    ),);
+    );
   }
+
   Future<void> Change(BuildContext context) async {
     PickedFile pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
@@ -314,22 +169,23 @@ row_divider,
     );
     if (pickedFile != null) {
       NuovaFoto = File(pickedFile.path);
-      changed=true;
+      changed = true;
       rebuildAllChildren(context);
     }
   }
 
   Future<void> ChangeConfirmed(BuildContext context) async {
-
-await controller.UpdateUser(controllerNome.text, controllerCognome.text, controllerUsername.text.substring(1),//per levare la chiocciola
-    controllerEmail.text,controllerNumero.text, NuovaFoto);
-profilo.ReplaceInfo( NuovaFoto);
-Navigator.pop(context);
-
-
+    await controller.UpdateUser(
+        input_nome.getText(),
+        input_cognome.getText(),
+        input_username.getText(),
+        //per levare la chiocciola
+        input_email.getText(),
+        input_numero.getText(),
+        NuovaFoto);
+    profilo.ReplaceInfo();
+    Navigator.pop(context);
   }
-
-
 }
 
 const String _svg_luz5b =

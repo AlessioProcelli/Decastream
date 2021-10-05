@@ -56,3 +56,11 @@ TextStyle My_Bold_Text(double font_size,Color color){
   );
 
 }
+TextStyle My_Light_Text( double font_size,Color color) {
+  return TextStyle(
+    fontFamily: 'MADE TOMMY',
+    fontSize: font_size,
+    color: color,
+    fontWeight: FontWeight.w400,
+  );
+}

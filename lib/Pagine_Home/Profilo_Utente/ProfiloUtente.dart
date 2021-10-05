@@ -46,12 +46,7 @@ class Profiloutente extends StatelessWidget {
                   //Nome Utente
                   Text(
                     "@" + controller.database.currentUser.username,
-                    style: TextStyle(
-                      fontFamily: 'MADE TOMMY',
-                      fontSize: RicalcoloWidth(10.0, context),
-                      color: const Color(0xff000000),
-                      fontWeight: FontWeight.w500,
-                    ),
+                    style: My_Light_Text(RicalcoloWidth(11.0, context),Color(0xff000000)),
                     textAlign: TextAlign.left,
                   ),
 
@@ -80,12 +75,7 @@ class Profiloutente extends StatelessWidget {
                       controller.database.currentUser.nome +
                           "  " +
                           controller.database.currentUser.cognome,
-                      style: TextStyle(
-                        fontFamily: 'MADE TOMMY',
-                        fontSize: RicalcoloWidth(19.0, context),
-                        color: const Color(0xff0e1116),
-                        fontWeight: FontWeight.w700,
-                      ),
+                      style: My_Bold_Text(RicalcoloWidth(19.0, context),Color(0xff0e1116)),
                       textAlign: TextAlign.left,
                     ),
                   ),
@@ -250,7 +240,7 @@ class Profiloutente extends StatelessWidget {
     );
   }
 
-  ReplaceInfo(File foto) {
+  ReplaceInfo() {
     rebuildAllChildren(thiscontext);
   }
 }

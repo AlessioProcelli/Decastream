@@ -18,7 +18,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:everstream/Ridimensiona.dart';
 import 'package:everstream/main.dart';
 import '../LiveAzienda.dart';
-import '../Main_Page.dart';
+import '../Pagine_Home/Main_Page.dart';
 import '../da Lavorarci/Cerca.dart';
 import '../Registrati.dart';
 import '../provaDipi.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:everstream/Ridimensiona.dart';
 import 'package:everstream/Pagine_Accesso/Accedi.dart';
 
-import '../Main_Page.dart';
+import '../Pagine_Home/Main_Page.dart';
 
 //0xffffffff
 //Colors.blue  const Color(0xffffffff)
