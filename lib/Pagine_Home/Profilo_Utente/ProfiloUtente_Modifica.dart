@@ -1,7 +1,7 @@
 import 'package:everstream/Pagine_Accesso/Accedi.dart';
 import 'package:everstream/Pagine_Home/Profilo_Utente/ProfiloUtente.dart';
 import 'package:everstream/Tipi/Utente.dart';
-import 'package:everstream/Widget_Grafici/Input_Row_Box.dart';
+import 'package:everstream/Widget/Input_Widget/Input_Row_Box.dart';
 import 'package:everstream/Widget_Grafici/Metodi_Grafici.dart';
 import 'package:everstream/da%20Lavorarci/callSpettatore.dart';
 import 'package:everstream/pages/index.dart';

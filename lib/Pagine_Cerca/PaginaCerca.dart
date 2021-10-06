@@ -1,26 +1,9 @@
 import 'package:everstream/NostriWidgetss/Visualizzatore_Ricerca.dart';
+import 'package:everstream/Widget_Grafici/Metodi_Grafici.dart';
 import 'package:flutter/material.dart';
-import 'package:adobe_xd/pinned.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
-
-import 'package:adobe_xd/page_link.dart';
-import 'package:flutter/material.dart';
-import 'package:adobe_xd/pinned.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
-
-import 'package:adobe_xd/page_link.dart';
 import 'package:everstream/Ridimensiona.dart';
 
-import 'package:image_picker/image_picker.dart';
 
-import 'main.dart';
-import 'package:everstream/ProfiloAzienda.dart';
-import 'package:everstream/Controller.dart';
-import 'package:everstream/NostriWidgetss/Cerca.dart';
-
-import 'NostriWidgetss/BarraCercaFiltra.dart';
 
 class PaginaCerca extends StatelessWidget{
 
@@ -36,30 +19,67 @@ class PaginaCerca extends StatelessWidget{
   Widget build(BuildContext context){
     final Size size = MediaQuery.of(context).size;
     return SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: <Widget>[
+            /// Input Cerca E Bottone Filtra
+            Container(
+              margin: EdgeInsets.only(
+                  top: RicalcoloHeight(17.0, context),
+                  right: RicalcoloWidth(25.0, context),
+                  bottom: RicalcoloHeight(10.0, context),
+                  left: RicalcoloWidth(25.0, context)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  ///input Cerca
+                  Material(
+                    elevation: 5,
+                    child: Container(
+                      width: RicalcoloWidth(207.0, context),
+                      height: RicalcoloHeight(30.0, context),
+                      color: Colors.white,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.search_outlined,
+                            color: Color(0xffe00a17),
+                          ),
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                  ),
 
-        child: Scaffold(
-          body: Column(
-          children:<Widget>[
-              Expanded(
-                //barra in alto
-                child: BarraCerca(),
+                  ///Bottone Filtra
+                  ElevatedButton(
+                    onPressed: () {
+                      print("ok");
+                    },
+                    style: My_Button_Style(Size(RicalcoloWidth(77, context),
+                        RicalcoloHeight(30, context))),
+                    child: Text(
+                      'Filtra',
+                      style: My_Text_Style(
+                          RicalcoloWidth(16.0, context), Color(0xffffffff)),
+                      textAlign: TextAlign.left,
+                    ),
+                  ),
+                ],
               ),
-              Expanded(
-                flex: 11,
-                //griglia aziende
-                child: Visualizzatore_Ricerca(),
-              ),
-            ],
-          ),
+            ),
 
+            /// Visualizzatore Di Ricerca
+            Expanded(
+              flex: 11,
+              //griglia aziende
+              child: Visualizzatore_Ricerca(),
+            ),
+          ],
         ),
+      ),
 
-          //children: <Widget>[
-
-
-
-        
-      );
+    );
 
   }
 }

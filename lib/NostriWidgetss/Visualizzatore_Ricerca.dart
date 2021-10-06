@@ -2,6 +2,7 @@
 import 'package:adobe_xd/pinned.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:everstream/Tipi/Azienda.dart';
+import 'package:everstream/Widget_Grafici/Metodi_Grafici.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -19,18 +20,20 @@ import '../main.dart';
 class Visualizzatore_Ricerca extends StatelessWidget {
 
   List<Azienda> listA;
-
+  CollectionReference aziende;
+  CollectionReference hashtag;
   @override
-  Visualizzatore_Ricerca() {}
+  Visualizzatore_Ricerca() {
+   aziende = FirebaseFirestore.instance.collection("Aziende");
+   hashtag = FirebaseFirestore.instance.collection("Hashtag");
+  }
 
   Widget build(BuildContext context) {
-    CollectionReference aziende = FirebaseFirestore.instance.collection("Aziende");
-    CollectionReference hashtag = FirebaseFirestore.instance.collection("Hashtag");
 
 
 
     return  Container(
-        margin: EdgeInsets.only(left: RicalcoloWidth(7.0, context),right: RicalcoloWidth(7.0, context)),
+     margin: EdgeInsets.only(left: RicalcoloWidth(7.0, context),right: RicalcoloWidth(7.0, context)),
     child:StreamBuilder<QuerySnapshot>(
         stream: aziende.snapshots(),
     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -51,10 +54,10 @@ class Visualizzatore_Ricerca extends StatelessWidget {
         itemBuilder: (BuildContext ctx, index) {
           //2 row
 
-          //contorno rosso
+          ///contorno rosso
           return Container(
             width: RicalcoloWidth(169.0, context),
-                        height: RicalcoloHeight(214.0, context),
+            height: RicalcoloHeight(214.0, context),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(23.0),
               color: const Color(0xffffffff),
@@ -72,125 +75,95 @@ class Visualizzatore_Ricerca extends StatelessWidget {
 
             child: Wrap(
               children: [
+ Stack(children:<Widget>[
+   Container(
+     width: RicalcoloWidth(180.0, context),
+     height: RicalcoloHeight(92.0, context),
+     decoration: BoxDecoration(
+       borderRadius: BorderRadius.only(
+         topLeft: Radius.circular(22.0),
+         topRight: Radius.circular(22.0),
+       ),
+       image: DecorationImage( // foto_copertina
+         image: NetworkImage(snapshot.data.docs[index]['Img_Profilo']),
+         fit: BoxFit.cover,
+       ),
+     ),
 
-                // immagine azienda
-                Container(
-                  width: RicalcoloWidth(180.0, context),
-                  height: RicalcoloHeight(92.0, context),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(22.0),
-                      topRight: Radius.circular(22.0),
-                    ),
-                    image: DecorationImage( // foto_copertina
-                      image: NetworkImage(snapshot.data.docs[index]['Img_Profilo']),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+     //box i
+     child:TextButton(onPressed: (){
+       //print("top");
+        Visualizza_ProfiloAzienda(snapshot.data.docs[index]['id'],context);
 
-                  //box i
-                  child:TextButton(onPressed: (){
-
-                    Visualizza_ProfiloAzienda(snapshot.data.docs[index]['id'],context);
-
-                  }, child: Container(
-                    margin: EdgeInsets.only(left: RicalcoloWidth(140.0,
-                        context),
-                        top: RicalcoloHeight(0.0, context),
-                        right: RicalcoloWidth(0.0, context),
-                        bottom: RicalcoloHeight(65.0, context)),
-                    width: RicalcoloWidth(11.0, context),
-                    height: RicalcoloHeight(11.0, context),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(14.0),
-                      color: const Color(0xffffffff),
-                    ),
-
-                    //scritta i
-                    child: Container(
-                      margin: EdgeInsets.only(top: RicalcoloHeight(2.0, context)),
-                      child:Text(
-                      'i',
-                      style: TextStyle(
-                        fontFamily: 'MADE TOMMY',
-                        fontSize: RicalcoloWidth(8.0, context),
-                        color: const Color(0xff000000),
-                        fontWeight: FontWeight.w500,
+     },
+     ),
+   ),
+                /// Box I
+                Align(
+              alignment: AlignmentDirectional.topEnd,
+                child:Container(
+                  margin: EdgeInsets.only(
+                      top: RicalcoloHeight(4.0, context),
+                      right: RicalcoloWidth(10.0, context),
                       ),
-                      textAlign: TextAlign.center, //TODO CAMBIARE ALLINEMENTO
-                    ),
+                  width: RicalcoloWidth(11.0, context),
+                  height: RicalcoloHeight(11.0, context),
+
+                    child:Icon(
+                      Icons.info_outlined,
+                      color:Colors.black,
                     ),
                   ),
                 ),
-),
-                Row( // prima row per nome azienda e stelle
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    //nome azienda
-                    Container(
-                      margin: EdgeInsets.only(
-                          top: RicalcoloHeight(6.0, context),
-                          right: RicalcoloWidth(1.0, context),
-                          left: RicalcoloWidth(9.0, context),
-                          bottom: RicalcoloHeight(1.0, context)),
-                      child: Text(
-                        snapshot.data.docs[index]['Nome_Azienda'], // max 16 caratteri
-                        style: TextStyle(
-                          fontFamily: 'MADE TOMMY',
-                          fontSize: RicalcoloWidth(14.0, context),
-                          color: const Color(0xff000000),
-                          fontWeight: FontWeight.w500,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
 
-                    //colonna per valutazione e stelle
-                   Container(
-          margin: EdgeInsets.only(right: RicalcoloWidth(5.0, context)),
-          child:Column(
-                      children: [
+                ]),
 
-                        //scritta valutazione
-                        Text(
-                          'Valutazione',
-                          style: TextStyle(
-                            fontFamily: 'MADE TOMMY',
-                            fontSize: RicalcoloWidth(3.0, context),
-                            color: const Color(0xff0e1116),
-                            fontWeight: FontWeight.w500,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        //immagine stelle
-                        Container(
-                          margin: EdgeInsets.only(
-                              top: RicalcoloHeight(3.0, context),
-                              right: RicalcoloWidth(1.0, context),
-                              bottom: RicalcoloHeight(1.0, context),
-                              left: RicalcoloWidth(1.0, context)),
-                          width: RicalcoloWidth(38.0, context),
-                          height: RicalcoloHeight(7.0, context),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: const AssetImage(
-                                  "assets/image/stelle.png"),
-                              fit: BoxFit.fill,
+                    /// Nome Azienda e Valutazione
+                      Container(
+                        margin: EdgeInsets.only(
+                            top: RicalcoloHeight(8.0, context),
+                            right: RicalcoloWidth(10.0, context),
+                            left: RicalcoloWidth(10.0, context),
+                            bottom: RicalcoloHeight(3.0, context)),
+                        child: Row(
+                          // prima row per nome azienda e stelle
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ///nome azienda
+                            Text(
+                              snapshot.data.docs[index]['Nome_Azienda'],
+                              // max 16 caratteri
+                              style: My_Light_Text(
+                                  RicalcoloWidth(14.0, context), Colors.black),
+                              textAlign: TextAlign.center,
                             ),
-                          ),
+
+                            ///valutazione e stelle
+
+                            Container(
+                              margin: EdgeInsets.only(
+                                  top: RicalcoloHeight(3.0, context),
+                                  right: RicalcoloWidth(1.0, context),
+                                  bottom: RicalcoloHeight(1.0, context),
+                                  left: RicalcoloWidth(1.0, context)),
+                              width: RicalcoloWidth(38.0, context),
+                              height: RicalcoloHeight(7.0, context),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: const AssetImage(
+                                      "assets/image/stelle.png"),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
+                      ),
+                      Padding(padding: EdgeInsets.only(top:RicalcoloHeight(25.0, context))),
 
-                      ],
-                    ),
-                   ),
+///Row per Hashtag
 
-                  ],
-
-                ),
-                Padding(padding: EdgeInsets.only(top:RicalcoloHeight(25.0, context))),
-
-
-                    Row(// seconda Row per hashtag
+                    Row(
                       children: [
                         StreamBuilder<QuerySnapshot>(
 

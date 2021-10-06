@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../NostriWidgetss/Menu.dart';
 import 'Profilo_Utente/ProfiloUtente.dart';
 import 'Profilo_Utente/ProfiloUtente_Modifica.dart';
-import '../PaginaCerca.dart';
+import '../Pagine_Cerca/PaginaCerca.dart';
 import '../main.dart';
 
 class Main_Page extends StatelessWidget {
@@ -29,10 +29,13 @@ class Main_Page extends StatelessWidget {
           Expanded(child: ReturnActiveSchermata()),
           Align(
             alignment: Alignment.bottomCenter,
-            child: Container(
-              color: Colors.white,
-              padding: EdgeInsets.fromLTRB(12, 12, 12, 12),
-              child: menu,
+            child: Material(
+              elevation: 20,
+              child: Container(
+                color: Colors.white,
+                padding: EdgeInsets.fromLTRB(12, 12, 12, 12),
+                child: menu,
+              ),
             ),
           ),
         ]),
