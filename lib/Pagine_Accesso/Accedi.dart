@@ -1,27 +1,13 @@
-import 'package:everstream/CallUtente.dart';
-import 'package:everstream/LiveDoppia.dart';
-import 'package:everstream/LiveUtente.dart';
+
 import 'package:everstream/ProfiloAzienda.dart';
-import 'package:everstream/Pagine_Home/Profilo_Utente/ProfiloUtente.dart';
-import 'package:everstream/Pagine_Home/Profilo_Utente/ProfiloUtente_Modifica.dart';
-import 'package:everstream/Pagine_Cerca/PaginaCerca.dart';
 import 'package:everstream/SceltaAccount.dart';
-import 'package:everstream/Tipi/Chiamata.dart';
 import 'package:everstream/Widget/Input_Widget/Input_Box.dart';
 import 'package:everstream/Widget_Grafici/Metodi_Grafici.dart';
-import 'package:everstream/pages/call.dart';
-import 'package:everstream/pages/index.dart';
-import 'package:everstream/prova.dart';
 import 'package:flutter/material.dart';
-import 'package:adobe_xd/pinned.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:everstream/Ridimensiona.dart';
 import 'package:everstream/main.dart';
-import '../LiveAzienda.dart';
 import '../Pagine_Home/Main_Page.dart';
-import '../da Lavorarci/Cerca.dart';
-import '../Registrati.dart';
-import '../provaDipi.dart';
+
 
 class Accedi extends StatelessWidget {
   /*sono i controller delle TEXTEDITFORM servono per avere riferimenti ai campi e prenderci il testo */

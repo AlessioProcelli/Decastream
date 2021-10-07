@@ -1,15 +1,9 @@
 import 'dart:io';
-import 'dart:ui';
-import 'package:everstream/LiveAzienda.dart';
 import 'package:everstream/Ridimensiona.dart';
 import 'package:everstream/Tipi/Chiamata.dart';
 import 'package:everstream/Tipi/Hashtag.dart';
-import 'package:flutter/rendering.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as Path;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:everstream/Database.dart';
@@ -18,12 +12,8 @@ import 'package:everstream/Tipi/Indirizzo.dart';
 import 'package:everstream/Tipi/Utente.dart';
 import 'package:everstream/Tipi/Luogo.dart';
 import 'package:permission_handler/permission_handler.dart';
-//secondo commento branch2
-
 import 'dart:core';
-
 import 'Call.dart';
-import 'CallUtente.dart';
 import 'ProfiloAzienda_Vista_Utente.dart';
 import 'Tipi/Offerta.dart';
 

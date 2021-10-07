@@ -1,13 +1,10 @@
-import 'package:everstream/NostriWidgetss/Cerca.dart';
+
 import 'package:everstream/Ridimensiona.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../NostriWidgetss/Menu.dart';
 import 'Profilo_Utente/ProfiloUtente.dart';
-import 'Profilo_Utente/ProfiloUtente_Modifica.dart';
 import '../Pagine_Cerca/PaginaCerca.dart';
-import '../main.dart';
 
 class Main_Page extends StatelessWidget {
   BuildContext context;

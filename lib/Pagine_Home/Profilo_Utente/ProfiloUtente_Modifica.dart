@@ -1,20 +1,14 @@
-import 'package:everstream/Pagine_Accesso/Accedi.dart';
+
 import 'package:everstream/Pagine_Home/Profilo_Utente/ProfiloUtente.dart';
 import 'package:everstream/Tipi/Utente.dart';
 import 'package:everstream/Widget/Input_Widget/Input_Row_Box.dart';
 import 'package:everstream/Widget_Grafici/Metodi_Grafici.dart';
-import 'package:everstream/da%20Lavorarci/callSpettatore.dart';
-import 'package:everstream/pages/index.dart';
-import 'package:path/path.dart' as Path;
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
 import '../../main.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:everstream/Ridimensiona.dart';
-import 'package:everstream/NostriWidgetss/Menu.dart';
 
 class Profiloutentemodifica extends StatelessWidget {
   Profiloutente profilo;
