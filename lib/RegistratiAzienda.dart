@@ -2,7 +2,7 @@ import 'package:everstream/main.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:everstream/Ridimensiona.dart';
+import 'package:everstream/Metodi/Ridimensiona.dart';
 
 class RegistratiAzienda extends StatelessWidget {
   final controllerNome=TextEditingController(text:"Nome Azienda");

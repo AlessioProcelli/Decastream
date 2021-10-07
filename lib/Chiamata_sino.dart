@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
-import  'package:everstream/Ridimensiona.dart';
+import  'package:everstream/Metodi/Ridimensiona.dart';
 
 class Chiamata_sino extends StatelessWidget {
   Chiamata_sino({

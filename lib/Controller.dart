@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:everstream/Ridimensiona.dart';
+import 'package:everstream/Metodi/Ridimensiona.dart';
 import 'package:everstream/Tipi/Chiamata.dart';
 import 'package:everstream/Tipi/Hashtag.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ import 'package:everstream/Tipi/Utente.dart';
 import 'package:everstream/Tipi/Luogo.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:core';
-import 'Call.dart';
+import 'Pagine/Pagine_Live/Call.dart';
 import 'ProfiloAzienda_Vista_Utente.dart';
 import 'Tipi/Offerta.dart';
 

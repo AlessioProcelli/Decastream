@@ -2,11 +2,11 @@
 
 
 
+import 'package:everstream/Metodi/Metodi_Grafici.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../../Metodi/Ridimensiona.dart';
 
-import '../../Ridimensiona.dart';
-import '../../Widget_Grafici/Metodi_Grafici.dart';
 
 class Input_Row_Box extends StatelessWidget{
   TextEditingController controller;

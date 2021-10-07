@@ -1,4 +1,4 @@
-import 'package:everstream/Ridimensiona.dart';
+import 'package:everstream/Metodi/Ridimensiona.dart';
 import 'package:flutter/material.dart';
 
 class MyLogo extends StatelessWidget {

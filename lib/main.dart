@@ -2,7 +2,7 @@
 import 'dart:async';
 import 'package:everstream/Controller.dart';
 import 'package:flutter/material.dart';
-import 'package:everstream/Pagine_Accesso/Accedi.dart';
+import 'Pagine/Pagine_Accesso/Accedi.dart';
 
 Future<void> init() async {
   controller.getUtenti();

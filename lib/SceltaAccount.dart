@@ -2,7 +2,7 @@ import 'package:everstream/Registrati.dart';
 import 'package:everstream/RegistratiAzienda.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
-import 'package:everstream/Ridimensiona.dart';
+import 'package:everstream/Metodi/Ridimensiona.dart';
 
 class SceltaAccount extends StatelessWidget {
   SceltaAccount({

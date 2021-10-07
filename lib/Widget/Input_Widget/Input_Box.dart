@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '/Ridimensiona.dart';
+import '../../Metodi/Ridimensiona.dart';
 
 class Input_Box extends StatelessWidget{
   double width;
