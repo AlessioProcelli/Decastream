@@ -37,10 +37,9 @@ TextStyle My_Text_Style( double font_size,Color color){
     fontWeight: FontWeight.w600,
   );}
 /// per schermata profilo utenti
-  TextStyle My_Text_Style2( double font_size,Color color) {
+  TextStyle My_Text_Style2( Color color) {
     return TextStyle(
       fontFamily: 'MADE TOMMY',
-      fontSize: font_size,
       color: color,
       fontWeight: FontWeight.w400,
     );

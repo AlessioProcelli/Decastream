@@ -8,10 +8,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:everstream/Controller.dart';
 
-import '../Pagine/Pagine_Live/Call.dart';
-import '../Pagine/Pagine_Live/Call.dart';
-import '../Metodi/Ridimensiona.dart';
-import '../main.dart';
+import '../Pagine_Live/Call.dart';
+import '../Pagine_Live/Call.dart';
+import '../../Metodi/Ridimensiona.dart';
+import '../../main.dart';
 
 //snapshot.data.docs[index]['Img_Profilo']
 //snapshot.data.docs[index]['Nome_Azienda']
@@ -47,7 +47,7 @@ class Visualizzatore_Ricerca extends StatelessWidget {
 
             return new GridView.builder(
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: RicalcoloHeight(200.0, context),
+                  maxCrossAxisExtent: RicalcoloHeight(220.0, context),
                   crossAxisSpacing: RicalcoloWidth(14.0, context),
                   mainAxisSpacing: RicalcoloWidth(28.0, context)),
               itemCount: snapshot.data.docs.length,
@@ -57,7 +57,7 @@ class Visualizzatore_Ricerca extends StatelessWidget {
                 ///contorno rosso
                 return Container(
                   width: RicalcoloWidth(169.0, context),
-                  height: RicalcoloHeight(214.0, context),
+                  height: RicalcoloHeight(220.0, context),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(23.0),
                     color: const Color(0xffffffff),
@@ -72,11 +72,14 @@ class Visualizzatore_Ricerca extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Wrap(
+                  child:Wrap(
+
                     children: [
                       Stack(children: <Widget>[
+                        /// Immagine Azienda
+
                         Container(
-                          width: RicalcoloWidth(180.0, context),
+                          width: RicalcoloWidth(172.0, context),
                           height: RicalcoloHeight(92.0, context),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
@@ -105,14 +108,14 @@ class Visualizzatore_Ricerca extends StatelessWidget {
                           alignment: AlignmentDirectional.topEnd,
                           child: Container(
                             margin: EdgeInsets.only(
-                              top: RicalcoloHeight(4.0, context),
-                              right: RicalcoloWidth(10.0, context),
+                              top: RicalcoloHeight(7.0, context),
+                              right: RicalcoloWidth(7.0, context),
                             ),
-                            width: RicalcoloWidth(11.0, context),
-                            height: RicalcoloHeight(11.0, context),
+
                             child: Icon(
                               Icons.info_outlined,
                               color: Colors.black,
+                              size: RicalcoloWidth(15, context),
                             ),
                           ),
                         ),
@@ -159,9 +162,7 @@ class Visualizzatore_Ricerca extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Padding(
-                          padding: EdgeInsets.only(
-                              top: RicalcoloHeight(25.0, context))),
+
 
                       ///Row per Hashtag
 
@@ -243,21 +244,25 @@ class Visualizzatore_Ricerca extends StatelessWidget {
                       ),
 
                       /// Bottone Chiamata e posizione
-                      Container(
-                        margin: EdgeInsets.only(
-                            top: RicalcoloHeight(5.0, context),
-                            right: RicalcoloWidth(10.0, context),
-                            bottom: RicalcoloHeight(5.0, context),
-                            left: RicalcoloWidth(10.0, context)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            ///Bottone Chiamata
-                            ElevatedButton.icon(
-                              label: Text('Chiama',
+                    Align(
+                alignment: AlignmentDirectional.center,
+                child:ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    primary: Color(0xff0e1116),
+                    onPrimary: Colors.white,
+                    elevation: 8,
+                    fixedSize: Size(RicalcoloWidth(90.0, context),
+                        RicalcoloHeight(10.0, context)),
+                  ),
+                              label:FittedBox(
+                              fit: BoxFit.contain,
+                              child: Text('Chiama',
                                   style: My_Bold_Text(
-                                      RicalcoloWidth(8.0, context),
-                                      Colors.white)),
+                                      RicalcoloWidth(12.0, context),
+                                      Colors.white))),
                               onPressed: () {
                                 Chiama(
                                     snapshot.data.docs[index]["id"], context);
@@ -265,65 +270,11 @@ class Visualizzatore_Ricerca extends StatelessWidget {
                               icon: Icon(
                                 Icons.videocam,
                                 color: Colors.white,
+                                size: RicalcoloWidth(11.0, context),
                               ),
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(14),
-                                ),
-                                primary: Color(0xff0e1116),
-                                onPrimary: Colors.white,
-                                fixedSize: Size(RicalcoloWidth(72.0, context),
-                                    RicalcoloHeight(28.0, context)),
-                                elevation: 8,
-                              ),
-                            ),
 
-                            ///posizione
-                            Container(
-                              width: RicalcoloWidth(27.0, context),
-                              height: RicalcoloHeight(28.0, context),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(7.0),
-                                color: const Color(0xadf5f5f5),
-                              ),
-                              child: Column(
-                                children: [
-                                  // immagine maps
-                                  Container(
-                                    margin: EdgeInsets.only(
-                                        top: RicalcoloHeight(6.0, context),
-                                        right: RicalcoloWidth(6.0, context),
-                                        bottom: RicalcoloHeight(2.0, context),
-                                        left: RicalcoloWidth(6.0, context)),
-                                    width: RicalcoloWidth(7.0, context),
-                                    height: RicalcoloHeight(9.0, context),
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        //TODO immagine maps
-                                        image: NetworkImage(
-                                            'https://firebasestorage.googleapis.com/v0/b/prova-24d5b.appspot.com/o/geo.png?alt=media&token=eb018e11-036d-43b1-ae78-76a16c085681'),
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                  ),
-
-                                  //scritta luogo
-                                  Text(
-                                    'LUOGO',
-                                    style: TextStyle(
-                                      fontFamily: 'MADE TOMMY',
-                                      fontSize: RicalcoloWidth(4.0, context),
-                                      color: const Color(0xff0e1116),
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    textAlign: TextAlign.start,
-                                  ),
-                                ],
-                              ),
                             ),
-                          ],
-                        ),
-                      ),
+                    ),
                     ],
                   ),
                 );

@@ -1,4 +1,4 @@
-import 'package:everstream/Widget/Visualizzatore_Ricerca.dart';
+import 'package:everstream/Pagine/Pagine_Cerca/Visualizzatore_Ricerca.dart';
 import 'package:everstream/Metodi/Metodi_Grafici.dart';
 import 'package:flutter/material.dart';
 import 'package:everstream/Metodi/Ridimensiona.dart';
