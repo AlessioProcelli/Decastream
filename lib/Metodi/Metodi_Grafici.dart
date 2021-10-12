@@ -14,6 +14,16 @@ ButtonStyle My_Button_Style(Size size){
     elevation: 8,
   );
 }
+/// Pagina Profilo azienda
+ButtonStyle My_Button_Style_CustomColor(Size size,){
+  return ElevatedButton.styleFrom(
+    shape: CircleBorder(),
+    primary: Colors.white,
+    onPrimary: Color(0xffe00a17),
+    fixedSize: size,
+    elevation: 8,
+  );
+}
 ///per schermata profilo utenti
 ButtonStyle My_White_Style(Size size){
   return ElevatedButton.styleFrom(

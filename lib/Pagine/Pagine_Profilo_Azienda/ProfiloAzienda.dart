@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'package:everstream/Metodi/Metodi_Grafici.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:everstream/Metodi/Ridimensiona.dart';
 import 'package:image_picker/image_picker.dart';
@@ -87,6 +89,41 @@ controller.setCurrentContext(context);
                 ],
               ),
             ),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children:<Widget>[
+
+
+            ElevatedButton(
+          onPressed: () {print("ok");},
+          style:My_Button_Style_CustomColor(Size(RicalcoloWidth(12.0, context), RicalcoloHeight(12.0, context))),
+        child:FittedBox(
+          fit:BoxFit.contain,
+          child:
+        Icon(
+                Icons.trending_up
+                ))),
+                Container(
+                  width: RicalcoloWidth(42.0, context),
+                  height: RicalcoloHeight(42.0, context),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: const AssetImage("assets/image/statistiche.png"),
+                      fit: BoxFit.fill,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color(0x29000000),
+                        offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
+                        blurRadius: 6,
+                      ),
+                    ],
+                  ),
+                ),
+
+            ]
+          ),
 
           Transform.translate(
             offset: Offset(RicalcoloWidth(35.0, context), RicalcoloHeight(197.0, context)),
@@ -1139,28 +1176,7 @@ controller.setCurrentContext(context);
               ),
             ),
           ),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(-2.0, context), RicalcoloHeight(3.0, context)),
-            child:
-            // Adobe XD layer: 'statistiche' (shape)
-            Container(
-              width: RicalcoloWidth(42.0, context),
-              height: RicalcoloHeight(42.0, context),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage("assets/image/statistiche.png"),
-                  fit: BoxFit.fill,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0x29000000),
-                    offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                    blurRadius: 6,
-                  ),
-                ],
-              ),
-            ),
-          ),
+
           Transform.translate(
             offset: Offset(RicalcoloWidth(334.0, context), RicalcoloHeight(3.0, context)),
             child:
