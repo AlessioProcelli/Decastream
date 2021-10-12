@@ -65,13 +65,15 @@ class Profiloutentemodifica extends StatelessWidget {
                           style: My_Button_Style(Size(
                               RicalcoloWidth(64.0, context),
                               RicalcoloHeight(21.0, context))),
-                          child: Text(
+                          child:FittedBox(
+                            fit: BoxFit.cover,
+                            child: Text(
                             'Annulla',
                             style: My_Text_Style(RicalcoloWidth(10.5, context),
                                 Color(0xffffffff)),
                             textAlign: TextAlign.left,
                           ),
-                        ),
+                        ),),
 
                         ///Fatto
                         ElevatedButton(
@@ -81,12 +83,14 @@ class Profiloutentemodifica extends StatelessWidget {
                           style: My_Button_Style(Size(
                               RicalcoloWidth(64.0, context),
                               RicalcoloHeight(21.0, context))),
-                          child: Text(
+                          child:FittedBox(
+                            fit: BoxFit.cover,
+                            child: Text(
                             'Fatto',
                             style: My_Text_Style(RicalcoloWidth(10.5, context),
                                 Color(0xffffffff)),
                             textAlign: TextAlign.left,
-                          ),
+                          ),),
                         ),
                       ],
                     ),

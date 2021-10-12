@@ -14,7 +14,7 @@ import 'package:everstream/Tipi/Luogo.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'dart:core';
 import 'Pagine/Pagine_Live/Call.dart';
-import 'ProfiloAzienda_Vista_Utente.dart';
+import 'Pagine/Pagine_Profilo_Azienda/ProfiloAzienda_Vista_Utente.dart';
 import 'Tipi/Offerta.dart';
 
 class Controller {

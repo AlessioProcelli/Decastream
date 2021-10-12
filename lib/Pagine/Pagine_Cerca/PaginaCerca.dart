@@ -58,12 +58,15 @@ class PaginaCerca extends StatelessWidget{
                     },
                     style: My_Button_Style(Size(RicalcoloWidth(77, context),
                         RicalcoloHeight(30, context))),
-                    child: Text(
+                    child:FittedBox(
+                      fit: BoxFit.cover,
+                      child: Text(
                       'Filtra',
                       style: My_Text_Style(
                           RicalcoloWidth(16.0, context), Color(0xffffffff)),
                       textAlign: TextAlign.left,
                     ),
+                  ),
                   ),
                 ],
               ),
@@ -71,7 +74,7 @@ class PaginaCerca extends StatelessWidget{
 
             /// Visualizzatore Di Ricerca
             Expanded(
-              flex: 11,
+              flex: 12,
               //griglia aziende
               child: Visualizzatore_Ricerca(),
             ),

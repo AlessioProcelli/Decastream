@@ -1,7 +1,7 @@
 
 import 'package:everstream/Metodi/Metodi_Grafici.dart';
 import 'package:everstream/Pagine/Main_Page.dart';
-import 'package:everstream/ProfiloAzienda.dart';
+import 'package:everstream/Pagine/Pagine_Profilo_Azienda/ProfiloAzienda.dart';
 import 'package:everstream/SceltaAccount.dart';
 import 'package:everstream/Widget/Input_Widget/Input_Box.dart';
 import 'package:flutter/material.dart';

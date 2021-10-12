@@ -1,50 +1,57 @@
 import 'dart:io';
-import 'package:everstream/Pop_Up/Pop_Up_Appuntamento/Popup_chiamataappuntamento.dart';
-import 'package:everstream/Tipi/Azienda.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:everstream/Metodi/Ridimensiona.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:video_player/video_player.dart';
+import '../../VideoPlayerPpUp.dart';
+import '../../main.dart';
 
-import 'Tipi/Hashtag.dart';
-import 'Tipi/Indirizzo.dart';
-import 'VideoPlayerPpUp.dart';
-import 'main.dart';
-
-class ProfiloAzienda_VistaUtente extends StatelessWidget {
-  Azienda view_azienda;
-  Indirizzo indirizzo=new Indirizzo(4,"Muggiole", 12);
-  String foto_profilo;
-  String foto_copertina;
-  List<Hashtag> hashtag_list;
-  double icon_dimension=40;
-  Popup_chiamataappuntamento popup_chiamata;
+class ProfiloAzienda extends StatelessWidget {
   VideoPlayerScreen popup=VideoPlayerScreen();
-  ProfiloAzienda_VistaUtente(Azienda azienda,List<Hashtag> hashtagList){
-    view_azienda=azienda;
-    foto_profilo=azienda.img_profilo;
-    foto_copertina=azienda.img_copertina;
-    hashtag_list=hashtagList;
-    popup_chiamata=Popup_chiamataappuntamento(view_azienda);
-  }
+  bool watchVideo=false;
+
+  File new_foto_profilo=null; //foto di appoggio
+  File new_foto_copertina=null;//nuova foto caricata
+  File new_hashtag_1=null;
+  File new_hashtag_2=null;
+  File new_hashtag_3=null;
+  File new_hashtag_4=null;
+  bool on_modifica=false;//per abilitare la modifica;
+  bool changed_hashtag_1=false;
+  bool changed_hashtag_2=false;
+  bool changed_hashtag_3=false;
+  bool changed_hashtag_4=false;
+  bool changed_profilo=false;// se cè stato cambiamento
+  bool changed_copertina=false;
+  String foto_profilo=controller.database.currentAzienda.img_profilo;
+  String foto_copertina=controller.database.currentAzienda.img_copertina;
+  final controllerIndirizzo=TextEditingController(text:"via monte napoleone(inserisci qui)");
+  final controllerDescrizione=TextEditingController(text: controller.database.currentAzienda.descrizione);
+  final controllerFollower=TextEditingController(text:controller.database.currentAzienda.follower.toString());
+  final controllerNome=TextEditingController(text:controller.database.currentAzienda.nome_azienda);
+  final controllerHash1=TextEditingController(text:"#"+controller.database.aziendaHashtagList[0].nome);
+  final controllerHash2=TextEditingController(text:"#"+controller.database.aziendaHashtagList[1].nome);
+  final controllerHash3=TextEditingController(text:"#"+controller.database.aziendaHashtagList[2].nome);
+  final controllerHash4=TextEditingController(text:"#"+controller.database.aziendaHashtagList[3].nome);
+  double icon_dimension=40;
+
+  ProfiloAzienda({
+    Key key,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-
-    popup.init();
+popup.init();
 controller.setCurrentContext(context);
 
-    return Scaffold(
+    return SafeArea(child: Scaffold(
       backgroundColor: const Color(0xffffffff),
       body: Stack(
         children: <Widget>[
-          Transform.translate(
-            offset: Offset(0.0,  RicalcoloHeight(-25.0, context)),
+          /// Copertina
 
-            child:
-            // Adobe XD layer: 'copertina' (group)
             SizedBox(
               width: RicalcoloWidth(375.0, context),
               height: RicalcoloHeight(204.0, context),
@@ -61,19 +68,26 @@ controller.setCurrentContext(context);
                     // Adobe XD layer: 'copertina' (shape)
                     Container(
                       decoration:  BoxDecoration(
-                        borderRadius: BorderRadius.circular(25.0),
+                        borderRadius: BorderRadius.only(bottomLeft:Radius.circular(25),bottomRight:Radius.circular(25)),
                         image: DecorationImage(
-                          image: NetworkImage(foto_copertina),
+                          image:changed_copertina?FileImage(new_foto_copertina):
+                          NetworkImage(foto_copertina),
 
                           fit: BoxFit.cover,
                         ),
                       ),
+                      child:on_modifica?TextButton(
+                        onPressed: (){
+                          ChangeFoto(context,1);
+                        },
+                      )
+                          :Container(),
                     ),
                   ),
                 ],
               ),
             ),
-          ),
+
           Transform.translate(
             offset: Offset(RicalcoloWidth(35.0, context), RicalcoloHeight(197.0, context)),
             child:
@@ -91,8 +105,13 @@ controller.setCurrentContext(context);
                     pinRight: true,
                     pinBottom: true,
                     fixedHeight: true,
-                    child: Text(
-                      indirizzo.via +" "+ indirizzo.n_Civico.toString() +" ",
+                    child: TextFormField(
+                      enabled: on_modifica,
+                      controller:controllerIndirizzo,
+                      onTap:(){ClearText(controllerIndirizzo);},
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                      ),
                       style: TextStyle(
                         fontFamily: 'MADE TOMMY',
                         fontSize: RicalcoloWidth(10.0, context),
@@ -129,11 +148,17 @@ controller.setCurrentContext(context);
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(13.0),
                         image: DecorationImage(
-                          image:NetworkImage(hashtag_list[0].immagine_hashtag),
+                          image:changed_hashtag_1?FileImage(new_hashtag_1)
+                              :NetworkImage(controller.database.aziendaHashtagList[0].immagine_hashtag),
                           fit: BoxFit.cover,
                         ),
                       ),
-
+                      child:on_modifica? TextButton( //attivo la possibilità di cliccare solo quando si modifica
+                        onPressed: (){
+                          ChangeFoto(context,3);
+                        },
+                      )
+                          :Container(), //altrimenti ci lascio un conteiner segnaposto
                     ),),
                   Pinned.fromSize(
                     bounds: Rect.fromLTWH(4.0, 51.0, 48.0, 16.0),
@@ -160,9 +185,15 @@ controller.setCurrentContext(context);
                     margin:  EdgeInsets.only(left:RicalcoloWidth(13.0, context),top:RicalcoloHeight(59.0, context)),
                     width:RicalcoloWidth(55.0, context),
                     height:RicalcoloHeight(67.0, context),
-                    child: Text(
-                        hashtag_list[0].nome,
-
+                    child: TextFormField(
+                      enabled: on_modifica,
+                      controller:controllerHash1,
+                      onTap:(){
+                        ClearText(controllerHash1);
+                        controllerHash1.text="#";},
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                      ),
                       style: TextStyle(
                         fontFamily: 'MADE TOMMY',
                         fontSize: RicalcoloWidth(7.0, context),
@@ -198,12 +229,17 @@ controller.setCurrentContext(context);
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(13.0),
                         image: DecorationImage(
-                          image: NetworkImage(hashtag_list[1].immagine_hashtag),
+                          image:changed_hashtag_2?FileImage(new_hashtag_2)
+                              : NetworkImage(controller.database.aziendaHashtagList[1].immagine_hashtag),
                           fit: BoxFit.cover,
                         ),
                       ),
-
-
+                      child:on_modifica?TextButton(
+                        onPressed: (){
+                          ChangeFoto(context,4);
+                        },
+                      )
+                          :Container(),
                     ),
                   ),
                   Pinned.fromSize(
@@ -231,8 +267,15 @@ controller.setCurrentContext(context);
                     margin:  EdgeInsets.only(left:RicalcoloWidth(13.0, context),top:RicalcoloHeight(59.0, context)),
                     width:RicalcoloWidth(55.0, context),
                     height:RicalcoloHeight(67.0, context),
-                    child:  Text(
-                    hashtag_list[1].nome,
+                    child:  TextFormField(
+                      enabled: on_modifica,
+                      controller:controllerHash2,
+                      onTap:(){
+                        ClearText(controllerHash2);
+                        controllerHash2.text="#";},
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                      ),
                       style: TextStyle(
                         fontFamily: 'MADE TOMMY',
                         fontSize: RicalcoloWidth(7.0, context),
@@ -268,11 +311,17 @@ controller.setCurrentContext(context);
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(13.0),
                         image: DecorationImage(
-                          image: NetworkImage(hashtag_list[2].immagine_hashtag),
+                          image:changed_hashtag_3?FileImage(new_hashtag_3)
+                              : NetworkImage(controller.database.aziendaHashtagList[2].immagine_hashtag),
                           fit: BoxFit.cover,
                         ),
                       ),
-
+                      child:on_modifica?TextButton(
+                        onPressed: (){
+                          ChangeFoto(context,5);
+                        },
+                      )
+                          :Container(),
                     ),
                   ),
                   Pinned.fromSize(
@@ -301,8 +350,15 @@ controller.setCurrentContext(context);
                     width:RicalcoloWidth(55.0, context),
                     height:RicalcoloHeight(67.0, context),
 
-                    child: Text(hashtag_list[2].nome,
-
+                    child: TextFormField(
+                      enabled: on_modifica,
+                      controller:controllerHash3,
+                      onTap:(){
+                        ClearText(controllerHash3);
+                        controllerHash3.text="#";},
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                      ),
                       style: TextStyle(
                         fontFamily: 'MADE TOMMY',
                         fontSize: RicalcoloWidth(7.0, context),
@@ -323,10 +379,17 @@ controller.setCurrentContext(context);
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(13.0),
               image: DecorationImage(
-                image:NetworkImage(hashtag_list[3].immagine_hashtag),
+                image:changed_hashtag_4?FileImage(new_hashtag_4)
+                    :NetworkImage(controller.database.aziendaHashtagList[3].immagine_hashtag),
                 fit: BoxFit.cover,
               ),
             ),
+            child:on_modifica?TextButton(
+              onPressed: (){
+                ChangeFoto(context, 6);
+              },
+            )
+                :Container(),
           ),
           Container(
             margin:  EdgeInsets.only(left:RicalcoloWidth(250.0, context),top:RicalcoloHeight(396.0, context)),
@@ -364,8 +427,15 @@ controller.setCurrentContext(context);
                     margin:  EdgeInsets.only(left:RicalcoloWidth(13.0, context),top:RicalcoloHeight(59.0, context)),
                     width:RicalcoloWidth(55.0, context),
                     height:RicalcoloHeight(67.0, context),
-                    child:  Text(hashtag_list[3].nome,
-
+                    child:  TextFormField(
+                      enabled: on_modifica,
+                      controller:controllerHash4,
+                      onTap:(){
+                        ClearText(controllerHash4);
+                        controllerHash4.text="#";},
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                      ),
                       style: TextStyle(
                         fontFamily: 'MADE TOMMY',
                         fontSize: RicalcoloWidth(7.0, context),
@@ -460,16 +530,14 @@ controller.setCurrentContext(context);
                     pinRight: true,
                     pinTop: true,
                     pinBottom: true,
-                    child:TextButton(
-                      onPressed:(){
-                       popup_chiamata.ActivePopup();
-                       },
+                    child:
                     // Adobe XD layer: 'profilo' (shape)
-                    child:Container(
+                    Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(21.0),
                         image: DecorationImage(
-                          image: new NetworkImage(foto_profilo),
+                          image: changed_profilo ?FileImage(new_foto_profilo)
+                              :new NetworkImage(foto_profilo),
                           fit: BoxFit.cover,
                         ),
                         border: Border.all(
@@ -482,7 +550,12 @@ controller.setCurrentContext(context);
                           ),
                         ],
                       ),
-                    ),
+                      child:on_modifica?TextButton(
+                        onPressed: (){
+                          ChangeFoto(context,2);
+                        },
+                      )
+                          :Container(),
                     ),
                   ),
                 ],
@@ -569,8 +642,13 @@ controller.setCurrentContext(context);
                     margin:  EdgeInsets.only(left:RicalcoloWidth(60.0, context),top:RicalcoloHeight(12.0, context)),
                     width:RicalcoloWidth(73.0, context),
                     height:RicalcoloHeight(13.0, context),
-                    child: Text( view_azienda.follower.toString(),
-
+                    child: TextFormField(
+                      enabled: false,
+                      controller:controllerFollower,
+                      onTap:(){ClearText(controllerFollower);},
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                      ),
                       style: TextStyle(
                         fontFamily: 'MADE TOMMY',
                         fontSize: RicalcoloWidth(12.0, context),
@@ -694,9 +772,14 @@ controller.setCurrentContext(context);
             margin:  EdgeInsets.only(left:RicalcoloWidth(35.0, context),top:RicalcoloHeight(266.0, context)),
             width: RicalcoloWidth(200.0, context),
 
-            child:  Text(
-              view_azienda.descrizione,
-              style: TextStyle(
+            child:  TextFormField(
+              enabled: on_modifica,
+              controller:controllerDescrizione,
+              onTap:(){ClearText(controllerDescrizione);},
+              decoration: InputDecoration(
+                border: InputBorder.none,
+
+              ),style: TextStyle(
               fontFamily: 'MADE TOMMY',
               fontSize: RicalcoloWidth(11.0, context),
               color: const Color(0xff000000),
@@ -898,39 +981,44 @@ controller.setCurrentContext(context);
 
 
 
-                popup.ActivePopUp();
+    popup.ActivePopUp();
 
 
-              },
+    },
 
                 child:Container(
-                  width: RicalcoloWidth(129.0, context),
+                    width: RicalcoloWidth(129.0, context),
                   height: RicalcoloHeight(129.0, context),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(22.0),
-                    image: DecorationImage(
-                      image: NetworkImage('https://firebasestorage.googleapis.com/v0/b/prova-24d5b.appspot.com/o/secondariaGenerico.jpg?alt=media&token=2d2ef207-f5b4-4637-8eca-c0ac15e00022'),
-                      fit: BoxFit.cover,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0x39000000),
-                        offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                        blurRadius: 6,
-                      ),
-                    ],
+                  borderRadius: BorderRadius.circular(22.0),
+                  image: DecorationImage(
+                  image: NetworkImage('https://firebasestorage.googleapis.com/v0/b/prova-24d5b.appspot.com/o/secondariaGenerico.jpg?alt=media&token=2d2ef207-f5b4-4637-8eca-c0ac15e00022'),
+                  fit: BoxFit.cover,
                   ),
-                ),
+                  boxShadow: [
+                  BoxShadow(
+                  color: const Color(0x39000000),
+                  offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
+                  blurRadius: 6,
+                  ),
+                  ],
+                  ),
+                  ),
 
-              ),
             ),
+         ),
           ),
           Transform.translate(
             offset: Offset(RicalcoloWidth(28.0, context), RicalcoloHeight(190.0, context)),
             child: Container(
               width: RicalcoloWidth(200.0, context),
-              child:Text( view_azienda.nome_azienda,
-
+              child:TextFormField(
+                enabled: on_modifica,//si attiva solo se la modifica è abilitata
+                controller:controllerNome,
+                onTap:(){ClearText(controllerNome);},
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                ),
                 style: TextStyle(
                   fontFamily: 'MADE TOMMY',
                   fontSize: RicalcoloWidth(19.0, context),
@@ -957,7 +1045,68 @@ controller.setCurrentContext(context);
             ),
           ),
           */
+          Container(
+          margin:  EdgeInsets.only(left:RicalcoloWidth(2.0, context),top:RicalcoloHeight(741.0, context)),
+    child:Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children:<Widget> [
+    Container(
+    width: RicalcoloWidth(icon_dimension, context),
+    height: RicalcoloHeight(icon_dimension, context),
+    decoration: BoxDecoration(
+    image: DecorationImage(
+    image:AssetImage( 'assets/image/cerca.png'),
+    fit: BoxFit.fill,                                                   ),
+    ),
+    ),
 
+
+    Container(
+    margin:  EdgeInsets.only(left:RicalcoloWidth(40.0, context)),
+    width: RicalcoloWidth(icon_dimension, context),
+    height: RicalcoloHeight(icon_dimension, context),
+    decoration: BoxDecoration(
+    image: DecorationImage(
+    image:AssetImage( 'assets/image/acquisti.png'),
+    fit: BoxFit.fill,
+    ),
+    ),
+
+    ),
+
+
+    // Adobe XD layer: 'messaggi@4x' (shape)
+    Container(
+    margin:  EdgeInsets.only(left:RicalcoloWidth(40.0, context)),
+    width: RicalcoloWidth(icon_dimension, context),
+    height: RicalcoloHeight(icon_dimension, context),
+    decoration: BoxDecoration(
+    image: DecorationImage(
+    image:AssetImage( 'assets/image/messaggi.png'),
+    fit: BoxFit.fill,
+    ),
+    ),
+
+    ),
+
+
+    Container(
+    margin:  EdgeInsets.only(left:RicalcoloWidth(40.0, context)),
+    width: RicalcoloWidth(icon_dimension, context),
+    height: RicalcoloHeight(icon_dimension, context),
+    decoration: BoxDecoration(
+    image:  DecorationImage(
+    image:AssetImage( 'assets/image/profiloRED.png'),
+    fit: BoxFit.fill,
+    ),
+    ),
+
+    ),
+
+    ],
+
+    ),
+          ),
           Transform.translate(
             offset: Offset(RicalcoloWidth(130.0, context), RicalcoloHeight(509.0, context)),
             child:
@@ -1043,7 +1192,9 @@ controller.setCurrentContext(context);
               height: RicalcoloHeight(25.0, context),
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image:AssetImage("assets/image/fatto.png"),
+                  image:on_modifica?AssetImage("assets/image/fatto.png")
+                      : AssetImage("assets/image/pennello.png"),
+
                   fit: BoxFit.fill,
                 ),
                 boxShadow: [
@@ -1056,19 +1207,71 @@ controller.setCurrentContext(context);
               ),
               child:TextButton(
                 onPressed: (){
-
+                  if(on_modifica==false) {
+                    on_modifica = true;
+                  }
+                  else{
+                    on_modifica=false;
+                    ChangedConfirmed(context);
+                  }
                   rebuildAllChildren(context);
                 },
               ),
             ),
           ),
-          popup,
-          popup_chiamata,
+
+
+      popup,
+
         ],
       ),
+    ));
+  }
+  Future<bool> ChangeFoto(BuildContext context,int scelta) async {
+    PickedFile pickedFile = await ImagePicker().getImage(
+      source: ImageSource.gallery,
+      maxWidth: 1800,
+      maxHeight: 1800,
     );
+    if (pickedFile != null) {
+      switch(scelta){ //1 copertina 2 profilo 3 hash1 4 hash2  5 hash3 6 hash7
+        case 1:
+          new_foto_copertina = File(pickedFile.path);
+          changed_copertina=true;
+          break;
+        case 2:
+          new_foto_profilo = File(pickedFile.path);
+          changed_profilo=true;
+          break;
+        case 3:
+          new_hashtag_1 = File(pickedFile.path);
+          changed_hashtag_1=true;
+          break;
+        case 4:
+          new_hashtag_2 = File(pickedFile.path);
+          changed_hashtag_2=true;
+          break;
+        case 5:
+          new_hashtag_3 = File(pickedFile.path);
+          changed_hashtag_3=true;
+          break;
+        case 6:
+          new_hashtag_4 = File(pickedFile.path);
+          changed_hashtag_4=true;
+          break;
+
+      }
+      rebuildAllChildren(context);
+    }
   }
 
+  ChangedConfirmed(BuildContext context){
+    controller.UpdateAzienda(new_foto_profilo, new_foto_copertina,
+        new_hashtag_1,new_hashtag_2, new_hashtag_3, new_hashtag_4,
+        controllerIndirizzo.text, controllerDescrizione.text, controllerNome.text,
+        controllerHash1.text.substring(1), controllerHash2.text.substring(1),  controllerHash3.text.substring(1),
+        controllerHash4.text.substring(1));
+  }
 }
 
 const String _svg_3q9l7b =

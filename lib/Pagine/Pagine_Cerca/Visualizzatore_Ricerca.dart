@@ -47,7 +47,7 @@ class Visualizzatore_Ricerca extends StatelessWidget {
 
             return new GridView.builder(
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: RicalcoloHeight(220.0, context),
+                  maxCrossAxisExtent: RicalcoloHeight(240.0, context),
                   crossAxisSpacing: RicalcoloWidth(14.0, context),
                   mainAxisSpacing: RicalcoloWidth(28.0, context)),
               itemCount: snapshot.data.docs.length,
@@ -56,8 +56,9 @@ class Visualizzatore_Ricerca extends StatelessWidget {
 
                 ///contorno rosso
                 return Container(
+
                   width: RicalcoloWidth(169.0, context),
-                  height: RicalcoloHeight(220.0, context),
+                  height: RicalcoloHeight(240.0, context),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(23.0),
                     color: const Color(0xffffffff),
@@ -72,9 +73,11 @@ class Visualizzatore_Ricerca extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child:Wrap(
+                  child:Column(
 
                     children: [
+                      /// BOX Immagine Azienda
+
                       Stack(children: <Widget>[
                         /// Immagine Azienda
 
@@ -243,26 +246,33 @@ class Visualizzatore_Ricerca extends StatelessWidget {
                         ],
                       ),
 
-                      /// Bottone Chiamata e posizione
-                    Align(
-                alignment: AlignmentDirectional.center,
-                child:ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
-                    ),
-                    primary: Color(0xff0e1116),
-                    onPrimary: Colors.white,
-                    elevation: 8,
-                    fixedSize: Size(RicalcoloWidth(90.0, context),
-                        RicalcoloHeight(10.0, context)),
-                  ),
-                              label:FittedBox(
-                              fit: BoxFit.contain,
-                              child: Text('Chiama',
-                                  style: My_Bold_Text(
-                                      RicalcoloWidth(12.0, context),
-                                      Colors.white))),
+                      /// Bottone Chiamata
+                      Align(
+                        alignment: AlignmentDirectional.center,
+                        child: Container(
+                          margin: EdgeInsets.only(
+                              top: RicalcoloHeight(5.0, context)),
+                          width: RicalcoloWidth(70.0, context),
+                          height: RicalcoloHeight(40.0, context),
+                          child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: ElevatedButton.icon(
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(14),
+                                ),
+                                primary: Color(0xff0e1116),
+                                onPrimary: Colors.white,
+                                elevation: 8,
+                              ),
+                              label: FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: Text('Chiama',
+                                      style: TextStyle(
+                                        fontFamily: 'MADE TOMMY',
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w600,
+                                      ))),
                               onPressed: () {
                                 Chiama(
                                     snapshot.data.docs[index]["id"], context);
@@ -270,11 +280,11 @@ class Visualizzatore_Ricerca extends StatelessWidget {
                               icon: Icon(
                                 Icons.videocam,
                                 color: Colors.white,
-                                size: RicalcoloWidth(11.0, context),
                               ),
-
                             ),
-                    ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 );
