@@ -44,7 +44,7 @@ class Database {
   }
 
   Future <int> addChiamata(Chiamata call) async {
-    int id = await TableLenght('Chiamate');
+    int id = await nextId('Chiamate');
     FirebaseFirestore.instance.collection('Chiamate').add({
       'id': id,
       'id_Azienda': call.id_azienda,
@@ -58,7 +58,7 @@ class Database {
   }
 
   Future <int> addHastag(Hashtag hash) async {
-    int id = await TableLenght('Hashtag');
+    int id = await nextId('Hashtag');
     FirebaseFirestore.instance.collection('Hashtag').add({
       'id': id,
       'Immagine_Hashtag': await getPathFotoProfilo(hash.immagine_hashtag),
@@ -72,7 +72,7 @@ class Database {
   }
 
   Future<int> addUser(Utente user) async {
-    int id = await TableLenght('utenti');
+    int id = await nextId('utenti');
     FirebaseFirestore.instance.collection('utenti').add({
       'id': id,
       'Foto_Profilo': await getPathFotoProfilo(user.foto_profilo),
@@ -92,7 +92,7 @@ class Database {
   }
 
   Future<int> addAzienda(Azienda azienda) async {
-    int id = await TableLenght('Aziende');
+    int id = await nextId('Aziende');
     FirebaseFirestore.instance.collection('Aziende').add({
       'id': id,
       'Nome_Azienda': azienda.nome_azienda,
@@ -128,7 +128,7 @@ class Database {
 
 
   Future<int> addCategoria(Categoria categoria) async {
-    int id = await TableLenght('Categorie');
+    int id = await nextId('Categorie');
     FirebaseFirestore.instance.collection('Categorie').add({
       'id': id,
       'Nome': categoria.nome,
@@ -141,7 +141,7 @@ class Database {
   }
 
   Future<int> addLuogo(Luogo luogo) async {
-    int id = await TableLenght('Luoghi');
+    int id = await nextId('Luoghi');
     FirebaseFirestore.instance.collection('Luoghi').add({
       'id': id,
       'Paese': luogo.paese,
@@ -154,7 +154,7 @@ class Database {
   }
 
   Future<int> addIndirizzo(Indirizzo indirizzo) async {
-    int id = await TableLenght('Indirizzi');
+    int id = await nextId('Indirizzi');
     FirebaseFirestore.instance.collection('Indirizzi').add({
       'id': id,
       'Id_Luogo': indirizzo.id_Luogo,
@@ -167,7 +167,7 @@ class Database {
   }
 
   Future <int> addOfferta(Offerta offerta) async {
-    int id = await TableLenght('Offerta');
+    int id = await nextId('Offerta');
     FirebaseFirestore.instance.collection('Offerta').add({
       'id': id,
       'id_Azienda': offerta.id_azienda,
@@ -188,7 +188,7 @@ class Database {
   }
 
   Future<void> addMessage(String table, String messaggio) async {
-    int leng = await TableLenght(table);
+    int leng = await nextId(table);
 
     FirebaseFirestore.instance.collection(table).doc(
         "C" + String.fromCharCode(leng)).set({
@@ -212,7 +212,7 @@ class Database {
     this.aziendaHashtagList = list;
   }
 
-  Future<int> TableLenght(String nome) async {
+  Future<int> TableLength(String nome) async {
     //calcola numero di elementi in una tabella
     int leng = 0;
     CollectionReference utenti; // appoggio query di tabella
@@ -499,5 +499,18 @@ class Database {
       }
     });
   }
+
+  Future<int> nextId(String nome) async{
+    QuerySnapshot query = await FirebaseFirestore.instance.collection(nome)
+        .get();
+    int biggestId=0;
+    query.docs.forEach((element) {
+      if (element ["id"]>biggestId) {
+        biggestId = element["id"];
+      }
+    });
+    return biggestId+1;
+  }
+
 
 }
