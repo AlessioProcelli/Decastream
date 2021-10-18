@@ -15,12 +15,14 @@ ButtonStyle My_Button_Style(Size size){
   );
 }
 /// Pagina Profilo azienda
-ButtonStyle My_Button_Style_CustomColor(Size size,){
+ButtonStyle My_Button_Style_CustomColor(){
   return ElevatedButton.styleFrom(
-    shape: CircleBorder(),
+    shape:  RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(2),
+    ),
     primary: Colors.white,
     onPrimary: Color(0xffe00a17),
-    fixedSize: size,
+fixedSize:Size(10,10),
     elevation: 8,
   );
 }

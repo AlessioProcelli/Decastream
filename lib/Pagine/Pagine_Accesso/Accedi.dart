@@ -181,12 +181,7 @@ class Accedi extends StatelessWidget {
         input_username.getText(), input_password.getText());
     if (correct) {
       Route route;
-      if (controller.database.isAzienda) {
-        route = MaterialPageRoute(builder: (context) => ProfiloAzienda());
-        controller.database.ListenChiamate();
-      } else {
         route = MaterialPageRoute(builder: (context) => Main_Page());
-      }
       Navigator.push(context, route);
     }
 

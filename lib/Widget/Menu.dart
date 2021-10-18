@@ -46,7 +46,7 @@ class Menu extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(left: RicalcoloWidth(40.0, context)),
             width: RicalcoloWidth(icon_dimension, context),
-            height: RicalcoloHeight(icon_dimension, context),
+            height: RicalcoloWidth(icon_dimension, context),
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: acquisti
@@ -67,7 +67,7 @@ class Menu extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(left: RicalcoloWidth(40.0, context)),
             width: RicalcoloWidth(icon_dimension, context),
-            height: RicalcoloHeight(icon_dimension, context),
+            height: RicalcoloWidth(icon_dimension, context),
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: messaggi
@@ -86,7 +86,7 @@ class Menu extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(left: RicalcoloWidth(40.0, context)),
             width: RicalcoloWidth(icon_dimension, context),
-            height: RicalcoloHeight(icon_dimension, context),
+            height: RicalcoloWidth(icon_dimension, context),
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: profilo

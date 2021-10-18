@@ -1,9 +1,11 @@
 
 import 'package:everstream/Metodi/Ridimensiona.dart';
+import 'package:everstream/Pagine/Pagine_Profilo_Azienda/ProfiloAzienda.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../Widget/Menu.dart';
 
+import '../main.dart';
 import 'Pagine_Cerca/PaginaCerca.dart';
 import 'Pagine_Profilo_Utente/ProfiloUtente.dart';
 
@@ -45,10 +47,14 @@ class Main_Page extends StatelessWidget {
     int current_active = menu.getCurrentActive();
     switch (current_active) {
       case 1:
-        return PaginaCerca();
+          return PaginaCerca();
         break;
       case 4:
-        return Profiloutente();
+        if(controller.database.isAzienda){
+          return ProfiloAzienda();
+        }else {
+          return Profiloutente();
+        }
         break;
     }
   }

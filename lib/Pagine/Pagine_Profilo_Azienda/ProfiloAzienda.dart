@@ -1,15 +1,18 @@
 import 'dart:io';
 import 'package:everstream/Metodi/Metodi_Grafici.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:everstream/Widget/Input_Widget/Input_Box.dart';
+
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:everstream/Metodi/Ridimensiona.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 import '../../VideoPlayerPpUp.dart';
 import '../../main.dart';
+
 
 class ProfiloAzienda extends StatelessWidget {
   VideoPlayerScreen popup=VideoPlayerScreen();
@@ -52,198 +55,257 @@ controller.setCurrentContext(context);
       backgroundColor: const Color(0xffffffff),
       body: Stack(
         children: <Widget>[
+
+
+
+          ///Colonna per uniformare visione principale
+
+          Column(
+            children:<Widget>[
           /// Copertina
 
-            SizedBox(
-              width: RicalcoloWidth(375.0, context),
-              height: RicalcoloHeight(204.0, context),
-              child: Stack(
-                children: <Widget>[
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(0.0, 0.0, 375.0, 204.0),
-                    size: Size(375.0, 204.0),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinTop: true,
-                    pinBottom: true,
-                    child:
-                    // Adobe XD layer: 'copertina' (shape)
-                    Container(
-                      decoration:  BoxDecoration(
-                        borderRadius: BorderRadius.only(bottomLeft:Radius.circular(25),bottomRight:Radius.circular(25)),
-                        image: DecorationImage(
-                          image:changed_copertina?FileImage(new_foto_copertina):
-                          NetworkImage(foto_copertina),
+          SizedBox(
+            width: RicalcoloWidth(375.0, context),
+            height: RicalcoloHeight(204.0, context),
+            child: Stack(
+              children: <Widget>[
+                Pinned.fromSize(
+                  bounds: Rect.fromLTWH(0.0, 0.0, 375.0, 204.0),
+                  size: Size(375.0, 204.0),
+                  pinLeft: true,
+                  pinRight: true,
+                  pinTop: true,
+                  pinBottom: true,
+                  child:
+                  // Adobe XD layer: 'copertina' (shape)
+                  Container(
+                    decoration:  BoxDecoration(
+                      borderRadius: BorderRadius.only(bottomLeft:Radius.circular(25),bottomRight:Radius.circular(25)),
+                      image: DecorationImage(
+                        image:changed_copertina?FileImage(new_foto_copertina):
+                        NetworkImage(foto_copertina),
 
-                          fit: BoxFit.cover,
-                        ),
+                        fit: BoxFit.cover,
                       ),
-                      child:on_modifica?TextButton(
-                        onPressed: (){
-                          ChangeFoto(context,1);
-                        },
-                      )
-                          :Container(),
                     ),
-                  ),
-                ],
-              ),
-            ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children:<Widget>[
-
-
-            ElevatedButton(
-          onPressed: () {print("ok");},
-          style:My_Button_Style_CustomColor(Size(RicalcoloWidth(12.0, context), RicalcoloHeight(12.0, context))),
-        child:FittedBox(
-          fit:BoxFit.contain,
-          child:
-        Icon(
-                Icons.trending_up
-                ))),
-                Container(
-                  width: RicalcoloWidth(42.0, context),
-                  height: RicalcoloHeight(42.0, context),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: const AssetImage("assets/image/statistiche.png"),
-                      fit: BoxFit.fill,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0x29000000),
-                        offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                        blurRadius: 6,
-                      ),
-                    ],
+                    child:on_modifica?TextButton(
+                      onPressed: (){
+                        ChangeFoto(context,1);
+                      },
+                    )
+                        :Container(),
                   ),
                 ),
-
-            ]
-          ),
-
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(35.0, context), RicalcoloHeight(197.0, context)),
-            child:
-            // Adobe XD layer: 'nome + descrizione' (group)
-            SizedBox(
-              width: RicalcoloWidth(153.0, context),
-              height: RicalcoloHeight(67.0, context),
-              child: Stack(
-                children: <Widget>[
-
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(0.0, 27.0, 165.0, 40.0),
-                    size: Size(153.0, 67.0),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinBottom: true,
-                    fixedHeight: true,
-                    child: TextFormField(
-                      enabled: on_modifica,
-                      controller:controllerIndirizzo,
-                      onTap:(){ClearText(controllerIndirizzo);},
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                      ),
-                      style: TextStyle(
-                        fontFamily: 'MADE TOMMY',
-                        fontSize: RicalcoloWidth(10.0, context),
-                        color: const Color(0xff000000),
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ],
-              ),
+              ],
             ),
           ),
-          Container(
-            margin:  EdgeInsets.only(left:RicalcoloWidth(31.0, context),top:RicalcoloHeight(396.0, context)),
 
-            child:
-            // Adobe XD layer: 'interessi_01' (group)
-            SizedBox(
-              width: RicalcoloWidth(55.0, context),
-              height: RicalcoloHeight(67.0, context),
-              child: Stack(
-                children: <Widget>[
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(0.0, 0.0, 55.0, 55.0),
-                    size: Size(55.0, 67.0),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinTop: true,
-                    pinBottom: true,
-                    child:
-                    // Adobe XD layer: 'La-Fase-2-per-i-neg…' (shape)
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(13.0),
-                        image: DecorationImage(
-                          image:changed_hashtag_1?FileImage(new_hashtag_1)
-                              :NetworkImage(controller.database.aziendaHashtagList[0].immagine_hashtag),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      child:on_modifica? TextButton( //attivo la possibilità di cliccare solo quando si modifica
-                        onPressed: (){
-                          ChangeFoto(context,3);
-                        },
-                      )
-                          :Container(), //altrimenti ci lascio un conteiner segnaposto
-                    ),),
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(4.0, 51.0, 48.0, 16.0),
-                    size: Size(55.0, 67.0),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinBottom: true,
-                    fixedHeight: true,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6.0),
-                        color: const Color(0xffffffff),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0x29000000),
-                            offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                            blurRadius: 6,
+              /// Specifiche Azienda
+
+              Container(
+                margin:EdgeInsets.only(top:RicalcoloHeight(10.0, context),left:RicalcoloWidth(15.0, context)),
+                  child:Column(
+                      children:<Widget>[
+                      Row(
+
+  children:<Widget>[
+
+    ///Nome
+    Container(
+        width: RicalcoloWidth(150.0, context),
+        height: RicalcoloHeight(25.0, context),child:  TextFormField(
+                enabled: on_modifica,//si attiva solo se la modifica è abilitata
+                controller:controllerNome,
+                onTap:(){ClearText(controllerNome);},
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                ),
+                style: TextStyle(
+                  fontFamily: 'MADE TOMMY',
+                  fontSize: RicalcoloWidth(19.0, context),
+                  color: const Color(0xff0e1116),
+                  fontWeight: FontWeight.w700,
+                ),
+                textAlign: TextAlign.left,
+              ),
+    ),
+
+                     ///Pulsante modifica
+                     Container(
+                       width: RicalcoloWidth(25.0, context),
+                       height: RicalcoloHeight(25.0, context),
+                       decoration: BoxDecoration(
+                         image: DecorationImage(
+                           image:on_modifica?AssetImage("assets/image/editFatto.png")
+                               : AssetImage("assets/image/pennello.png"),
+
+                           fit: BoxFit.fill,
+                         ),
+                         boxShadow: [
+                           BoxShadow(
+                             color: const Color(0x29000000),
+                             offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
+                             blurRadius:5,
+                           ),
+                         ],
+                       ),
+                       child:TextButton(
+                         onPressed: (){
+                           if(on_modifica==false) {
+                             on_modifica = true;
+                           }
+                           else{
+                             on_modifica=false;
+                             ChangedConfirmed(context);
+                           }
+                           rebuildAllChildren(context);
+                         },
+                       ),
+                     ),
+
+
+]),
+                        ///Indirizzo
+                       TextFormField(
+                          enabled: on_modifica,
+                          controller:controllerIndirizzo,
+                          onTap:(){ClearText(controllerIndirizzo);},
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
                           ),
-                        ],
+                          style: TextStyle(
+                            fontFamily: 'MADE TOMMY',
+                            fontSize: RicalcoloWidth(10.0, context),
+                            color: const Color(0xff000000),
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+
+          /// Descrizione
+
+      TextFormField(
+                  enabled: on_modifica,
+                  controller:controllerDescrizione,
+                  onTap:(){ClearText(controllerDescrizione);},
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+
+                  ),style: TextStyle(
+                  fontFamily: 'MADE TOMMY',
+                  fontSize: RicalcoloWidth(11.0, context),
+                  color: const Color(0xff000000),
+                  fontWeight: FontWeight.w300,
+                  height: 1.2,
+                ),
+
+                ),
+
+
+                        /// Lista Hashtag
+                        Container(
+
+                            width: RicalcoloWidth(55.0, context),
+                            height: RicalcoloHeight(67.0, context),
+                            child: Column(
+                              children: <Widget>[
+
+                                  Container(
+                                    width: RicalcoloWidth(55.0, context),
+                                    height:  RicalcoloWidth(55.0, context),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(13.0),
+                                      image: DecorationImage(
+                                        image:changed_hashtag_1?FileImage(new_hashtag_1)
+                                            :NetworkImage(controller.database.aziendaHashtagList[0].immagine_hashtag),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    child:on_modifica? TextButton( //attivo la possibilità di cliccare solo quando si modifica
+                                      onPressed: (){
+                                        ChangeFoto(context,3);
+                                      },
+                                    )
+                                        :Container(), //altrimenti ci lascio un conteiner segnaposto
+                                  ),
+
+   Container(
+    width: RicalcoloWidth(55 ,context),
+    height: RicalcoloHeight(10, context),
+    decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(14.0),
+    color: const Color(0xffe00a17),
+    ),
+
+    child:
+                                 TextFormField(
+                                    enabled: on_modifica,
+                                    controller:controllerHash1,
+                                    onTap:(){
+                                      ClearText(controllerHash1);
+                                      controllerHash1.text="#";},
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                    ),
+                                    style: TextStyle(
+                                      fontFamily: 'MADE TOMMY',
+                                      fontSize: RicalcoloWidth(7.0, context),
+                                      color: const Color(0xff0e1116),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    textAlign: TextAlign.left,
+                                  ),
+    ),
+                              ],
+                            ),
+                          ),
+
+
+
+
+                      ])),
+
+        ]),
+          ///Bottoni in alto
+          Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children:<Widget>[
+
+                ///Button Statistiche
+
+                Container(
+                    width: RicalcoloWidth(42.0, context),
+                    height: RicalcoloHeight(42.0, context),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: const AssetImage("assets/image/statistiche.png"),
+                        fit: BoxFit.fill,
                       ),
                     ),
-                  ),
-                  Container(
-                    margin:  EdgeInsets.only(left:RicalcoloWidth(13.0, context),top:RicalcoloHeight(59.0, context)),
-                    width:RicalcoloWidth(55.0, context),
-                    height:RicalcoloHeight(67.0, context),
-                    child: TextFormField(
-                      enabled: on_modifica,
-                      controller:controllerHash1,
-                      onTap:(){
-                        ClearText(controllerHash1);
-                        controllerHash1.text="#";},
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                      ),
-                      style: TextStyle(
-                        fontFamily: 'MADE TOMMY',
-                        fontSize: RicalcoloWidth(7.0, context),
-                        color: const Color(0xff0e1116),
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.left,
+                    child:TextButton(
+                      onPressed:(){ print("top");},
+                    )
+                ),
+
+
+                ///Button Statistiche
+                Container(
+                  width: RicalcoloWidth(41.0, context),
+                  height: RicalcoloHeight(41.0, context),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: const AssetImage("assets/image/impostazioni.png"),
+                      fit: BoxFit.fill,
                     ),
                   ),
-                ],
-              ),
-            ),
+                  child:TextButton(
+                    onPressed:(){ print("top");},
+                  ),
+                ),
+              ]
           ),
+
+
           Container(
             margin:  EdgeInsets.only(left:RicalcoloWidth(177.0, context),top:RicalcoloHeight(396.0, context)),
             child:
@@ -798,35 +860,8 @@ controller.setCurrentContext(context);
               textAlign: TextAlign.left,
             ),
           ),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(54.5, context), RicalcoloHeight(534.5, context)),
-            child: SvgPicture.string(
-              _svg_3q9l7b,
-              allowDrawingOutsideViewBox: true,
-            ),
-          ),
-          Container(
-            margin:  EdgeInsets.only(left:RicalcoloWidth(35.0, context),top:RicalcoloHeight(266.0, context)),
-            width: RicalcoloWidth(200.0, context),
 
-            child:  TextFormField(
-              enabled: on_modifica,
-              controller:controllerDescrizione,
-              onTap:(){ClearText(controllerDescrizione);},
-              decoration: InputDecoration(
-                border: InputBorder.none,
 
-              ),style: TextStyle(
-              fontFamily: 'MADE TOMMY',
-              fontSize: RicalcoloWidth(11.0, context),
-              color: const Color(0xff000000),
-              fontWeight: FontWeight.w300,
-
-              height: 1.2,
-            ),
-
-            ),
-          ),
           Transform.translate(
             offset: Offset(RicalcoloWidth(7.0, context), RicalcoloHeight(9.0, context)),
             child:
@@ -1045,105 +1080,9 @@ controller.setCurrentContext(context);
             ),
          ),
           ),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(28.0, context), RicalcoloHeight(190.0, context)),
-            child: Container(
-              width: RicalcoloWidth(200.0, context),
-              child:TextFormField(
-                enabled: on_modifica,//si attiva solo se la modifica è abilitata
-                controller:controllerNome,
-                onTap:(){ClearText(controllerNome);},
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                ),
-                style: TextStyle(
-                  fontFamily: 'MADE TOMMY',
-                  fontSize: RicalcoloWidth(19.0, context),
-                  color: const Color(0xff0e1116),
-                  fontWeight: FontWeight.w700,
-                ),
-                textAlign: TextAlign.left,
-              ),
-            ),),
-          //visualizza la mappa
-          /*  Transform.translate(
-            offset: Offset(RicalcoloWidth(197, context), RicalcoloHeight(222.0, context)),
-            child:
-                // Adobe XD layer: 'PHOTO-2021-05-30-14…' (shape)
-                Container(
-              width: RicalcoloWidth(31.0, context),
-            height: RicalcoloHeight(31.0, context),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage("assets/image/mappa.jpg"),
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-          ),
-          */
-          Container(
-          margin:  EdgeInsets.only(left:RicalcoloWidth(2.0, context),top:RicalcoloHeight(741.0, context)),
-    child:Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children:<Widget> [
-    Container(
-    width: RicalcoloWidth(icon_dimension, context),
-    height: RicalcoloHeight(icon_dimension, context),
-    decoration: BoxDecoration(
-    image: DecorationImage(
-    image:AssetImage( 'assets/image/cerca.png'),
-    fit: BoxFit.fill,                                                   ),
-    ),
-    ),
 
 
-    Container(
-    margin:  EdgeInsets.only(left:RicalcoloWidth(40.0, context)),
-    width: RicalcoloWidth(icon_dimension, context),
-    height: RicalcoloHeight(icon_dimension, context),
-    decoration: BoxDecoration(
-    image: DecorationImage(
-    image:AssetImage( 'assets/image/acquisti.png'),
-    fit: BoxFit.fill,
-    ),
-    ),
 
-    ),
-
-
-    // Adobe XD layer: 'messaggi@4x' (shape)
-    Container(
-    margin:  EdgeInsets.only(left:RicalcoloWidth(40.0, context)),
-    width: RicalcoloWidth(icon_dimension, context),
-    height: RicalcoloHeight(icon_dimension, context),
-    decoration: BoxDecoration(
-    image: DecorationImage(
-    image:AssetImage( 'assets/image/messaggi.png'),
-    fit: BoxFit.fill,
-    ),
-    ),
-
-    ),
-
-
-    Container(
-    margin:  EdgeInsets.only(left:RicalcoloWidth(40.0, context)),
-    width: RicalcoloWidth(icon_dimension, context),
-    height: RicalcoloHeight(icon_dimension, context),
-    decoration: BoxDecoration(
-    image:  DecorationImage(
-    image:AssetImage( 'assets/image/profiloRED.png'),
-    fit: BoxFit.fill,
-    ),
-    ),
-
-    ),
-
-    ],
-
-    ),
-          ),
           Transform.translate(
             offset: Offset(RicalcoloWidth(130.0, context), RicalcoloHeight(509.0, context)),
             child:
@@ -1177,64 +1116,7 @@ controller.setCurrentContext(context);
             ),
           ),
 
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(334.0, context), RicalcoloHeight(3.0, context)),
-            child:
-            // Adobe XD layer: 'impostazioni' (shape)
-            Container(
-              width: RicalcoloWidth(41.0, context),
-              height: RicalcoloHeight(41.0, context),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage("assets/image/impostazioni.png"),
-                  fit: BoxFit.fill,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0x29000000),
-                    offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                    blurRadius: 6,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            margin:  EdgeInsets.only(left:RicalcoloWidth(158.0, context),top:RicalcoloHeight(191.0, context)),
-            child:
-            // Adobe XD layer: 'editProfile' (shape)
-            Container(
-              width: RicalcoloWidth(25.0, context),
-              height: RicalcoloHeight(25.0, context),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image:on_modifica?AssetImage("assets/image/fatto.png")
-                      : AssetImage("assets/image/pennello.png"),
 
-                  fit: BoxFit.fill,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0x29000000),
-                    offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                    blurRadius:5,
-                  ),
-                ],
-              ),
-              child:TextButton(
-                onPressed: (){
-                  if(on_modifica==false) {
-                    on_modifica = true;
-                  }
-                  else{
-                    on_modifica=false;
-                    ChangedConfirmed(context);
-                  }
-                  rebuildAllChildren(context);
-                },
-              ),
-            ),
-          ),
 
 
       popup,

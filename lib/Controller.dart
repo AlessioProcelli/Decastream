@@ -105,7 +105,6 @@ class Controller {
       }
     }
     ;
-
     ///se esito negativo cerca tra le aziende
     if (trovato == false) {
       List<Azienda> listaziende = await database.getAziendaList();
