@@ -11,7 +11,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../Tipi/Hashtag.dart';
 import '../../Tipi/Indirizzo.dart';
-import '../../VideoPlayerPpUp.dart';
+import '../../Pop_Up/PopupVideoAzienda.dart';
 import '../../main.dart';
 
 class ProfiloAzienda_VistaUtente extends StatelessWidget {
