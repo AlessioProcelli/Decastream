@@ -92,42 +92,37 @@ class Controller {
   Future<bool> LoginIsCorrect(String username, String password) async {
     bool trovato = false;
     database.isAzienda = false;
-    List<Utente> listuser = await database.cercaUtente(username);
-    print("\n"+listuser.length.toString());
-    ///Ricerca User Per nome e cognome
-    for (Utente element in listuser) {
-      //ricerca tra gli utenti
-      if (element.username.compareTo(username) == 0 &&
-          element.password.compareTo(password) == 0) {
+    Utente user = await database.findUser(username);
+
+    ///Confronto utente recuperato con la password
+    if (user != null) {
+      if (user.password.compareTo(password) == 0) {
         trovato = true;
-        database.setCurrentUser(element);
-        break;
+        database.setcurrentUser(user);
       }
     }
-    ;
+
     ///se esito negativo cerca tra le aziende
     if (trovato == false) {
-      List<Azienda> listaziende = await database.getAziendaList();
+      Azienda azienda = await database.findAzienda(username);
       List<Hashtag> list = await database
           .getHashtagList(); //prende list hashtag per recuperare quelli aziendali
 
-      for (Azienda element in listaziende) {
-        if (element.username.compareTo(username) == 0 &&
-            element.password.compareTo(password) == 0) {
+      if (azienda != null) {
+        if (azienda.password.compareTo(password) == 0) {
           trovato = true;
-          database.currentAzienda = element;
+          database.currentAzienda = azienda;
           database.isAzienda = true;
+          List<Hashtag> hashlist = await database.findCompanyHashtag(
+              azienda.id);
           list.forEach((hashtag) {
-            if (hashtag.id_azienda == element.id) {
-              database.aziendaHashtagList.add(hashtag);
-            }
+            database.aziendaHashtagList.add(hashtag);
           });
-          break;
         }
       }
-      ;
     }
-    return trovato;
+      return trovato;
+
   }
 
   Future<bool> getChat(String id_utente, List<String> listchat) async {

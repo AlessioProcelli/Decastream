@@ -1,6 +1,7 @@
 
 import 'dart:async';
 import 'package:everstream/Controller.dart';
+import 'package:everstream/Pagine/Main_Page.dart';
 import 'package:flutter/material.dart';
 import 'Database.dart';
 import 'Pagine/Pagine_Accesso/Accedi.dart';
@@ -33,8 +34,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-
       home:Accedi(),
+
+      routes: {
+
+        '/mainPage': (context) => Main_Page(),
+      },
+
 
     );
   }

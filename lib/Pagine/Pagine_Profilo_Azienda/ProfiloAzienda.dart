@@ -558,7 +558,7 @@ class ProfiloAzienda extends StatelessWidget {
                   ),
 
                   ///popup
-                  popup,
+                 // popup,
                 ],
               ),
             )));

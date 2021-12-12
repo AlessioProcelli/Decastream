@@ -184,7 +184,7 @@ class Accedi extends StatelessWidget {
     if (correct) {
       Route route;
         route = MaterialPageRoute(builder: (context) => Main_Page());
-      Navigator.push(context, route);
+      Navigator.pushNamed(context, "/mainPage");
     }
 
   }

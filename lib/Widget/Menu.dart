@@ -1,11 +1,6 @@
-
 import 'package:everstream/Pagine/Main_Page.dart';
 import 'package:flutter/material.dart';
 import 'package:everstream/Metodi/Ridimensiona.dart';
-
-
-
-
 
 class Menu extends StatelessWidget {
   Main_Page padre;
@@ -24,82 +19,104 @@ class Menu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            width: RicalcoloWidth(icon_dimension, context),
-            height: RicalcoloHeight(icon_dimension, context),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: cerca
-                    ? AssetImage('assets/image/cercaRED.png')
-                    : AssetImage('assets/image/cerca.png'),
-                fit: BoxFit.fill,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        Container(
+          width: RicalcoloWidth(icon_dimension, context),
+          height: RicalcoloHeight(icon_dimension, context),
+          child: AspectRatio(
+            aspectRatio: 1 / 1,
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: cerca
+                      ? AssetImage('assets/image/cercaRED.png')
+                      : AssetImage('assets/image/cerca.png'),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              child: TextButton(
+                onPressed: () => {setCurrentActive(1, context)},
               ),
             ),
-            child: TextButton(
-              onPressed: () => {setCurrentActive(1, context)},
-            ),
           ),
+        ),
 
-          Container(
-            margin: EdgeInsets.only(left: RicalcoloWidth(40.0, context)),
-            width: RicalcoloWidth(icon_dimension, context),
-            height: RicalcoloWidth(icon_dimension, context),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: acquisti
-                    ? AssetImage('assets/image/acquistiRED.png')
-                    : AssetImage('assets/image/acquisti.png'),
-                fit: BoxFit.fill,
+        Container(
+          width: RicalcoloWidth(icon_dimension, context),
+          height: RicalcoloHeight(icon_dimension, context),
+          child: AspectRatio(
+            aspectRatio: 1 / 1,
+            child: Container(
+              width: RicalcoloWidth(icon_dimension, context),
+              height: RicalcoloWidth(icon_dimension, context),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: acquisti
+                      ? AssetImage('assets/image/acquistiRED.png')
+                      : AssetImage('assets/image/acquisti.png'),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              child: TextButton(
+                onPressed: () => {
+                  //Cerca
+                  //setCurrentActive(2,context)
+                },
               ),
             ),
-            child: TextButton(
-              onPressed: () => {
-                //Cerca
-                //setCurrentActive(2,context)
-              },
-            ),
           ),
+        ),
 
-          // Adobe XD layer: 'messaggi@4x' (shape)
-          Container(
-            margin: EdgeInsets.only(left: RicalcoloWidth(40.0, context)),
-            width: RicalcoloWidth(icon_dimension, context),
-            height: RicalcoloWidth(icon_dimension, context),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: messaggi
-                    ? AssetImage('assets/image/messaggiRED.png')
-                    : AssetImage('assets/image/messaggi.png'),
-                fit: BoxFit.fill,
+        // Adobe XD layer: 'messaggi@4x' (shape)
+        Container(
+          width: RicalcoloWidth(icon_dimension, context),
+          height: RicalcoloHeight(icon_dimension, context),
+          child: AspectRatio(
+            aspectRatio: 1 / 1,
+            child: Container(
+              width: RicalcoloWidth(icon_dimension, context),
+              height: RicalcoloWidth(icon_dimension, context),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: messaggi
+                      ? AssetImage('assets/image/messaggiRED.png')
+                      : AssetImage('assets/image/messaggi.png'),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              child: TextButton(
+                onPressed: () => {
+                  // setCurrentActive(3,context)
+                },
               ),
             ),
-            child: TextButton(
-              onPressed: () => {
-                // setCurrentActive(3,context)
-              },
-            ),
           ),
-
-          Container(
-            margin: EdgeInsets.only(left: RicalcoloWidth(40.0, context)),
-            width: RicalcoloWidth(icon_dimension, context),
-            height: RicalcoloWidth(icon_dimension, context),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: profilo
-                    ? AssetImage('assets/image/profiloRED.png')
-                    : AssetImage('assets/image/profilo.png'),
-                fit: BoxFit.fill,
+        ),
+        Container(
+          width: RicalcoloWidth(icon_dimension, context),
+          height: RicalcoloHeight(icon_dimension, context),
+          child: AspectRatio(
+            aspectRatio: 1 / 1,
+            child: Container(
+              width: RicalcoloWidth(icon_dimension, context),
+              height: RicalcoloWidth(icon_dimension, context),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: profilo
+                      ? AssetImage('assets/image/profiloRED.png')
+                      : AssetImage('assets/image/profilo.png'),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              child: TextButton(
+                onPressed: () => {setCurrentActive(4, context)},
               ),
             ),
-            child: TextButton(
-              onPressed: () => {setCurrentActive(4, context)},
-            ),
           ),
-        ],
+        ),
+      ],
     );
   }
 

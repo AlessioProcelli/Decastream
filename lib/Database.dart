@@ -201,7 +201,7 @@ class Database {
         .catchError((error) => print("Failed to add messaggio: $error"));
   }
 
-  void setCurrentUser(Utente user) {
+  void setcurrentUser(Utente user) {
     this.currentUser = user;
     this.isAzienda = false;
   }
@@ -511,26 +511,70 @@ class Database {
     });
     return biggestId+1;
   }
-  Future<List<Utente>> cercaUtente(String nome) async {
-    List<Utente> list = [];
+
+  Future<Utente> findUser(String username) async {
+    Utente user = null;
     QuerySnapshot query = await FirebaseFirestore.instance.collection('utenti').
-    where('Username',isEqualTo:nome).get();
+    where('Username', isEqualTo: username).get();
+    if (query.docs.isNotEmpty) {
+      QueryDocumentSnapshot first = query.docs.first;
+      user = new Utente(
+          first["Nome"],
+          first["Cognome"],
+          first["Data_Nascita"],
+          first ["Sesso"],
+          first ["Id_luogo"],
+          first["Email"],
+          first["Username"],
+          first ["Password"],
+          first["id"],
+          first ["Foto_Profilo"],
+          first ["Cellulare"]);
+    }
+
+    return user;
+  }
+
+  Future<Azienda> findAzienda(String username) async {
+    Azienda company = null;
+    QuerySnapshot query = await FirebaseFirestore.instance.collection('Aziende')
+        .
+    where('Username', isEqualTo: username)
+        .get();
+    if (query.docs.isNotEmpty) {
+      QueryDocumentSnapshot first = query.docs.first;
+      company = new Azienda(
+          first ["Nome_Azienda"],
+          first ["Id_Indirizzo"],
+          first ["Partita_Iva"],
+          first ["Tipologia_Azienda"],
+          first ["Email"],
+          first ["Username"],
+          first ["Password"],
+          first ["Img_Copertina"],
+          first ["Img_Profilo"],
+          first ["Descrizione"],
+          first ["Follower"],
+          first ["id"],
+          first ["Img_Secondaria"]);
+    }
+
+    return company;
+  }
+
+  Future<List<Hashtag>> findCompanyHashtag(int id) async {
+    List<Hashtag> list = [];
+    QuerySnapshot query = await FirebaseFirestore.instance.collection('Hashtag')
+    .where('id',isEqualTo: id).get();
     query.docs.forEach((element) {
-      list.add(new Utente(
-          element["Nome"],
-          element["Cognome"],
-          element["Data_Nascita"],
-          element ["Sesso"],
-          element ["Id_luogo"],
-          element["Email"],
-          element["Username"],
-          element ["Password"],
-          element["id"],
-          element ["Foto_Profilo"],
-          element ["Cellulare"]));
+      list.add(new Hashtag(element ["id_Azienda"], element ["Nome"],
+          element ["Immagine_Hashtag"], element ["id"]));
     }
     );
     return list;
   }
+
+
+
 
 }
