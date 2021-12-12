@@ -92,8 +92,8 @@ class Controller {
   Future<bool> LoginIsCorrect(String username, String password) async {
     bool trovato = false;
     database.isAzienda = false;
-    List<Utente> listuser = await database.getUserList();
-
+    List<Utente> listuser = await database.cercaUtente(username);
+    print("\n"+listuser.length.toString());
     ///Ricerca User Per nome e cognome
     for (Utente element in listuser) {
       //ricerca tra gli utenti

@@ -511,6 +511,26 @@ class Database {
     });
     return biggestId+1;
   }
-
+  Future<List<Utente>> cercaUtente(String nome) async {
+    List<Utente> list = [];
+    QuerySnapshot query = await FirebaseFirestore.instance.collection('utenti').
+    where('Username',isEqualTo:nome).get();
+    query.docs.forEach((element) {
+      list.add(new Utente(
+          element["Nome"],
+          element["Cognome"],
+          element["Data_Nascita"],
+          element ["Sesso"],
+          element ["Id_luogo"],
+          element["Email"],
+          element["Username"],
+          element ["Password"],
+          element["id"],
+          element ["Foto_Profilo"],
+          element ["Cellulare"]));
+    }
+    );
+    return list;
+  }
 
 }
