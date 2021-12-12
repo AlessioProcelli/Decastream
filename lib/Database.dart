@@ -36,7 +36,7 @@ class Database {
 
   void init() async {
     debugPrint("instance");
-    WidgetsFlutterBinding
+    await WidgetsFlutterBinding
         .ensureInitialized(); //comandi per inizializzare Firebase
     await Firebase
         .initializeApp(); //Sempre da eseguire prima di qualsiasi operazione su database

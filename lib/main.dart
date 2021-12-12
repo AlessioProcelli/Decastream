@@ -2,24 +2,22 @@
 import 'dart:async';
 import 'package:everstream/Controller.dart';
 import 'package:flutter/material.dart';
+import 'Database.dart';
 import 'Pagine/Pagine_Accesso/Accedi.dart';
 
-Future<void> init() async {
-  controller.getUtenti();
-}
 
+Database _database;
 Controller controller;
-Timer timer;
 
 Future<void> main()  async {
-controller=new Controller();
-/*const oneSec = const Duration(seconds:1);
-new Timer.periodic(oneSec, (Timer t) => print('hi!'));*/
-/*runApp(MyLogo());
-  await Future.delayed(Duration(seconds: 3));*/
- // timer = Timer.periodic(Duration(seconds: 5), (Timer t) => Ascolta());
+
+_database= new Database();
+controller=new Controller(_database);
+
+/*runApp(MyLogo());*/
+
  runApp(MyApp());
- /* runApp(ProvaMyApp());*/
+
 
 }
 

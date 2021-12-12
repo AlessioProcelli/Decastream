@@ -228,7 +228,8 @@ class CallPageState extends State<Call> {
     return SafeArea(
         child:Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
+      body: SingleChildScrollView(
+        child:Center(
         child: Container(
 
         child:Stack(
@@ -366,7 +367,7 @@ class CallPageState extends State<Call> {
       ),
         ),
     ),
-    );
+    ));
 
   }
   ///Bottoni in fondo

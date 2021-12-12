@@ -14,7 +14,6 @@ class Accedi extends StatelessWidget {
   /*sono i controller delle TEXTEDITFORM servono per avere riferimenti ai campi e prenderci il testo */
   Input_Box input_username = Input_Box(261.0, 41.0, "Nome utente o email");
   Input_Box input_password = Input_Box(261.0, 41.0, "Password", true);
-
   bool pressPassword = false;
   bool pressUser = false;
 
@@ -45,12 +44,10 @@ class Accedi extends StatelessWidget {
                           EdgeInsets.only(top: RicalcoloHeight(32.0, context)),
                       width: RicalcoloWidth(92.0, context),
                       height: RicalcoloHeight(112.0, context),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: const AssetImage("assets/image/logo.png"),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
+
+                    child: AspectRatio(
+                      aspectRatio: 23 / 28,
+                      child:Image.asset ( "assets/image/logo.png"),)
                     ),
                     Container(
                       margin:
@@ -114,17 +111,22 @@ class Accedi extends StatelessWidget {
                   Container(
                     margin:
                         EdgeInsets.only(top: RicalcoloHeight(55.0, context)),
-                    child: ElevatedButton(
+                    width: RicalcoloWidth(126.0, context),
+                    height: RicalcoloHeight(42.0, context),
+                    child:AspectRatio(
+                      aspectRatio: 3 / 1,
+                      child:ElevatedButton(
                       onPressed: () {
                         Login(context);
                       },
-                      style: My_Button_Style(Size(RicalcoloWidth(126.0, context), RicalcoloHeight(42.0, context))),
+                      style: Primary_Button_Style(),
                       child: Text(
                         'ACCEDI',
                         style: My_Text_Style(RicalcoloWidth(16.0, context),  Color(0xffffffff)),
                         textAlign: TextAlign.left,
                       ),
                     ),
+                  ),
                   ),
 
                   ///Invito Registrazione

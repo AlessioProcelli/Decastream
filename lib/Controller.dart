@@ -20,8 +20,8 @@ import 'Tipi/Offerta.dart';
 class Controller {
   Database database;
 
-  Controller() {
-    database = new Database();
+  Controller( Database database) {
+    this.database = database;
   }
 
   Future<void> AddUtente(

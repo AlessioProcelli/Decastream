@@ -14,6 +14,16 @@ ButtonStyle My_Button_Style(Size size){
     elevation: 8,
   );
 }
+ButtonStyle Primary_Button_Style(){
+  return ElevatedButton.styleFrom(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(14),
+    ),
+    primary: Color(0xffe00a17),
+    onPrimary: Colors.white,
+    elevation: 8,
+  );
+}
 /// Pagina Profilo azienda
 ButtonStyle My_Button_Style_CustomColor(){
   return ElevatedButton.styleFrom(
