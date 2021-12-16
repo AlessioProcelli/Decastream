@@ -2,6 +2,7 @@ import 'dart:ffi';
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:everstream/Tipi/Utente.dart';
 import 'package:everstream/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,11 +13,11 @@ import '../../Metodi/Metodi_Grafici.dart';
 import 'ProfiloUtente_Modifica.dart';
 
 class Profiloutente extends StatelessWidget {
+  Utente activeUser = controller.database.currentUser;
   BuildContext thiscontext;
   bool changeFotoProfilo = false;
   File fotoCambiata;
   double text_size_box = 15.0;
-
   double width_size_box = 230.0;
   double height_size_box = 43.0;
 
@@ -50,7 +51,7 @@ class Profiloutente extends StatelessWidget {
                   children: <Widget>[
                     //Nome Utente
                     Text(
-                      "@" + controller.database.currentUser.username,
+                      "@" + activeUser.username,
                       style: My_Light_Text(
                           RicalcoloWidth(11.0, context), Color(0xff000000)),
                       textAlign: TextAlign.left,
@@ -60,28 +61,27 @@ class Profiloutente extends StatelessWidget {
                     Container(
                       margin:
                           EdgeInsets.only(top: RicalcoloHeight(5.0, context)),
-                      child:
-                          // Adobe XD layer: 'fedez-biografia-202…' (shape)
-                          Container(
                         width: RicalcoloWidth(116.0, context),
                         height: RicalcoloHeight(116.0, context),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(27.0),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                                controller.database.currentUser.foto_profilo),
-                            fit: BoxFit.cover,
+                        child: AspectRatio(
+                          aspectRatio: 1 / 1,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(27.0),
+                              image: DecorationImage(
+                                image: NetworkImage(activeUser.foto_profilo),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+
                     Container(
                       margin:
                           EdgeInsets.only(top: RicalcoloHeight(10.0, context)),
                       child: Text(
-                        controller.database.currentUser.nome +
-                            "  " +
-                            controller.database.currentUser.cognome,
+                        activeUser.nome + "  " + activeUser.cognome,
                         style: My_Bold_Text(
                             RicalcoloWidth(19.0, context), Color(0xff0e1116)),
                         textAlign: TextAlign.left,
@@ -93,29 +93,33 @@ class Profiloutente extends StatelessWidget {
             ),
 
             /// Bottone Modifica
-            Container(
-              margin: EdgeInsets.only(
-                  top: RicalcoloHeight(12.0, context),
-                  right: RicalcoloWidth(10.0, context)),
-              child: Align(
-                alignment: AlignmentDirectional.topEnd,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Route route = MaterialPageRoute(
-                        builder: (context) => Profiloutentemodifica(this));
-                    Navigator.push(context, route);
-                  },
-                  style: My_Button_Style(Size(RicalcoloWidth(75.0, context),
-                      RicalcoloHeight(17.0, context))),
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: Text(
-                      'Modifica',
-                      style: My_Text_Style(
-                          RicalcoloWidth(
-                              RicalcoloWidth(1000, context), context),
-                          Color(0xffffffff)),
-                      textAlign: TextAlign.left,
+            Align(
+              alignment: AlignmentDirectional.topEnd,
+              child: Container(
+                margin: EdgeInsets.only(
+                    top: RicalcoloHeight(12.0, context),
+                    right: RicalcoloWidth(10.0, context)),
+                width: RicalcoloWidth(75.0, context),
+                height: RicalcoloHeight(38.0, context),
+                child: AspectRatio(
+                  aspectRatio: 25 / 16,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Route route = MaterialPageRoute(
+                          builder: (context) => Profiloutentemodifica(this));
+                      Navigator.push(context, route);
+                    },
+                    style: Primary_Button_Style(),
+                    child: FittedBox(
+                      fit: BoxFit.contain,
+                      child: Text(
+                        'Modifica',
+                        style: My_Text_Style(
+                            RicalcoloWidth(
+                                RicalcoloWidth(1000, context), context),
+                            Color(0xffffffff)),
+                        textAlign: TextAlign.left,
+                      ),
                     ),
                   ),
                 ),
@@ -275,7 +279,7 @@ class Profiloutente extends StatelessWidget {
     );
   }
 
-  ReplaceInfo() {
+  replaceInfo() {
     rebuildAllChildren(thiscontext);
   }
 }

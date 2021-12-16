@@ -1,3 +1,5 @@
+
+
 import 'package:adobe_xd/pinned.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:everstream/Metodi/Metodi_Grafici.dart';
@@ -7,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:everstream/Controller.dart';
+import 'package:flutter/widgets.dart';
 
 import '../Pagine_Live/Call.dart';
 import '../Pagine_Live/Call.dart';
@@ -47,18 +50,24 @@ class Visualizzatore_Ricerca extends StatelessWidget {
 
             return new GridView.builder(
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: RicalcoloHeight(240.0, context),
+                childAspectRatio:23/24,
+                  maxCrossAxisExtent: RicalcoloHeight(280.0, context),
                   crossAxisSpacing: RicalcoloWidth(14.0, context),
                   mainAxisSpacing: RicalcoloWidth(28.0, context)),
               itemCount: snapshot.data.docs.length,
               itemBuilder: (BuildContext ctx, index) {
                 //2 row
 
-                ///contorno rosso
-                return Container(
+               ///bottone visita
+                return  FloatingActionButton(
 
-                  width: RicalcoloWidth(169.0, context),
-                  height: RicalcoloHeight(240.0, context),
+                    onPressed: () {
+                  visualizzaProfiloAzienda(
+                      snapshot.data.docs[index]['id'], context);
+                },
+                  ///contorno rosso
+                child: Container(
+
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(23.0),
                     color: const Color(0xffffffff),
@@ -73,21 +82,55 @@ class Visualizzatore_Ricerca extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child:Column(
+                  child:
+                SingleChildScrollView(
+                child:Column(
 
                     children: [
                       /// BOX Immagine Azienda
 
                       Stack(children: <Widget>[
-                        /// Immagine Azienda
+                        /// Immagine Azienda Copertina
+                Container(
+                    width: RicalcoloWidth(172.0, context),
+                      height: RicalcoloHeight(92.0, context),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(22.0),
+                          topRight: Radius.circular(22.0),
+                        ),
+                        image: DecorationImage(
+                          // foto_copertina
+                          image: NetworkImage(
+                              snapshot.data.docs[index]['Img_Copertina']),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                  /// Immagine Azienda Profilo
+                  child:Align(
+                      alignment: AlignmentDirectional.bottomCenter,
+                    child:Container(
+                      width: RicalcoloWidth(35.0, context),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        color: const Color(0xffffffff),
+                        border: Border.all(
+                            width: RicalcoloWidth(1.0, context),
+                            color: const Color(0xffe00a17)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0x29000000),
+                            offset: Offset(0.0, RicalcoloHeight(5.0, context)),
+                            blurRadius: 9,
+                          ),
+                        ],
+                      ),
+                    child:AspectRatio(
+                      aspectRatio: 1/1,
+                      child:Container(
 
-                        Container(
-                          width: RicalcoloWidth(172.0, context),
-                          height: RicalcoloHeight(92.0, context),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(22.0),
-                              topRight: Radius.circular(22.0),
+                            borderRadius: BorderRadius.all(Radius.circular(8.0),
                             ),
                             image: DecorationImage(
                               // foto_copertina
@@ -96,16 +139,11 @@ class Visualizzatore_Ricerca extends StatelessWidget {
                               fit: BoxFit.cover,
                             ),
                           ),
-
-                          ///Visualizza azienda
-                          child: TextButton(
-                            onPressed: () {
-                              Visualizza_ProfiloAzienda(
-                                  snapshot.data.docs[index]['id'], context);
-                            },
-                          ),
                         ),
-
+                  ),
+                  ),
+                  ),
+                ),
                         /// Box I
                         Align(
                           alignment: AlignmentDirectional.topEnd,
@@ -122,6 +160,7 @@ class Visualizzatore_Ricerca extends StatelessWidget {
                             ),
                           ),
                         ),
+
                       ]),
 
                       /// Nome Azienda e Valutazione
@@ -130,20 +169,27 @@ class Visualizzatore_Ricerca extends StatelessWidget {
                             top: RicalcoloHeight(8.0, context),
                             right: RicalcoloWidth(10.0, context),
                             left: RicalcoloWidth(10.0, context),
-                            bottom: RicalcoloHeight(3.0, context)),
-                        child: Row(
+                            bottom: RicalcoloHeight(6.0, context)),
+                        child:  Row(
                           // prima row per nome azienda e stelle
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             ///nome azienda
+                           Container(
+                             width:RicalcoloWidth(100.0, context),
+
+                        child: FittedBox(
+                          fit:BoxFit.scaleDown,
+                          child:
                             Text(
                               snapshot.data.docs[index]['Nome_Azienda'],
                               // max 16 caratteri
                               style: My_Light_Text(
-                                  RicalcoloWidth(14.0, context), Colors.black),
+                                  RicalcoloWidth(15.0, context), Colors.black),
                               textAlign: TextAlign.center,
                             ),
-
+                        ),
+                           ),
                             ///valutazione e stelle
 
                             Container(
@@ -204,7 +250,8 @@ class Visualizzatore_Ricerca extends StatelessWidget {
                                         (BuildContext context, indexHastag) {
                                       return
                                           //riquadro hashtag
-                                          Container(
+                                         AspectRatio(aspectRatio: 4/1,
+                                             child:Container(
                                         margin: EdgeInsets.only(
                                             left:
                                                 RicalcoloWidth(10.0, context)),
@@ -222,22 +269,23 @@ class Visualizzatore_Ricerca extends StatelessWidget {
                                               offset: Offset(
                                                   0.0,
                                                   RicalcoloHeight(
-                                                      3.0, context)),
-                                              blurRadius: 6,
+                                                      1.0, context)),
+                                              blurRadius: 1,
                                             ),
                                           ],
                                         ),
-                                        child: Text(
+                                        child:FittedBox(
+                                          fit: BoxFit.fitWidth,
+                                          child:Text(
                                           "#" + listQ[indexHastag]["Nome"],
                                           style: TextStyle(
                                             fontFamily: 'MADE TOMMY',
-                                            fontSize:
-                                                RicalcoloWidth(5.0, context),
+
                                             color: const Color(0xff0e1116),
                                             fontWeight: FontWeight.w300,
                                           ),
                                           textAlign: TextAlign.center,
-                                        ),
+                                        ),),)
                                       );
                                     }),
                               );
@@ -274,7 +322,7 @@ class Visualizzatore_Ricerca extends StatelessWidget {
                                         fontWeight: FontWeight.w600,
                                       ))),
                               onPressed: () {
-                                Chiama(
+                                chiama(
                                     snapshot.data.docs[index]["id"], context);
                               },
                               icon: Icon(
@@ -287,6 +335,8 @@ class Visualizzatore_Ricerca extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+                ),
                 );
               },
             );
@@ -294,11 +344,11 @@ class Visualizzatore_Ricerca extends StatelessWidget {
     );
   }
 
-  void Chiama(int id, BuildContext context) {
+  void chiama(int id, BuildContext context) {
     controller.ChiamaAzienda(id, context);
   }
 
-  void Visualizza_ProfiloAzienda(int index, BuildContext context) {
+  void visualizzaProfiloAzienda(int index, BuildContext context) {
     controller.VisualizzaProfiloAzienda(index, context);
   }
 }

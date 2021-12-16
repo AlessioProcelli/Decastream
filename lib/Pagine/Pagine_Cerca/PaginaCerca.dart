@@ -17,7 +17,6 @@ class PaginaCerca extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    final Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -27,7 +26,7 @@ class PaginaCerca extends StatelessWidget{
               margin: EdgeInsets.only(
                   top: RicalcoloHeight(17.0, context),
                   right: RicalcoloWidth(25.0, context),
-                  bottom: RicalcoloHeight(10.0, context),
+                  bottom: RicalcoloHeight(15.0, context),
                   left: RicalcoloWidth(25.0, context)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,12 +51,17 @@ class PaginaCerca extends StatelessWidget{
                   ),
 
                   ///Bottone Filtra
+                  Container(
+                    width: RicalcoloWidth(64.0, context),
+                    height: RicalcoloHeight(31.0, context),
+                    child: AspectRatio(
+                      aspectRatio: 2 / 1,
+                      child:
                   ElevatedButton(
                     onPressed: () {
                       print("ok");
                     },
-                    style: My_Button_Style(Size(RicalcoloWidth(77, context),
-                        RicalcoloHeight(30, context))),
+                    style: Primary_Button_Style(),
                     child:FittedBox(
                       fit: BoxFit.cover,
                       child: Text(
@@ -68,15 +72,19 @@ class PaginaCerca extends StatelessWidget{
                     ),
                   ),
                   ),
+                    ),
+                  ),
                 ],
               ),
             ),
 
             /// Visualizzatore Di Ricerca
             Expanded(
-              flex: 12,
+              flex: 2,
+
               //griglia aziende
               child: Visualizzatore_Ricerca(),
+
             ),
           ],
         ),

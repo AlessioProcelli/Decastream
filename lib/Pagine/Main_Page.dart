@@ -11,12 +11,17 @@ import 'Pagine_Profilo_Utente/ProfiloUtente.dart';
 
 class Main_Page extends StatelessWidget {
   BuildContext context;
+  final Widget paginaCerca=PaginaCerca();
+  Widget paginaProfilo;
   Menu menu;
 
-  Main_Page({
-    Key key,
-  }) : super(key: key) {
+  Main_Page()  {
     menu = new Menu(this);
+    if(controller.database.isAzienda){
+      paginaProfilo= ProfiloAzienda();
+    }else {
+      paginaProfilo= Profiloutente();
+    }
   }
 
   @override
@@ -26,7 +31,7 @@ class Main_Page extends StatelessWidget {
       child: Scaffold(
         backgroundColor: const Color(0xffffffff),
         body: Column(children: <Widget>[
-          Expanded(child: ReturnActiveSchermata()),
+          Expanded(child: returnActiveSchermata()),
           Align(
             alignment: Alignment.bottomCenter,
             child: Material(
@@ -43,23 +48,19 @@ class Main_Page extends StatelessWidget {
     );
   }
 
-  Widget ReturnActiveSchermata() {
+  Widget returnActiveSchermata() {
     int current_active = menu.getCurrentActive();
     switch (current_active) {
       case 1:
-          return PaginaCerca();
+          return paginaCerca;
         break;
       case 4:
-        if(controller.database.isAzienda){
-          return ProfiloAzienda();
-        }else {
-          return Profiloutente();
-        }
+          return paginaProfilo;
         break;
     }
   }
 
-  void Change() {
+  void change() {
     rebuildAllChildren(context);
   }
 }

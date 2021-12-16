@@ -143,7 +143,7 @@ class Controller {
     database.addMessage("Chat" + azienda, messaggio);
   }
 
-  Future<void> UpdateUser(String nome, String cognome, String username,
+  Future<void> updateUser(String nome, String cognome, String username,
       String email, String cellulare, File foto_profilo) async {
     if (foto_profilo != null) {
       String fileName = Path.basename(foto_profilo.path);
@@ -158,7 +158,7 @@ class Controller {
     database.currentUser.cognome = cognome;
     database.currentUser.username = username;
     database.currentUser.email = email;
-    database.UpdateUser();
+    database.updateUser();
   }
 
   Future<void> UpdateAzienda(

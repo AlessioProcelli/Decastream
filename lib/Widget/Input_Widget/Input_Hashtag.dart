@@ -25,7 +25,6 @@ class Input_Hashtag extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
 
-
       child: Column(
         children: <Widget>[
           Container(

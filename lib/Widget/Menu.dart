@@ -139,7 +139,7 @@ class Menu extends StatelessWidget {
         profilo = true;
         break;
     }
-    padre.Change();
+    padre.change();
     rebuildAllChildren(context);
   }
 

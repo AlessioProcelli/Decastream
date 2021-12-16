@@ -1,5 +1,3 @@
-
-
 import 'package:everstream/Tipi/Utente.dart';
 import 'package:everstream/Widget/Input_Widget/Input_Row_Box.dart';
 import 'package:everstream/Metodi/Metodi_Grafici.dart';
@@ -48,6 +46,7 @@ class Profiloutentemodifica extends StatelessWidget {
                   color: const Color(0x0e000000),
                 ),
                 child: Column(children: <Widget>[
+
                   ///Bottoni  Annulla e Fatto
                   Container(
                     margin: EdgeInsets.only(
@@ -57,64 +56,85 @@ class Profiloutentemodifica extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
+
                         ///Annulla
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          style: My_Button_Style(Size(
-                              RicalcoloWidth(64.0, context),
-                              RicalcoloHeight(21.0, context))),
-                          child:FittedBox(
-                            fit: BoxFit.cover,
-                            child: Text(
-                            'Annulla',
-                            style: My_Text_Style(RicalcoloWidth(10.5, context),
-                                Color(0xffffffff)),
-                            textAlign: TextAlign.left,
+                        Container(
+                          width: RicalcoloWidth(64.0, context),
+                          height: RicalcoloHeight(31.0, context),
+                          child: AspectRatio(
+                            aspectRatio: 2 / 1,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              style: Primary_Button_Style(),
+                              child: FittedBox(
+                                fit: BoxFit.cover,
+                                child: Text(
+                                  'Annulla',
+                                  style: My_Text_Style(
+                                      RicalcoloWidth(10.5, context),
+                                      Color(0xffffffff)),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),),
+                        ),
 
                         ///Fatto
-                        ElevatedButton(
-                          onPressed: () {
-                            ChangeConfirmed(context);
-                          },
-                          style: My_Button_Style(Size(
-                              RicalcoloWidth(64.0, context),
-                              RicalcoloHeight(21.0, context))),
-                          child:FittedBox(
-                            fit: BoxFit.cover,
-                            child: Text(
-                            'Fatto',
-                            style: My_Text_Style(RicalcoloWidth(10.5, context),
-                                Color(0xffffffff)),
-                            textAlign: TextAlign.left,
-                          ),),
+                        Container(
+                          width: RicalcoloWidth(64.0, context),
+                          height: RicalcoloHeight(31.0, context),
+                          child: AspectRatio(
+                            aspectRatio: 2 / 1,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                changeConfirmed(context);
+                              },
+                              style: Primary_Button_Style(),
+                              child: FittedBox(
+                                fit: BoxFit.cover,
+                                child: Text(
+                                  'Fatto',
+                                  style: My_Text_Style(
+                                      RicalcoloWidth(10.5, context),
+                                      Color(0xffffffff)),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
                   ),
 
+
                   ///Foto
                   Container(
                     margin:
-                        EdgeInsets.only(top: RicalcoloHeight(15.0, context)),
+                    EdgeInsets.only(top: RicalcoloHeight(15.0, context)),
                     width: RicalcoloWidth(116.0, context),
                     height: RicalcoloHeight(116.0, context),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(27.0),
-                      image: DecorationImage(
-                        image:
+                    child: AspectRatio(
+                      aspectRatio: 1 / 1,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(27.0),
+                          image: DecorationImage(
+                            image:
                             changed ? FileImage(NuovaFoto) : NetworkImage(url),
-                        fit: BoxFit.cover,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                     ),
                   ),
 
                   TextButton(
                     onPressed: () {
-                      Change(context);
+                      change(context);
                     },
                     child: Text(
                       'Inserisci nuova foto',
@@ -126,7 +146,7 @@ class Profiloutentemodifica extends StatelessWidget {
 
                   Padding(
                       padding:
-                          EdgeInsets.only(top: RicalcoloHeight(25.0, context))),
+                      EdgeInsets.only(top: RicalcoloHeight(25.0, context))),
 
                   /// Nome
                   row_divider,
@@ -160,7 +180,7 @@ class Profiloutentemodifica extends StatelessWidget {
     );
   }
 
-  Future<void> Change(BuildContext context) async {
+  Future<void> change(BuildContext context) async {
     PickedFile pickedFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
       maxWidth: 1800,
@@ -173,8 +193,8 @@ class Profiloutentemodifica extends StatelessWidget {
     }
   }
 
-  Future<void> ChangeConfirmed(BuildContext context) async {
-    await controller.UpdateUser(
+  Future<void> changeConfirmed(BuildContext context) async {
+    await controller.updateUser(
         input_nome.getText(),
         input_cognome.getText(),
         input_username.getText(),
@@ -182,7 +202,7 @@ class Profiloutentemodifica extends StatelessWidget {
         input_email.getText(),
         input_numero.getText(),
         NuovaFoto);
-    profilo.ReplaceInfo();
+    profilo.replaceInfo();
     Navigator.pop(context);
   }
 }

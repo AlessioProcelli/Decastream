@@ -19,7 +19,6 @@ import '../../main.dart';
 class ProfiloAzienda extends StatelessWidget {
   VideoPlayerScreen popup = VideoPlayerScreen();
   bool watchVideo = false;
-
   File new_foto_profilo = null; //foto di appoggio
   File new_foto_copertina = null; //nuova foto caricata
   bool on_modifica = false; //per abilitare la modifica;

@@ -357,16 +357,12 @@ class Database {
     return url;
   }
 
-  Future<void> UpdateUser() async {
+  Future<void> updateUser() async {
     //fa update del utente in base a le modifiche apportate in locale a quello corrente
     String documentid;
-    QuerySnapshot query = await FirebaseFirestore.instance.collection('utenti')
-        .get();
-    query.docs.forEach((element) {
-      if (element ["id"] == currentUser.id) {
-        documentid = element.id;
-      }
-    });
+    QuerySnapshot query = await FirebaseFirestore.instance.collection('utenti').
+    where('id', isEqualTo: currentUser.id).get();
+    documentid=query.docs.first.id;
     String pathFotoProfilo;
     pathFotoProfilo = await getPathFotoProfilo(currentUser.foto_profilo);
     FirebaseFirestore.instance.collection('utenti')
@@ -387,12 +383,8 @@ class Database {
     //fa update del utente in base a le modifiche apportate in locale a quello corrente
     String documentid;
     QuerySnapshot query = await FirebaseFirestore.instance.collection('Aziende')
-        .get();
-    query.docs.forEach((element) {
-      if (element ["id"] == currentAzienda.id) {
-        documentid = element.id;
-      }
-    });
+        .where('id', isEqualTo: currentAzienda.id).get();
+        documentid = query.docs.first.id;
     String pathFotoProfilo;
     pathFotoProfilo = await getPathFotoProfilo(currentAzienda.img_profilo);
     String pathFotoCopertina;
@@ -417,11 +409,10 @@ class Database {
 
     aziendaHashtagList.forEach((hashtag) async {
       String documentid;
-      query.docs.forEach((element) {
-        if (element ["id"] == hashtag.id) {
-          documentid = element.id;
-        }
-      });
+      QuerySnapshot query = await FirebaseFirestore.instance.collection('Hashtag')
+          .where('id', isEqualTo: hashtag.id).get();
+
+          documentid = query.docs.first.id;
       String pathHashImage;
       pathHashImage = await getPathFotoProfilo(hashtag.immagine_hashtag);
       FirebaseFirestore.instance.collection('Hashtag')

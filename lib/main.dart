@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'package:everstream/Controller.dart';
 import 'package:everstream/Pagine/Main_Page.dart';
+import 'package:everstream/Pagine/Pagine_Profilo_Utente/ProfiloUtente_Modifica.dart';
 import 'package:flutter/material.dart';
 import 'Database.dart';
 import 'Pagine/Pagine_Accesso/Accedi.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
       routes: {
 
         '/mainPage': (context) => Main_Page(),
+
       },
 
 
