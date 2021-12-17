@@ -49,9 +49,9 @@ class ProfiloAzienda extends StatelessWidget {
       controller.database.aziendaHashtagList[3].nome);
   double icon_dimension = 40;
 
-  ProfiloAzienda({
-    Key key,
-  }) : super(key: key);
+  ProfiloAzienda() {
+    controller.database.listenChiamate();
+  }
 
   @override
   Widget build(BuildContext context) {

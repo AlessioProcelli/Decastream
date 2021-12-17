@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:everstream/Metodi/Ridimensiona.dart';
+import 'package:everstream/Pagine/Pagine_Chiamata/ChiamataInArrivo.dart';
 import 'package:everstream/Tipi/Chiamata.dart';
 import 'package:everstream/Tipi/Hashtag.dart';
 import 'package:flutter/material.dart';
@@ -81,13 +82,6 @@ class Controller {
     }
   }
 
-  Future<void> getUtenti() async {
-    // ignore: unnecessary_statements
-    List<QueryDocumentSnapshot> list = await database.getTable("utenti");
-    list.forEach((element) {
-      print(element);
-    });
-  }
 
   Future<bool> LoginIsCorrect(String username, String password) async {
     bool trovato = false;
@@ -236,30 +230,20 @@ class Controller {
     //cerca se l'azienda corrente sta venendo chiamata
     if (database.isAzienda) {
       //si attiva solo se è un azienda
-      List<Chiamata> listchiamate = await database.getChiamateList();
-      List<Utente> listuser = await database.getUserList();
-      listchiamate.forEach((current_chiamata) {
-        if (current_chiamata.id_azienda == database.currentAzienda.id) {
-          listuser.forEach((current_user) async {
-            if (current_chiamata.id_utente == current_user.id) {
-              await _handleCameraAndMic(Permission.camera);
-              await _handleCameraAndMic(Permission.microphone);
-              await database.RemoveCall(new Chiamata(
-                  current_chiamata.id_azienda, current_user.id, 7, 7));
+      Chiamata chiamata = await database.findChiamateAziendat(database.currentAzienda.id);
+      if(chiamata != null) {
+       Utente user = await database.findUserById(chiamata.id_utente);
+                await _handleCameraAndMic(Permission.camera);
+                await _handleCameraAndMic(Permission.microphone);
+                await database.RemoveCall(new Chiamata(chiamata.id_azienda, user.id, 7, 7));
+                Route route = MaterialPageRoute(
+                    builder: (context) =>
+                        ChiamatainArrivo( "ChiamataN" + chiamata.id_azienda.toString() + user.id.toString(), //da nome canale univoco,
+                             user));
+                Navigator.push(database.currentcontext, route);
+              }
 
-              Route route = MaterialPageRoute(
-                  builder: (context) => Call(
-                      channelName: "ChiamataN" +
-                          current_chiamata.id_azienda.toString() +
-                          current_user.id.toString() //da nome canale univoco
-                      ,
-                      user: current_user));
-              Navigator.push(database.currentcontext, route);
-            }
-          });
-        }
-      });
-    }
+          }
   }
 
   Future<void> ChiamaAzienda(int id_azienda, BuildContext context) async {
@@ -316,24 +300,12 @@ class Controller {
   }
 
   Future<void> VisualizzaProfiloAzienda(int id, BuildContext context) async {
-    List<Azienda> aziende = await database.getAziendaList();
-    List<Hashtag> hashtag_list = await database.getHashtagList();
-    List<Hashtag> azienda_hash_list = [];
-    Azienda currentAzienda;
-    aziende.forEach((element) {
-      if (element.id == id) {
-        currentAzienda = element;
-      }
-    });
-    hashtag_list.forEach((element) {
-      if (element.id_azienda == id) {
-        azienda_hash_list.add(new Hashtag(
-            element.id_azienda, element.nome, element.immagine_hashtag));
-      }
-    });
-    Route route = MaterialPageRoute(
-        builder: (context) =>
-            ProfiloAzienda_VistaUtente(currentAzienda, azienda_hash_list));
-    Navigator.push(context, route);
-  }
+    Azienda currentAzienda = await database.findAziendaById(id);
+      List<Hashtag> azienda_hash_list = await database.findCompanyHashtag(id);
+      Route route = MaterialPageRoute(
+          builder: (context) =>
+              ProfiloAzienda_VistaUtente(currentAzienda, azienda_hash_list));
+      Navigator.push(context, route);
+    }
+
 }

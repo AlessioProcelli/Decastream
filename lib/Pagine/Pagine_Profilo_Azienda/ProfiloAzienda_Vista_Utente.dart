@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'package:everstream/Metodi/Metodi_Grafici.dart';
 import 'package:everstream/Pop_Up/Pop_Up_Appuntamento/Popup_chiamataappuntamento.dart';
 import 'package:everstream/Tipi/Azienda.dart';
+import 'package:everstream/Widget/Input_Widget/Input_Hashtag.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
@@ -16,1059 +18,489 @@ import '../../main.dart';
 
 class ProfiloAzienda_VistaUtente extends StatelessWidget {
   Azienda view_azienda;
-  Indirizzo indirizzo=new Indirizzo(4,"Muggiole", 12);
+  Indirizzo indirizzo = new Indirizzo(4, "Muggiole", 12);
   String foto_profilo;
   String foto_copertina;
   List<Hashtag> hashtag_list;
-  double icon_dimension=40;
+  double icon_dimension = 40;
   Popup_chiamataappuntamento popup_chiamata;
-  VideoPlayerScreen popup=VideoPlayerScreen();
-  ProfiloAzienda_VistaUtente(Azienda azienda,List<Hashtag> hashtagList){
-    view_azienda=azienda;
-    foto_profilo=azienda.img_profilo;
-    foto_copertina=azienda.img_copertina;
-    hashtag_list=hashtagList;
-    popup_chiamata=Popup_chiamataappuntamento(view_azienda);
+  VideoPlayerScreen popup = VideoPlayerScreen();
+  Input_Hashtag hashbox1;
+  Input_Hashtag hashbox2;
+  Input_Hashtag hashbox3;
+  Input_Hashtag hashbox4;
+  TextEditingController controllerIndirizzo;
+  TextEditingController controllerDescrizione;
+  TextEditingController controllerNome;
+
+  ProfiloAzienda_VistaUtente(Azienda azienda, List<Hashtag> hashtagList) {
+    view_azienda = azienda;
+    foto_profilo = azienda.img_profilo;
+    foto_copertina = azienda.img_copertina;
+    hashtag_list = hashtagList;
+    popup_chiamata = Popup_chiamataappuntamento(view_azienda);
+    hashbox1 =
+        Input_Hashtag(hashtagList[0].immagine_hashtag, hashtagList[0].nome);
+    hashbox2 =
+        Input_Hashtag(hashtagList[1].immagine_hashtag, hashtagList[1].nome);
+    hashbox3 =
+        Input_Hashtag(hashtagList[2].immagine_hashtag, hashtagList[2].nome);
+    hashbox4 =
+        Input_Hashtag(hashtagList[3].immagine_hashtag, hashtagList[3].nome);
+    controllerIndirizzo =
+        new TextEditingController(text: "Indirizzo di prova 127 PT");
+    controllerNome = new TextEditingController(text: view_azienda.nome_azienda);
+    controllerDescrizione =
+        new TextEditingController(text: view_azienda.descrizione);
   }
+
   @override
   Widget build(BuildContext context) {
+    //popup.init();
+    controller.setCurrentContext(context);
 
-    popup.init();
-controller.setCurrentContext(context);
-
-    return Scaffold(
-      backgroundColor: const Color(0xffffffff),
-      body: Stack(
-        children: <Widget>[
-          Transform.translate(
-            offset: Offset(0.0,  RicalcoloHeight(-25.0, context)),
-
-            child:
-            // Adobe XD layer: 'copertina' (group)
-            SizedBox(
-              width: RicalcoloWidth(375.0, context),
-              height: RicalcoloHeight(204.0, context),
+    return SafeArea(
+        child: Scaffold(
+            backgroundColor: const Color(0xffffffff),
+            body: SingleChildScrollView(
               child: Stack(
                 children: <Widget>[
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(0.0, 0.0, 375.0, 204.0),
-                    size: Size(375.0, 204.0),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinTop: true,
-                    pinBottom: true,
-                    child:
-                    // Adobe XD layer: 'copertina' (shape)
-                    Container(
-                      decoration:  BoxDecoration(
-                        borderRadius: BorderRadius.circular(25.0),
-                        image: DecorationImage(
-                          image: NetworkImage(foto_copertina),
+                  ///Colonna per uniformare visione principale
 
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(35.0, context), RicalcoloHeight(197.0, context)),
-            child:
-            // Adobe XD layer: 'nome + descrizione' (group)
-            SizedBox(
-              width: RicalcoloWidth(153.0, context),
-              height: RicalcoloHeight(67.0, context),
-              child: Stack(
-                children: <Widget>[
+                  Column(children: <Widget>[
+                    /// Copertina
 
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(0.0, 27.0, 165.0, 40.0),
-                    size: Size(153.0, 67.0),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinBottom: true,
-                    fixedHeight: true,
-                    child: Text(
-                      indirizzo.via +" "+ indirizzo.n_Civico.toString() +" ",
-                      style: TextStyle(
-                        fontFamily: 'MADE TOMMY',
-                        fontSize: RicalcoloWidth(10.0, context),
-                        color: const Color(0xff000000),
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            margin:  EdgeInsets.only(left:RicalcoloWidth(31.0, context),top:RicalcoloHeight(396.0, context)),
-
-            child:
-            // Adobe XD layer: 'interessi_01' (group)
-            SizedBox(
-              width: RicalcoloWidth(55.0, context),
-              height: RicalcoloHeight(67.0, context),
-              child: Stack(
-                children: <Widget>[
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(0.0, 0.0, 55.0, 55.0),
-                    size: Size(55.0, 67.0),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinTop: true,
-                    pinBottom: true,
-                    child:
-                    // Adobe XD layer: 'La-Fase-2-per-i-neg…' (shape)
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(13.0),
-                        image: DecorationImage(
-                          image:NetworkImage(hashtag_list[0].immagine_hashtag),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-
-                    ),),
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(4.0, 51.0, 48.0, 16.0),
-                    size: Size(55.0, 67.0),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinBottom: true,
-                    fixedHeight: true,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6.0),
-                        color: const Color(0xffffffff),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0x29000000),
-                            offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                            blurRadius: 6,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin:  EdgeInsets.only(left:RicalcoloWidth(13.0, context),top:RicalcoloHeight(59.0, context)),
-                    width:RicalcoloWidth(55.0, context),
-                    height:RicalcoloHeight(67.0, context),
-                    child: Text(
-                        hashtag_list[0].nome,
-
-                      style: TextStyle(
-                        fontFamily: 'MADE TOMMY',
-                        fontSize: RicalcoloWidth(7.0, context),
-                        color: const Color(0xff0e1116),
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            margin:  EdgeInsets.only(left:RicalcoloWidth(177.0, context),top:RicalcoloHeight(396.0, context)),
-            child:
-            // Adobe XD layer: 'interessi_03' (group)
-            SizedBox(
-              width: RicalcoloWidth(55.0, context),
-              height: RicalcoloHeight(67.0, context),
-              child: Stack(
-                children: <Widget>[
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(0.0, 0.0, 55.0, 55.0),
-                    size: Size(55.0, 67.0),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinTop: true,
-                    pinBottom: true,
-                    child:
-                    // Adobe XD layer: 'chiara-ferragni-lan…' (shape)
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(13.0),
-                        image: DecorationImage(
-                          image: NetworkImage(hashtag_list[1].immagine_hashtag),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-
-
-                    ),
-                  ),
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(6.0, 51.0, 44.0, 16.0),
-                    size: Size(55.0, 67.0),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinBottom: true,
-                    fixedHeight: true,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6.0),
-                        color: const Color(0xffffffff),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0x29000000),
-                            offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                            blurRadius: 6,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin:  EdgeInsets.only(left:RicalcoloWidth(13.0, context),top:RicalcoloHeight(59.0, context)),
-                    width:RicalcoloWidth(55.0, context),
-                    height:RicalcoloHeight(67.0, context),
-                    child:  Text(
-                    hashtag_list[1].nome,
-                      style: TextStyle(
-                        fontFamily: 'MADE TOMMY',
-                        fontSize: RicalcoloWidth(7.0, context),
-                        color: const Color(0xff0e1116),
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            margin:  EdgeInsets.only(left:RicalcoloWidth(104.0, context),top:RicalcoloHeight(396.0, context)),
-            child:
-            // Adobe XD layer: 'interessi_02' (group)
-            SizedBox(
-              width: RicalcoloWidth(55.0, context),
-              height: RicalcoloHeight(67.0, context),
-              child: Stack(
-                children: <Widget>[
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(0.0, 0.0, 55.0, 55.0),
-                    size: Size(55.0, 67.0),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinTop: true,
-                    pinBottom: true,
-                    child:
-                    // Adobe XD layer: 'profumi-evidenza' (shape)
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(13.0),
-                        image: DecorationImage(
-                          image: NetworkImage(hashtag_list[2].immagine_hashtag),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-
-                    ),
-                  ),
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(6.0, 51.0, 44.0, 16.0),
-                    size: Size(55.0, 67.0),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinBottom: true,
-                    fixedHeight: true,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6.0),
-                        color: const Color(0xffffffff),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0x29000000),
-                            offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                            blurRadius: 6,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin:  EdgeInsets.only(left:RicalcoloWidth(13.0, context),top:RicalcoloHeight(55.0, context)),
-                    width:RicalcoloWidth(55.0, context),
-                    height:RicalcoloHeight(67.0, context),
-
-                    child: Text(hashtag_list[2].nome,
-
-                      style: TextStyle(
-                        fontFamily: 'MADE TOMMY',
-                        fontSize: RicalcoloWidth(7.0, context),
-                        color: const Color(0xff0e1116),
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            margin:  EdgeInsets.only(left:RicalcoloWidth(250.0, context),top:RicalcoloHeight(396.0, context)),
-            width: RicalcoloWidth(55.0, context),
-            height: RicalcoloHeight(60.0, context),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(13.0),
-              image: DecorationImage(
-                image:NetworkImage(hashtag_list[3].immagine_hashtag),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Container(
-            margin:  EdgeInsets.only(left:RicalcoloWidth(250.0, context),top:RicalcoloHeight(396.0, context)),
-
-            child:
-            // Adobe XD layer: 'interessi_04' (group)
-            SizedBox(
-              width: RicalcoloWidth(55.0, context),
-              height: RicalcoloHeight(67.0, context),
-              child: Stack(
-                children: <Widget>[
-
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(6.0, 51.0, 44.0, 16.0),
-                    size: Size(55.0, 67.0),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinBottom: true,
-                    fixedHeight: true,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6.0),
-                        color: const Color(0xffffffff),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0x29000000),
-                            offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                            blurRadius: 6,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin:  EdgeInsets.only(left:RicalcoloWidth(13.0, context),top:RicalcoloHeight(59.0, context)),
-                    width:RicalcoloWidth(55.0, context),
-                    height:RicalcoloHeight(67.0, context),
-                    child:  Text(hashtag_list[3].nome,
-
-                      style: TextStyle(
-                        fontFamily: 'MADE TOMMY',
-                        fontSize: RicalcoloWidth(7.0, context),
-                        color: const Color(0xff0e1116),
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(51.0, context), RicalcoloHeight(649.0, context)),
-            child:
-            // Adobe XD layer: 'valutazione' (group)
-            SizedBox(
-              width: RicalcoloWidth(111.0, context),
-              height: RicalcoloHeight(46.0, context),
-              child: Stack(
-                children: <Widget>[
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(0.0, 0.0, 111.0, 46.0),
-                    size: Size(111.0, 46.0),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinTop: true,
-                    pinBottom: true,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16.0),
-                        color: const Color(0xffffffff),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0x29000000),
-                            offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                            blurRadius: 6,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(37.0, 5.0, 42.0, 10.0),
-                    size: Size(111.0, 46.0),
-                    pinTop: true,
-                    fixedWidth: true,
-                    fixedHeight: true,
-                    child: Text(
-                      'Valutazione',
-                      style: TextStyle(
-                        fontFamily: 'MADE TOMMY',
-                        fontSize: RicalcoloWidth(8.0, context),
-                        color: const Color(0xff0e1116),
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(68.0, context), RicalcoloHeight(668.0, context)),
-            child:
-            // Adobe XD layer: 'stelle' (shape)
-            Container(
-              width: RicalcoloWidth(76.0, context),
-              height: RicalcoloHeight(12.0, context),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage("assets/image/stelle.png"),
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-          ),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(228.0, context), RicalcoloHeight(143.0, context)),
-            child:
-            // Adobe XD layer: 'profilo + hastag' (group)
-            SizedBox(
-              width: RicalcoloWidth(111.0, context),
-              height: RicalcoloHeight(113.0, context),
-              child: Stack(
-                children: <Widget>[
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(0.0, 0.0, 111.0, 113.0),
-                    size: Size(111.0, 113.0),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinTop: true,
-                    pinBottom: true,
-                    child:TextButton(
-                      onPressed:(){
-                       popup_chiamata.ActivePopup();
-                       },
-                    // Adobe XD layer: 'profilo' (shape)
-                    child:Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(21.0),
-                        image: DecorationImage(
-                          image: new NetworkImage(foto_profilo),
-                          fit: BoxFit.cover,
-                        ),
-                        border: Border.all(
-                            width: 1.5, color: const Color(0xff0e1116)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0x29000000),
-                            offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                            blurRadius: 6,
-                          ),
-                        ],
-                      ),
-                    ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(250.0, context), RicalcoloHeight(281.0, context)),
-            child:
-            // Adobe XD layer: 'SEGUITI' (group)
-            SizedBox(
-              width: RicalcoloWidth(73.0, context),
-              height: RicalcoloHeight(27.0, context),
-              child: Stack(
-                children: <Widget>[
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(0.0, 0.0, 67.0, 27.0),
-                    size: Size(73.0, 27.0),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinTop: true,
-                    pinBottom: true,
-                    child:
-                    // Adobe XD layer: 'follower' (group)
-                    Stack(
-                      children: <Widget>[
-                        Pinned.fromSize(
-                          bounds: Rect.fromLTWH(0.0, 0.0, 67.0, 27.0),
-                          size: Size(67.0, 27.0),
-                          pinLeft: true,
-                          pinRight: true,
-                          pinTop: true,
-                          pinBottom: true,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7.0),
-                              color: const Color(0xffe00a17),
+                    SizedBox(
+                      width: RicalcoloWidth(375.0, context),
+                      height: RicalcoloHeight(204.0, context),
+                      child: Stack(
+                        children: <Widget>[
+                          Pinned.fromSize(
+                            bounds: Rect.fromLTWH(0.0, 0.0, 375.0, 204.0),
+                            size: Size(375.0, 204.0),
+                            pinLeft: true,
+                            pinRight: true,
+                            pinTop: true,
+                            pinBottom: true,
+                            child:
+                                // Adobe XD layer: 'copertina' (shape)
+                                Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(25),
+                                    bottomRight: Radius.circular(25)),
+                                image: DecorationImage(
+                                  image: NetworkImage(foto_copertina),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(50.0, 2.0, 23.0, 23.0),
-                    size: Size(73.0, 27.0),
-                    pinRight: true,
-                    pinTop: true,
-                    pinBottom: true,
-                    fixedWidth: true,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        color: const Color(0xffffffff),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0x29000000),
-                            offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                            blurRadius: 6,
-                          ),
                         ],
                       ),
                     ),
-                  ),
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(9.0, 8.0, 56.0, 12.0),
-                    size: Size(73.0, 27.0),
-                    pinLeft: true,
-                    fixedWidth: true,
-                    fixedHeight: true,
-                    child: Text(
-                      'Follower',
-                      style: TextStyle(
-                        fontFamily: 'MADE TOMMY',
-                        fontSize: RicalcoloWidth(10.0, context),
-                        color: const Color(0xffffffff),
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  Container(
-                    margin:  EdgeInsets.only(left:RicalcoloWidth(60.0, context),top:RicalcoloHeight(12.0, context)),
-                    width:RicalcoloWidth(73.0, context),
-                    height:RicalcoloHeight(13.0, context),
-                    child: Text( view_azienda.follower.toString(),
 
-                      style: TextStyle(
-                        fontFamily: 'MADE TOMMY',
-                        fontSize: RicalcoloWidth(12.0, context),
-                        color: const Color(0xff0e1116),
-                        fontWeight: FontWeight.w500,
-                      ),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(179.0, context), RicalcoloHeight(169.0, context)),
-            child: SizedBox(
-              width: RicalcoloWidth(15.0, context),
-              height: RicalcoloHeight(3.0, context),
-              child: Stack(
-                children: <Widget>[
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(0.0, 0.0, 3.0, 3.0),
-                    size: Size(15.0, 3.0),
-                    pinLeft: true,
-                    pinTop: true,
-                    pinBottom: true,
-                    fixedWidth: true,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius:
-                        BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                        color: const Color(0xffffffff),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0x29000000),
-                            offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                            blurRadius: 6,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(6.0, 0.0, 3.0, 3.0),
-                    size: Size(15.0, 3.0),
-                    pinTop: true,
-                    pinBottom: true,
-                    fixedWidth: true,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius:
-                        BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                        color: const Color(0x56000000),
-                      ),
-                    ),
-                  ),
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(12.0, 0.0, 3.0, 3.0),
-                    size: Size(15.0, 3.0),
-                    pinRight: true,
-                    pinTop: true,
-                    pinBottom: true,
-                    fixedWidth: true,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius:
-                        BorderRadius.all(Radius.elliptical(9999.0, 9999.0)),
-                        color: const Color(0x56000000),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(54.5, context), RicalcoloHeight(537.5, context)),
-            child: SizedBox(
-              width: RicalcoloWidth(114.0, context),
-              height: RicalcoloHeight(90.0, context),
-              child: SingleChildScrollView(
-                  child: Text(
-                    'giovedì	09–21\nvenerdì	09–21\nsabato	Chiuso\ndomenica	Chiuso\nlunedì	Chiuso\nmartedì	Chiuso\nmercoledì	09–21\n',
-                    style: TextStyle(
-                      fontFamily: 'MADE TOMMY',
-                      fontSize: RicalcoloWidth(12.0, context),
-                      color: const Color(0xff000000),
-                      fontWeight: FontWeight.w300,
-                      height: 1,
-                    ),
-                    textHeightBehavior:
-                    TextHeightBehavior(applyHeightToFirstAscent: false),
-                    textAlign: TextAlign.left,
-                  )),
-            ),
-          ),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(55.0, context), RicalcoloHeight(516.0, context)),
-            child: Text(
-              'Fasce Orarie',
-              style: TextStyle(
-                fontFamily: 'MADE TOMMY',
-                fontSize: RicalcoloWidth(12.0, context),
-                color: const Color(0xff000000),
-                fontWeight: FontWeight.w500,
-                height: 1,
-              ),
-              textHeightBehavior:
-              TextHeightBehavior(applyHeightToFirstAscent: false),
-              textAlign: TextAlign.left,
-            ),
-          ),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(54.5, context), RicalcoloHeight(534.5, context)),
-            child: SvgPicture.string(
-              _svg_3q9l7b,
-              allowDrawingOutsideViewBox: true,
-            ),
-          ),
-          Container(
-            margin:  EdgeInsets.only(left:RicalcoloWidth(35.0, context),top:RicalcoloHeight(266.0, context)),
-            width: RicalcoloWidth(200.0, context),
+                    /// Specifiche Azienda
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: SizedBox(
+                            width: 200,
+                            child: Container(
+                                margin: EdgeInsets.only(
+                                    top: RicalcoloHeight(10.0, context),
+                                    left: RicalcoloWidth(15.0, context)),
+                                child: Column(children: <Widget>[
+                                  Row(children: <Widget>[
+                                    ///Nome
+                                    Container(
+                                      width: RicalcoloWidth(150.0, context),
+                                      height: RicalcoloHeight(25.0, context),
+                                      child: TextFormField(
+                                        controller: controllerNome,
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                        ),
+                                        style: TextStyle(
+                                          fontFamily: 'MADE TOMMY',
+                                          fontSize:
+                                              RicalcoloWidth(19.0, context),
+                                          color: const Color(0xff0e1116),
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                  ]),
 
-            child:  Text(
-              view_azienda.descrizione,
-              style: TextStyle(
-              fontFamily: 'MADE TOMMY',
-              fontSize: RicalcoloWidth(11.0, context),
-              color: const Color(0xff000000),
-              fontWeight: FontWeight.w300,
+                                  ///Indirizzo
+                                  TextFormField(
+                                    controller: controllerIndirizzo,
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                    ),
+                                    style: TextStyle(
+                                      fontFamily: 'MADE TOMMY',
+                                      fontSize: RicalcoloWidth(10.0, context),
+                                      color: const Color(0xff000000),
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    textAlign: TextAlign.left,
+                                  ),
 
-              height: 1.2,
-            ),
+                                  /// Descrizione
 
-            ),
-          ),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(7.0, context), RicalcoloHeight(9.0, context)),
-            child:
-            // Adobe XD layer: 'statistiche' (group)
-            SizedBox(
-              width: RicalcoloWidth(23.0, context),
-              height: RicalcoloHeight(23.0, context),
-              child: Stack(
-                children: <Widget>[
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(0.0, 0.0, 23.0, 23.0),
-                    size: Size(23.0, 23.0),
-                    pinLeft: true,
-                    pinRight: true,
-                    pinTop: true,
-                    pinBottom: true,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6.0),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0x29000000),
-                            offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                            blurRadius: 6,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Pinned.fromSize(
-                    bounds: Rect.fromLTWH(6.6, 6.5, 10.1, 10.1),
-                    size: Size(23.0, 23.0),
-                    fixedWidth: true,
-                    fixedHeight: true,
-                    child:
-                    // Adobe XD layer: 'profits' (group)
-                    Stack(
-                      children: <Widget>[
-                        Pinned.fromSize(
-                          bounds: Rect.fromLTWH(0.0, 0.0, 10.1, 10.1),
-                          size: Size(10.1, 10.1),
-                          pinLeft: true,
-                          pinRight: true,
-                          pinTop: true,
-                          pinBottom: true,
-                          child: Stack(
-                            children: <Widget>[
-                              Pinned.fromSize(
-                                bounds: Rect.fromLTWH(0.0, 0.0, 10.1, 10.1),
-                                size: Size(10.1, 10.1),
-                                pinLeft: true,
-                                pinRight: true,
-                                pinTop: true,
-                                pinBottom: true,
-                                child: Stack(
-                                  children: <Widget>[
-                                    Pinned.fromSize(
-                                      bounds: Rect.fromLTWH(0.0, 5.5, 1.6, 1.6),
-                                      size: Size(10.1, 10.1),
-                                      pinLeft: true,
-                                      fixedWidth: true,
-                                      fixedHeight: true,
-                                      child: SvgPicture.string(
-                                        _svg_lwxv7w,
-                                        allowDrawingOutsideViewBox: true,
-                                        fit: BoxFit.fill,
-                                      ),
+                                  TextFormField(
+                                    controller: controllerDescrizione,
+                                    maxLines: 4,
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
                                     ),
-                                    Pinned.fromSize(
-                                      bounds: Rect.fromLTWH(2.3, 5.8, 1.0, 4.3),
-                                      size: Size(10.1, 10.1),
-                                      pinBottom: true,
-                                      fixedWidth: true,
-                                      fixedHeight: true,
-                                      child: SvgPicture.string(
-                                        _svg_x0tarl,
-                                        allowDrawingOutsideViewBox: true,
-                                        fit: BoxFit.fill,
-                                      ),
+                                    style: TextStyle(
+                                      fontFamily: 'MADE TOMMY',
+                                      fontSize: RicalcoloWidth(11.0, context),
+                                      color: const Color(0xff000000),
+                                      fontWeight: FontWeight.w300,
+                                      height: 1.2,
                                     ),
-                                    Pinned.fromSize(
-                                      bounds: Rect.fromLTWH(3.9, 5.0, 1.0, 5.1),
-                                      size: Size(10.1, 10.1),
-                                      pinBottom: true,
-                                      fixedWidth: true,
-                                      fixedHeight: true,
-                                      child: SvgPicture.string(
-                                        _svg_b8qyxn,
-                                        allowDrawingOutsideViewBox: true,
-                                        fit: BoxFit.fill,
-                                      ),
+                                  ),
+                                ])))),
+
+                    /// Lista Hashtag
+                    Container(
+                        margin: EdgeInsets.only(
+                            top: RicalcoloHeight(20.0, context)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            hashbox1,
+                            hashbox2,
+                            hashbox3,
+                            hashbox4
+                          ],
+                        )),
+
+                    /// Orari E foto Secondaria
+
+                    Container(
+                        margin: EdgeInsets.only(
+                            top: RicalcoloHeight(35.0, context),
+                            left: RicalcoloWidth(15.0, context)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ///Orari
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                /// titolo e orologio
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Fasce Orarie',
+                                      style: My_Bold_Text(
+                                          RicalcoloWidth(14.0, context),
+                                          Color(0xff000000)),
                                     ),
-                                    Pinned.fromSize(
-                                      bounds: Rect.fromLTWH(2.2, 0.0, 7.9, 4.7),
-                                      size: Size(10.1, 10.1),
-                                      pinRight: true,
-                                      pinTop: true,
-                                      fixedWidth: true,
-                                      fixedHeight: true,
-                                      child: SvgPicture.string(
-                                        _svg_voewea,
-                                        allowDrawingOutsideViewBox: true,
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                    Pinned.fromSize(
-                                      bounds: Rect.fromLTWH(0.8, 7.6, 1.0, 2.5),
-                                      size: Size(10.1, 10.1),
-                                      pinLeft: true,
-                                      pinBottom: true,
-                                      fixedWidth: true,
-                                      fixedHeight: true,
-                                      child: SvgPicture.string(
-                                        _svg_mwko1,
-                                        allowDrawingOutsideViewBox: true,
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                    Pinned.fromSize(
-                                      bounds: Rect.fromLTWH(8.5, 3.4, 1.0, 6.7),
-                                      size: Size(10.1, 10.1),
-                                      pinRight: true,
-                                      pinBottom: true,
-                                      fixedWidth: true,
-                                      fixedHeight: true,
-                                      child: SvgPicture.string(
-                                        _svg_sxr18k,
-                                        allowDrawingOutsideViewBox: true,
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                    Pinned.fromSize(
-                                      bounds: Rect.fromLTWH(5.4, 5.5, 1.0, 4.6),
-                                      size: Size(10.1, 10.1),
-                                      pinBottom: true,
-                                      fixedWidth: true,
-                                      fixedHeight: true,
-                                      child: SvgPicture.string(
-                                        _svg_r4n82r,
-                                        allowDrawingOutsideViewBox: true,
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                    Pinned.fromSize(
-                                      bounds: Rect.fromLTWH(6.9, 4.7, 1.0, 5.4),
-                                      size: Size(10.1, 10.1),
-                                      pinBottom: true,
-                                      fixedWidth: true,
-                                      fixedHeight: true,
-                                      child: SvgPicture.string(
-                                        _svg_yiawxm,
-                                        allowDrawingOutsideViewBox: true,
-                                        fit: BoxFit.fill,
+                                    Container(
+                                      width: RicalcoloWidth(17.0, context),
+                                      height: RicalcoloWidth(17.0, context),
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: const AssetImage(
+                                              "assets/image/orariok.png"),
+                                          fit: BoxFit.fill,
+                                        ),
                                       ),
                                     ),
                                   ],
+                                ),
+
+                                ///Orari
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      top: RicalcoloHeight(10.0, context)),
+                                  child: SingleChildScrollView(
+                                      child: Text(
+                                    'Giovedì	09–21\nVenerdì	09–21\nSabato	chiuso\nDomenica	chiuso\nLunedì	chiuso\nMartedì	chiuso\nMercoledì	09–21\n',
+                                    style: TextStyle(
+                                      fontFamily: 'MADE TOMMY',
+                                      fontSize: RicalcoloWidth(13.0, context),
+                                      color: const Color(0xff000000),
+                                      fontWeight: FontWeight.w300,
+                                      height: 1,
+                                    ),
+                                    textAlign: TextAlign.left,
+                                  )),
+                                ),
+                              ],
+                            ),
+
+                            ///Img Secondaria
+
+                            Container(
+                              margin: EdgeInsets.only(
+                                  right: RicalcoloWidth(15.0, context)),
+                              width: RicalcoloWidth(129.0, context),
+                              height: RicalcoloHeight(129.0, context),
+                              child: TextButton(
+                                onPressed: () {
+                                  popup.ActivePopUp();
+                                },
+                                child: Container(
+                                  width: RicalcoloWidth(129.0, context),
+                                  height: RicalcoloHeight(129.0, context),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(22.0),
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                          'https://firebasestorage.googleapis.com/v0/b/prova-24d5b.appspot.com/o/secondariaGenerico.jpg?alt=media&token=2d2ef207-f5b4-4637-8eca-c0ac15e00022'),
+                                      fit: BoxFit.cover,
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: const Color(0x39000000),
+                                        offset: Offset(
+                                            0.0, RicalcoloHeight(4.0, context)),
+                                        blurRadius: 5,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )),
+
+                    /// Valutazioni
+                    Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            left: RicalcoloWidth(15.0, context),
+                            top: RicalcoloHeight(15.0, context)),
+                        width: RicalcoloWidth(111.0, context),
+                        height: RicalcoloHeight(46.0, context),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16.0),
+                          color: Color(0xffffffff),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0x29000000),
+                              offset:
+                                  Offset(0.0, RicalcoloHeight(3.0, context)),
+                              blurRadius: 6,
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              'Valutazione',
+                              style: TextStyle(
+                                fontFamily: 'MADE TOMMY',
+                                fontSize: RicalcoloWidth(10.0, context),
+                                color: const Color(0xff0e1116),
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                            Container(
+                              width: RicalcoloWidth(76.0, context),
+                              height: RicalcoloHeight(12.0, context),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: const AssetImage(
+                                      "assets/image/stelle.png"),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ]),
+
+                  ///Bottoni in alto
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        ///Button Statistiche
+
+                        Container(
+                            width: RicalcoloWidth(42.0, context),
+                            height: RicalcoloHeight(42.0, context),
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: const AssetImage(
+                                    "assets/image/statistiche.png"),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                            child: TextButton(
+                              onPressed: () {
+                                print("top");
+                              },
+                            )),
+
+                        ///Button Statistiche
+                        Container(
+                          width: RicalcoloWidth(41.0, context),
+                          height: RicalcoloHeight(41.0, context),
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: const AssetImage(
+                                  "assets/image/impostazioni.png"),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          child: TextButton(
+                            onPressed: () {
+                              print("top");
+                            },
+                          ),
+                        ),
+                      ]),
+
+                  ///FotoProfilo e BoxFollowers
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Column(children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(
+                            right: RicalcoloWidth(20.0, context),
+                            top: RicalcoloHeight(143.0, context)),
+                        child:
+
+                            /// imamgine profilo + immagine
+                            SizedBox(
+                          width: RicalcoloWidth(118.0, context),
+                          height: RicalcoloHeight(145.0, context),
+                          child: Stack(
+                            children: <Widget>[
+                              // Adobe XD layer: 'profilo' (shape)
+                              Container(
+                                width: RicalcoloWidth(118.0, context),
+                                height: RicalcoloWidth(118.0, context),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(21.0),
+                                  image: DecorationImage(
+                                    image: NetworkImage(foto_profilo),
+                                    fit: BoxFit.cover,
+                                  ),
+                                  border: Border.all(
+                                      width: 1.5,
+                                      color: const Color(0xff0e1116)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: const Color(0x29000000),
+                                      offset: Offset(
+                                          0.0, RicalcoloHeight(3.0, context)),
+                                      blurRadius: 6,
+                                    ),
+                                  ],
+                                ),
+                                child: TextButton(
+                                  onPressed: () {
+                                    popup_chiamata.ActivePopup();
+                                  },
+                                ),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: Container(
+                                  width: RicalcoloWidth(49.0, context),
+                                  height: RicalcoloHeight(50.0, context),
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: const AssetImage(
+                                          "assets/image/telecameraBLACK.png"),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(209.0, context), RicalcoloHeight(507.0, context)),
-            child:
-            // Adobe XD layer: 'zara2' (shape)
-            Container(
-              width: RicalcoloWidth(129.0, context),
-              height: RicalcoloHeight(129.0, context),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(22.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0x39000000),
-                    offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                    blurRadius: 6,
-                  ),
-                ],
-              ),
-              child: TextButton( onPressed:(){
-
-
-
-
-                popup.ActivePopUp();
-
-
-              },
-
-                child:Container(
-                  width: RicalcoloWidth(129.0, context),
-                  height: RicalcoloHeight(129.0, context),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(22.0),
-                    image: DecorationImage(
-                      image: NetworkImage('https://firebasestorage.googleapis.com/v0/b/prova-24d5b.appspot.com/o/secondariaGenerico.jpg?alt=media&token=2d2ef207-f5b4-4637-8eca-c0ac15e00022'),
-                      fit: BoxFit.cover,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0x39000000),
-                        offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                        blurRadius: 6,
                       ),
-                    ],
+
+                      /// Followers
+                      Container(
+                        width: RicalcoloWidth(76.0, context),
+                        margin: EdgeInsets.only(
+                            top: RicalcoloHeight(15.0, context)),
+                        padding: EdgeInsets.only(
+                            left: RicalcoloWidth(5.0, context),
+                            right: RicalcoloWidth(3.0, context)),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(7.0),
+                          color: Color(0xffe00a17),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(0x29000000),
+                              offset:
+                                  Offset(0.0, RicalcoloHeight(3.0, context)),
+                              blurRadius: 6,
+                            ),
+                          ],
+                        ),
+
+                        /// Scritta + numero
+                        child: SizedBox(
+                          width: RicalcoloWidth(73.0, context),
+                          height: RicalcoloHeight(27.0, context),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Follower',
+                                style: TextStyle(
+                                  fontFamily: 'MADE TOMMY',
+                                  fontSize: RicalcoloWidth(10.0, context),
+                                  color: const Color(0xffffffff),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                              Container(
+                                width: RicalcoloWidth(20.0, context),
+                                height: RicalcoloWidth(20.0, context),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4.0),
+                                  color: Colors.white,
+                                ),
+                                child: TextFormField(
+                                  enabled: false,
+                                  decoration: InputDecoration(
+                                    fillColor: Colors.white,
+                                    border: InputBorder.none,
+                                  ),
+                                  style: TextStyle(
+                                    fontFamily: 'MADE TOMMY',
+                                    fontSize: RicalcoloWidth(11.0, context),
+                                    color: const Color(0xff0e1116),
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  textAlignVertical: TextAlignVertical.center,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ]),
                   ),
-                ),
 
-              ),
-            ),
-          ),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(28.0, context), RicalcoloHeight(190.0, context)),
-            child: Container(
-              width: RicalcoloWidth(200.0, context),
-              child:Text( view_azienda.nome_azienda,
-
-                style: TextStyle(
-                  fontFamily: 'MADE TOMMY',
-                  fontSize: RicalcoloWidth(19.0, context),
-                  color: const Color(0xff0e1116),
-                  fontWeight: FontWeight.w700,
-                ),
-                textAlign: TextAlign.left,
-              ),
-            ),),
-          //visualizza la mappa
-          /*  Transform.translate(
-            offset: Offset(RicalcoloWidth(197, context), RicalcoloHeight(222.0, context)),
-            child:
-                // Adobe XD layer: 'PHOTO-2021-05-30-14…' (shape)
-                Container(
-              width: RicalcoloWidth(31.0, context),
-            height: RicalcoloHeight(31.0, context),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage("assets/image/mappa.jpg"),
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-          ),
-          */
-
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(130.0, context), RicalcoloHeight(509.0, context)),
-            child:
-            // Adobe XD layer: 'orari' (shape)
-            Container(
-
-              width: RicalcoloWidth(35.0, context),
-              height: RicalcoloHeight(35.0, context),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage("assets/image/orari.png"),
-                  fit: BoxFit.fill,
-                ),
-
-              ),
-            ),
-          ),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(309.0, context), RicalcoloHeight(228.0, context)),
-            child:
-            // Adobe XD layer: 'telecameraBLACK' (shape)
-            Container(
-              width: RicalcoloWidth(49.0, context),
-              height: RicalcoloHeight(50.0, context),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage("assets/image/telecameraBLACK.png"),
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-          ),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(-2.0, context), RicalcoloHeight(3.0, context)),
-            child:
-            // Adobe XD layer: 'statistiche' (shape)
-            Container(
-              width: RicalcoloWidth(42.0, context),
-              height: RicalcoloHeight(42.0, context),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage("assets/image/statistiche.png"),
-                  fit: BoxFit.fill,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0x29000000),
-                    offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                    blurRadius: 6,
-                  ),
+                  /// per popup video
+                  // popup
+                  popup_chiamata,
                 ],
               ),
-            ),
-          ),
-          Transform.translate(
-            offset: Offset(RicalcoloWidth(334.0, context), RicalcoloHeight(3.0, context)),
-            child:
-            // Adobe XD layer: 'impostazioni' (shape)
-            Container(
-              width: RicalcoloWidth(41.0, context),
-              height: RicalcoloHeight(41.0, context),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: const AssetImage("assets/image/impostazioni.png"),
-                  fit: BoxFit.fill,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0x29000000),
-                    offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                    blurRadius: 6,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            margin:  EdgeInsets.only(left:RicalcoloWidth(158.0, context),top:RicalcoloHeight(191.0, context)),
-            child:
-            // Adobe XD layer: 'editProfile' (shape)
-            Container(
-              width: RicalcoloWidth(25.0, context),
-              height: RicalcoloHeight(25.0, context),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image:AssetImage("assets/image/fatto.png"),
-                  fit: BoxFit.fill,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0x29000000),
-                    offset: Offset(0.0,  RicalcoloHeight(3.0, context)),
-                    blurRadius:5,
-                  ),
-                ],
-              ),
-              child:TextButton(
-                onPressed: (){
-
-                  rebuildAllChildren(context);
-                },
-              ),
-            ),
-          ),
-          popup,
-          popup_chiamata,
-        ],
-      ),
-    );
+            )));
   }
-
 }
 
 const String _svg_3q9l7b =
