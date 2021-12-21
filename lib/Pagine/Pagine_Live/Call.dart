@@ -5,6 +5,7 @@ import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:everstream/Widget/ChatLista.dart';
 import 'package:everstream/Pop_Up/PopupUtente.dart';
 import 'package:everstream/Tipi/Utente.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../Metodi/Ridimensiona.dart';
 import '../../../main.dart';
@@ -38,7 +39,7 @@ class CallPageState extends State<Call> {
   RtcEngine _engine;
   bool thereisofferta=false;
   BuildContext this_context;
-  double lunghezzaFinestra=660;
+  double lunghezzaFinestra;
   final controllerMessageChat=TextEditingController(text:"Scrivi il Messaggio Qui..");
 
   @override
@@ -219,209 +220,168 @@ class CallPageState extends State<Call> {
     widget.popup=LancioOfferta(this);
     widget.popupUtente=PopupUtente(this);
     controller.database.currentcontext=context;
+    lunghezzaFinestra=RicalcoloHeight(660.0, context);
     if(controller.database.isAzienda){
+      /// salva azienda  corrente
       widget.azienda=controller.database.currentAzienda;
     }
-    if(!controller.database.isAzienda){
-      lunghezzaFinestra=630;
-    }
+
     return SafeArea(
         child:Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child:Center(
-        child: Container(
-
-        child:Stack(
+      body:Stack(
+        children:[Column(
+            mainAxisSize: MainAxisSize.max,
           children: <Widget>[
 
             /// contiene la finestra di live
 
             Container(
               height:RicalcoloHeight(lunghezzaFinestra, context),
-              child:
+              child:Stack(
+                  children: <Widget>[
 
+                    //finestra di live
               _viewRows(),
-            ),
 
-              ///Contiene Profilo Chaiamante
-              Container( //Contiene Profilo Chaiamante
-                margin:  EdgeInsets.only(left:RicalcoloWidth(10.0, context),top:RicalcoloHeight(24.0, context)),
-                child: controller.database.isAzienda? UtenteChiamante():AziendaChiamante() ,
-              ),
+                    // i pop up
+                    controller.database.isAzienda ?
+                        //pop up azienda
+                    thereisofferta ? widget.popup : Container()
+                    // pop up utente
+                    : controller.database.thereisOfferta ? widget.popupUtente : Container(),
 
-              ///Container chat
-              Container( //Container chat
-                  margin: EdgeInsets.only(left: RicalcoloWidth(20.0, context),
-                      top: RicalcoloHeight(450.0, context)),
-                  height: 180,
-                  child:ChatList (widget.azienda.username) //Per La chat
-              ),
+                    ///Contiene Profilo Chaiamante
+                    Container( //Contiene Profilo Chaiamante
+                      margin:  EdgeInsets.only(left:RicalcoloWidth(10.0, context),top:RicalcoloHeight(24.0, context)),
+                      child: controller.database.isAzienda? UtenteChiamante():AziendaChiamante() ,
+                    ),
 
+                    ///Container chat
+                   Align(
+                     alignment: Alignment.bottomCenter,
+                   child: Container(
+                        height: RicalcoloHeight(180.0, context),
+                        child:ChatList (widget.azienda.username) //Per La chat
+                    ),
+                   ),
+              ])
 
-
-            ///Diversificazione
-            controller.database.isAzienda ?Stack(
-                children:<Widget>[
-
-              ///Chiamata Azienda
-
-                  ///PopUp
-                  thereisofferta ? widget.popup : Container(),
-
-              Transform.translate( //barra rossa in fondo
-                offset: Offset(0.0, RicalcoloHeight(746.0, context)),
-                child:
-                // Adobe XD layer: 'red' (shape)
-                Container(
-                  width: RicalcoloWidth(375.0, context),
-                  height: RicalcoloHeight(91.0, context),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(35.0),
-                    color: const Color(0xffe00a17),
-                  ),
-                ),
-              ),
-
-              Container( // Bottoni cambio camera ecc
-                margin: EdgeInsets.only(left: RicalcoloWidth(1.0, context),
-                    top: RicalcoloHeight(630.0, context)),
-                child: BottoniSup(context),
-              ),
-
-
-            ],):
-            Stack(
-              children:<Widget>[
-              ///Chiamata Utente
-
-                ///Ombra nera
-                Container(
-                  margin: EdgeInsets.only(
-                      top: RicalcoloHeight(620.0, context)),
-                  width: RicalcoloWidth(378.0, context),
-                  height: RicalcoloHeight(186.0, context),
-                  decoration: BoxDecoration(
-
-                    color: const Color(0x710e1116),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0x12000000),
-                        offset: Offset(0.0,  RicalcoloHeight(-10.0, context)),
-                        blurRadius: 6,
-                      ),
-                    ],
-                  ),
-
-                ),
-
-                /// PopUp Utente
-                controller.database.thereisOfferta ? widget.popupUtente : Container(),
-              Container( // barra chat
-                margin: EdgeInsets.only(left: RicalcoloWidth(1.0, context),
-                    top: RicalcoloHeight(630.0, context)),
-                child: BarraChat(),
-              ),
-
-
-              Transform.translate( //barra rossa in fondo
-                offset: Offset(0.0, RicalcoloHeight(746.0, context)),
-                child:
-                // Adobe XD layer: 'red' (shape)
-                Container(
-                  width: RicalcoloWidth(375.0, context),
-                  height: RicalcoloHeight(91.0, context),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(35.0),
-                    color: const Color(0xffe00a17),
-                  ),
-                ),
-              ),
-
-
-              Container(
-                margin: EdgeInsets.only(left: RicalcoloWidth(1.0, context),
-                    top: RicalcoloHeight(480.0, context)),
-                child: BottoniSup(context),
-              ),
-                ],
             ),
 
 
-            ///Fine Diverisificazione
 
-            ///Bottoni in fondo
-            Container( //Bottoni di controllo
-              height:70,
+            Container(// Bottoni cambio camera ecc
               margin: EdgeInsets.only(left: RicalcoloWidth(1.0, context),
-                  top: RicalcoloHeight(705.0, context)),
+                  top: RicalcoloHeight(1.0, context)),
+              child: BottoniSup(context),
+            ),
+
+
+
+
+
+
+
+
+  ],
+
+
+          
+
+        ),
+          ///Bottoni in fondo
+          Align(
+            alignment: Alignment.bottomCenter,
+            child:
+            Container( //Bottoni di controllo
+              height: RicalcoloHeight(70, context),
               child: BottoniControllo(context),
             ),
+          ),
 
-],
 
-
-          
-          
-        ),
+        ])
       ),
-        ),
-    ),
-    ));
+
+
+    );
 
   }
   ///Bottoni in fondo
-  Widget BottoniControllo(BuildContext context){ //ci sono i bottoni della barra in fondo
-    return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-      Container(
-        width: RicalcoloWidth(69.0, context),
-        height: RicalcoloHeight(64.0, context),
+  Widget BottoniControllo(BuildContext context) {
+    //ci sono i bottoni della barra in fondo
+    return Stack(children: [
+      Align(
+        alignment: Alignment.bottomCenter,
+    child:Container(
+        margin: EdgeInsets.only(top: RicalcoloHeight(25.0, context)),
+        width: RicalcoloWidth(360.0, context),
+        height: RicalcoloHeight(51.0, context),
         decoration: BoxDecoration(
-          image: DecorationImage(
-            image: const AssetImage("assets/image/videocameraBORDO.png"),
-            fit: BoxFit.cover,
-          ),
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(35), topLeft: Radius.circular(35)),
+          color: const Color(0xffe00a17),
         ),
       ),
-
-    Container( //bottone chiusura chiamata
-    width: RicalcoloWidth(69.0, context),
-    height: RicalcoloHeight(64.0, context),
-    decoration: BoxDecoration(
-    image: DecorationImage(
-    image: const AssetImage("assets/image/attaccaBORDO.png"),
-    fit: BoxFit.cover,
-    ),
-    ),
-child:TextButton(
-  onPressed: (){
-    _onCallEnd(context);
-  },
-),
-    ),
-
-
-            Container(
-              width: RicalcoloWidth(69.0, context),
-              height: RicalcoloHeight(64.0, context),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: muted ? AssetImage("assets/image/microfonoSpento.png"):
-                  AssetImage("assets/image/microfonoBORDO.png"),
-                  fit: BoxFit.cover,
+      ),
+      Container(
+          margin: EdgeInsets.only(bottom: RicalcoloHeight(10.0, context)),
+          height: RicalcoloHeight(61.0, context),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              AspectRatio(
+                aspectRatio: 1 / 1,
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image:
+                          const AssetImage("assets/image/videocameraBORDO.png"),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               ),
-    child:TextButton(
-    onPressed: (){
-    _onToggleMute();
-    },),
-            ),
+              AspectRatio(
+                aspectRatio: 1 / 1,
+                child: Container(
+                  //bottone chiusura chiamata
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: const AssetImage("assets/image/attaccaBORDO.png"),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
 
-    ],
-
-    );
+                  child: TextButton(
+                    onPressed: () {
+                      _onCallEnd(context);
+                    },
+                  ),
+                ),
+              ),
+              AspectRatio(
+                aspectRatio: 1 / 1,
+                child: Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: muted
+                          ? AssetImage("assets/image/microfonoSpento.png")
+                          : AssetImage("assets/image/microfonoBORDO.png"),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: TextButton(
+                    onPressed: () {
+                      _onToggleMute();
+                    },
+                  ),
+                ),
+              ),
+            ],
+          )),
+    ]);
   }
 
   Widget BottoniSup(BuildContext context){ //lancia offerta riepilogo offerte e gira telecamera
@@ -474,12 +434,11 @@ child:TextButton(
           ),
           ),
 
-    ) : Container(),
+    ) :BarraChat(),
 
           Container( // bottone per girare la camera
-     margin: controller.database.isAzienda
-         ?  EdgeInsets.only(left:RicalcoloWidth(40.0, context),top:0)
-     :EdgeInsets.only(left:RicalcoloWidth(226.0, context),top:0),
+     margin: EdgeInsets.only(left:RicalcoloWidth(40.0, context),top:0),
+
           width:RicalcoloWidth(39.0, context),
           height: RicalcoloHeight(39.0, context),
           decoration: BoxDecoration(
@@ -579,69 +538,58 @@ child:TextButton(
     );
   }
 
-  Widget BarraChat(){
-    return  Row(
-
-        children:<Widget>[
-
-          Container(
-            margin:  EdgeInsets.only(left:RicalcoloWidth(41.0, context),top:RicalcoloHeight(30.0, context)),
-            width: RicalcoloWidth(272.0, context),
-            height: RicalcoloHeight(28.0, context),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(9.0),
-              color: const Color(0x91ffffff),
-              boxShadow: [
-                BoxShadow(
-                  color: const Color(0x17000000),
-                  offset: Offset(0.0, RicalcoloHeight(3.0, context)),
-                  blurRadius: 6,
-                ),
-              ],
-            ),
-
-            child:Container(
-              width: RicalcoloWidth(240.0, context),
-              margin:  EdgeInsets.only(left:RicalcoloWidth(13.0, context),top:RicalcoloHeight(1.0, context)),
-              child:TextFormField(
-                controller: controllerMessageChat,
-                onTap:(){ClearText(controllerMessageChat);},
-                style: TextStyle(
-                  fontFamily: 'MADE TOMMY',
-                  fontSize: RicalcoloWidth(11.0, context),
-                  color: const Color(0xffffffff),
-                  fontWeight: FontWeight.w600,
-                ),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                ),
-                textAlign: TextAlign.left,
+  Widget BarraChat() {
+    return Container(
+            width: RicalcoloWidth(200.0, context),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(9.0),
+            color: const Color(0x17000000),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0x17000000),
+                offset: Offset(0.0, RicalcoloHeight(3.0, context)),
+                blurRadius: 6,
               ),
-            ),
+            ],
           ),
-
-
-          Container(
-            margin:  EdgeInsets.only(top:RicalcoloHeight(30.0, context)),
-            width: RicalcoloWidth(35.0, context),
-            height: RicalcoloHeight(35.0, context),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: const AssetImage("assets/image/invioRED.png"),
-                fit: BoxFit.fill,
-              ),
-            ),
-
-            child:TextButton(
-              onPressed: (){
-                controller.addMessage(controllerMessageChat.text,widget.azienda.username);
+          child:FittedBox(
+    fit: BoxFit.scaleDown,
+    child:Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                width: RicalcoloWidth(190.0, context),
+            margin: EdgeInsets.only(
+                left: RicalcoloWidth(13.0, context),
+                top: RicalcoloHeight(1.0, context)),
+            child: TextFormField(
+              controller: controllerMessageChat,
+              onTap: () {
+                ClearText(controllerMessageChat);
               },
-            ),
+              style: TextStyle(
+                fontFamily: 'MADE TOMMY',
+                fontSize: RicalcoloWidth(11.0, context),
+                color: const Color(0xffffffff),
+                fontWeight: FontWeight.w600,
+              ),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+              ),
+              textAlign: TextAlign.left,
+            ),),
+
+         IconButton(
+            icon: const Icon(Icons.arrow_upward),
+            color: Colors.red,
+            onPressed: () {
+              controller.addMessage(
+                  controllerMessageChat.text, widget.azienda.username);
+            },
           ),
-        ],
 
-
-    );
+      ],
+    )));
   }
 
   void LanciaOfferta() {
