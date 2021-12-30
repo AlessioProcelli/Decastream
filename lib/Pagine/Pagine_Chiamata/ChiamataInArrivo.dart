@@ -65,8 +65,8 @@ class ChiamatainArrivo  extends StatelessWidget{
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children:[
                 Container(
-                  width:100,
-                  height: 100,
+                  width:RicalcoloWidth(100.0, context),
+                  height:RicalcoloHeight(100, context),
                   child:AspectRatio(aspectRatio: 1/1 ,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -83,8 +83,8 @@ class ChiamatainArrivo  extends StatelessWidget{
                   ),
                 ),
                 Container(
-                  width:100,
-                  height: 100,
+                  width:RicalcoloWidth(100.0, context),
+                  height:RicalcoloHeight(100, context),
                   child: AspectRatio(aspectRatio: 1/1 ,
                       child: ElevatedButton(
 
@@ -110,6 +110,7 @@ class ChiamatainArrivo  extends StatelessWidget{
   }
 
   rispondi(BuildContext context) {
+    Navigator.pop(context);
     Route route = MaterialPageRoute(
         builder: (context) =>
     Call(channelName: idChiamata,user: user));

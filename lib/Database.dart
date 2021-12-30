@@ -29,6 +29,7 @@ class Database {
   bool isAzienda = false;// per capire qualche schermata porofilo fare visualizzare
   Offerta current_Offerta;
   bool thereisOfferta=false;
+
   Database() {
     init(); //inizializzazione a invocazione costruttore
   }

@@ -191,6 +191,7 @@ class CallPageState extends State<Call> {
 
   void _onCallEnd(BuildContext context) {
     Navigator.pop(context);
+
     final views = _getRenderViews();
 
     if(views.length<2){
@@ -231,13 +232,13 @@ class CallPageState extends State<Call> {
       backgroundColor: Colors.white,
       body:Stack(
         children:[Column(
-            mainAxisSize: MainAxisSize.max,
+
           children: <Widget>[
 
             /// contiene la finestra di live
 
             Container(
-              height:RicalcoloHeight(lunghezzaFinestra, context),
+              height:lunghezzaFinestra,
               child:Stack(
                   children: <Widget>[
 

@@ -55,7 +55,7 @@ class ProfiloAzienda extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    popup.init();
+  // fix me:  popup.init();
     controller.setCurrentContext(context);
 
     return SafeArea(
@@ -112,7 +112,7 @@ class ProfiloAzienda extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child:SizedBox(
-                        width:200,
+                        width:RicalcoloWidth(200,context),
                         child: Container(
                         margin: EdgeInsets.only(
                             top: RicalcoloHeight(10.0, context),
