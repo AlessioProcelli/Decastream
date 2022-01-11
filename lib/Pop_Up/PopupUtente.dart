@@ -1,5 +1,6 @@
 
 import 'package:adobe_xd/pinned.dart';
+import 'package:everstream/Metodi/Metodi_Grafici.dart';
 import 'package:everstream/Tipi/Offerta.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,16 +20,10 @@ class PopupUtente extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-
-      margin: EdgeInsets.only(
-          top: RicalcoloHeight(170.0, context), right: RicalcoloWidth(35.0, context),
-          bottom: RicalcoloHeight(70.0, context), left: RicalcoloWidth(145.0, context)),
-
-      //child: Transform.translate(
-        //offset: Offset(RicalcoloWidth(223.0, context), RicalcoloHeight(480.0, context)),
-        //child: Container(
-
+    return Align(
+      alignment: Alignment.center,
+        child:Container(
+          
       width: RicalcoloWidth(135.0, context),
       height: RicalcoloHeight(185.0, context),
       decoration: BoxDecoration(
@@ -51,29 +46,23 @@ class PopupUtente extends StatelessWidget {
             child: Column(
 
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      width: RicalcoloWidth(30.0, context),
-                      height: RicalcoloHeight(30.0, context),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6.0),
-                        color: const Color(0xdfd6d6d6),
-                      ),
-                        child: TextButton(
+                Align(
+                  alignment: Alignment.topRight,
+
+    child:TextButton(
                           onPressed: () {
                             current_call.OffertaUtenteChiusa();
                           },
+
                           child: Icon(
 
                             Icons.clear,
-                            size: 20.0,
+                            size: 25.0,
                             color: Colors.black,
                           ),
                         ),
-                      ),
-                  ],
+
+
                 ),
 
                 Container(
@@ -165,7 +154,7 @@ class PopupUtente extends StatelessWidget {
         //),
       //),
 
-    );
+    ));
 
   }
 }

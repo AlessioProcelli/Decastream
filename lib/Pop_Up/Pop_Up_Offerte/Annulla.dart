@@ -5,7 +5,7 @@ import 'package:adobe_xd/pinned.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../Metodi/Ridimensiona.dart';
-import 'PopupOffertaLancio.dart';
+import 'lancioOfferta.dart';
 
 class Annulla extends StatelessWidget {
   @override

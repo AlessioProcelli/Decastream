@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import '../../Metodi/Ridimensiona.dart';
 import '../../../main.dart';
 import 'settings.dart';
-import '../../Pop_Up/Pop_Up_Offerte/PopupOffertaLancio.dart';
+import '../../Pop_Up/Pop_Up_Offerte/lancioOfferta.dart';
 import '../../Tipi/Azienda.dart';
 
 class Call extends StatefulWidget {
@@ -221,18 +221,19 @@ class CallPageState extends State<Call> {
     widget.popup=LancioOfferta(this);
     widget.popupUtente=PopupUtente(this);
     controller.database.currentcontext=context;
-    lunghezzaFinestra=RicalcoloHeight(660.0, context);
+    lunghezzaFinestra=RicalcoloHeight(640.0, context);
     if(controller.database.isAzienda){
       /// salva azienda  corrente
       widget.azienda=controller.database.currentAzienda;
     }
 
     return SafeArea(
-        child:Scaffold(
+        child: Scaffold(
       backgroundColor: Colors.white,
-      body:Stack(
-        children:[Column(
-
+      body:SingleChildScrollView(
+        child:Expanded(
+        child:Column(
+          mainAxisSize: MainAxisSize.max,
           children: <Widget>[
 
             /// contiene la finestra di live
@@ -283,30 +284,30 @@ class CallPageState extends State<Call> {
 
 
 
+            ///Bottoni in fondo
+            Align(
+              alignment: Alignment.bottomCenter,
+              child:
+              Container( //Bottoni di controllo
+
+                child: BottoniControllo(context),
+              ),
+            ),
 
 
   ],
 
 
-          
+
 
         ),
-          ///Bottoni in fondo
-          Align(
-            alignment: Alignment.bottomCenter,
-            child:
-            Container( //Bottoni di controllo
-              height: RicalcoloHeight(70, context),
-              child: BottoniControllo(context),
-            ),
-          ),
 
 
-        ])
+        )
       ),
 
 
-    );
+    ));
 
   }
   ///Bottoni in fondo
@@ -316,7 +317,7 @@ class CallPageState extends State<Call> {
       Align(
         alignment: Alignment.bottomCenter,
     child:Container(
-        margin: EdgeInsets.only(top: RicalcoloHeight(25.0, context)),
+        margin: EdgeInsets.only(top: RicalcoloHeight(35.0, context)),
         width: RicalcoloWidth(360.0, context),
         height: RicalcoloHeight(51.0, context),
         decoration: BoxDecoration(
@@ -599,6 +600,7 @@ class CallPageState extends State<Call> {
         widget.popup.parametri.controllerPrezzo.text,
         widget.popup.parametri.getMetodoDiSpedizione(),
     widget.user);
+    OffertaChiusa();
   }
   void OffertaChiusa(){
     thereisofferta=false;

@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../Pagine/Pagine_Live/Call.dart';
 import '../../Metodi/Ridimensiona.dart';
-import 'AnnullaLanciaOfferta.dart';
+import 'Annulla.dart';
 import 'BottoneLanciaOfferta.dart';
 import 'BoxPopupLancia.dart';
 
