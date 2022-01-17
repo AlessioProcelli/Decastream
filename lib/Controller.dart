@@ -236,6 +236,7 @@ class Controller {
                 await _handleCameraAndMic(Permission.camera);
                 await _handleCameraAndMic(Permission.microphone);
                 await database.RemoveCall(new Chiamata(chiamata.id_azienda, user.id, 7, 7));
+                print("okok")
                 Route route = MaterialPageRoute(
                     builder: (context) =>
                         ChiamatainArrivo( "ChiamataN" + chiamata.id_azienda.toString() + user.id.toString(), //da nome canale univoco,
