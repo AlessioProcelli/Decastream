@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:everstream/Tipi/Hashtag.dart';
 import 'package:everstream/Tipi/Indirizzo.dart';
+import 'package:everstream/Tipi/Orario_Lavorativo.dart';
 import 'package:everstream/main.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -24,6 +25,7 @@ class Database {
   var chiamate;
   CollectionReference users; //riferimento a tabella database
   Utente currentUser; //usati per memorizzare credenziali di chi fa accesso
+  Orario_Lavorativo orario_lavorativo; //orario lavorativo aziende
   Azienda currentAzienda;
   List<Hashtag> aziendaHashtagList = []; //tiene traccia degli hashtag aziendali
   bool isAzienda = false;// per capire qualche schermata porofilo fare visualizzare
@@ -104,13 +106,6 @@ class Database {
       'Id_Categoria2': null,
       'Id_Categoria3': null,
       'Id_Categoria4': null,
-      'Orario_Lunedi': null,
-      'Orario_Martedi': null,
-      'Orario_Mercoledi': null,
-      'Orario_Giovedi': null,
-      'Orario_Venerdi': null,
-      'Orario_Sabato': null,
-      'Orario_Domenica': null,
       'Valutazione': null,
       'Follower': azienda.follower,
       'Partita_Iva': azienda.partita_iva,
@@ -631,6 +626,50 @@ class Database {
 
       return call;
     }
-   
+
+  Future<int> addOrario(Orario_Lavorativo orarioList) async {
+    int id = await nextId('Orari');
+    FirebaseFirestore.instance.collection('Orari').add({
+      'id': id,
+      'id_Azienda': orarioList.idAzienda,
+      'Lunedi_Apertura': await orarioList.getApertura(Giorni_Settimana.Lunedi),
+      'Lunedi_Chiusura':await orarioList.getChiusura(Giorni_Settimana.Lunedi),
+      'Martedi_Apertura':await orarioList.getApertura(Giorni_Settimana.Martedi),
+      'Martedi_Chiusura':await orarioList.getChiusura(Giorni_Settimana.Martedi),
+      'Mercoledi_Apertura':await orarioList.getApertura(Giorni_Settimana.Mercoledi),
+      'Mercoledi_Chiusura':await orarioList.getChiusura(Giorni_Settimana.Mercoledi),
+      'Giovedi_Apertura':await orarioList.getApertura(Giorni_Settimana.Giovedi),
+      'Giovedi_Chiusura':await orarioList.getChiusura(Giorni_Settimana.Giovedi),
+      'Venerdi_Apertura':await orarioList.getApertura(Giorni_Settimana.Venerdi),
+      'Venerdi_Chiusura':await orarioList.getChiusura(Giorni_Settimana.Venerdi),
+      'Sabato_Apertura':await orarioList.getApertura(Giorni_Settimana.Sabato),
+      'Sabato_Chiusura':await orarioList.getChiusura(Giorni_Settimana.Sabato),
+      'Domenica_Apertura':await orarioList.getApertura(Giorni_Settimana.Domenica),
+      'Domenica_Chiusura':await orarioList.getChiusura(Giorni_Settimana.Domenica),
+    }) //.then sono eventi che succedano nel futuro
+        .then((value) =>
+        print("Orario Added")) //*appena il futuro si concretizza
+        .catchError((error) => print("Failed to add Orario: $error"));
+    return id;
+  }
+  Future<Orario_Lavorativo> findOrarioList(int id) async {
+    Orario_Lavorativo o;
+    QuerySnapshot query = await FirebaseFirestore.instance.collection('Orari')
+        .where('id_Azienda',isEqualTo: id).get();
+    if (query.docs.isNotEmpty) {
+      QueryDocumentSnapshot first = query.docs.first;
+      o=new Orario_Lavorativo(first[ 'id']);
+      o.addGiorno(Giorni_Settimana.Lunedi, first['Lunedi_Apertura'], first['Lunedi_Chiusura']);
+      o.addGiorno(Giorni_Settimana.Martedi, first['Martedi_Apertura'], first['Martedi_Chiusura']);
+      o.addGiorno(Giorni_Settimana.Mercoledi, first['Mercoledi_Apertura'], first['Mercoledi_Chiusura']);
+      o.addGiorno(Giorni_Settimana.Giovedi, first['Giovedi_Apertura'], first['Giovedi_Chiusura']);
+      o.addGiorno(Giorni_Settimana.Venerdi, first['Venerdi_Apertura'], first['Venerdi_Chiusura']);
+      o.addGiorno(Giorni_Settimana.Sabato, first['Sabato_Apertura'], first['Sabato_Chiusura']);
+      o.addGiorno(Giorni_Settimana.Domenica, first['Domenica_Apertura'], first['Domenica_Chiusura']);
+    }
+    return o;
+  }
+
+
 
 }

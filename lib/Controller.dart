@@ -3,6 +3,7 @@ import 'package:everstream/Metodi/Ridimensiona.dart';
 import 'package:everstream/Pagine/Pagine_Chiamata/ChiamataInArrivo.dart';
 import 'package:everstream/Tipi/Chiamata.dart';
 import 'package:everstream/Tipi/Hashtag.dart';
+import 'package:everstream/Tipi/Orario_Lavorativo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart' as Path;
@@ -17,6 +18,7 @@ import 'dart:core';
 import 'Pagine/Pagine_Live/Call.dart';
 import 'Pagine/Pagine_Profilo_Azienda/ProfiloAzienda_Vista_Utente.dart';
 import 'Tipi/Offerta.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 class Controller {
   Database database;
@@ -60,6 +62,7 @@ class Controller {
       String tipologia_azienda,
       String password,
       String user) async {
+
     bool celuogo = false; //per valutare se il luogo è gia stato isneirto
     int idLuogo; //id luogo da associare alla persona
     int idIndirizzo;
@@ -77,9 +80,23 @@ class Controller {
         await database.addIndirizzo(new Indirizzo(idLuogo, null, null));
     int idazienda = await database.addAzienda(new Azienda(nome_azienda,
         idIndirizzo, partita_iva, tipologia_azienda, email, user, password));
+    addOrario(idazienda);
     for (int i = 4; i > 0; i--) {
       await database.addHastag(new Hashtag(idazienda, "hashtag"));
     }
+  }
+
+  addOrario(int id){
+    Orario_Lavorativo orarilist=new Orario_Lavorativo(id);
+    orarilist.addGiorno(Giorni_Settimana.Lunedi, 9, 18);
+    orarilist.addGiorno(Giorni_Settimana.Martedi, 9, 18);
+    orarilist.addGiorno(Giorni_Settimana.Mercoledi, 9, 18);
+    orarilist.addGiorno(Giorni_Settimana.Giovedi, 9, 18);
+    orarilist.addGiorno(Giorni_Settimana.Venerdi, 9, 18);
+    orarilist.addGiorno(Giorni_Settimana.Sabato, 9, 18);
+    orarilist.addGiorno(Giorni_Settimana.Domenica, 9, 18);
+    database.addOrario(orarilist);
+
   }
 
 
@@ -112,6 +129,7 @@ class Controller {
           list.forEach((hashtag) {
             database.aziendaHashtagList.add(hashtag);
           });
+          database.orario_lavorativo =await database.findOrarioList(azienda.id);
         }
       }
     }
@@ -236,7 +254,14 @@ class Controller {
                 await _handleCameraAndMic(Permission.camera);
                 await _handleCameraAndMic(Permission.microphone);
                 await database.RemoveCall(new Chiamata(chiamata.id_azienda, user.id, 7, 7));
-                print("okok")
+                print("okok");
+       FlutterRingtonePlayer.play(
+         android: AndroidSounds.ringtone,
+         ios: IosSounds.bell,
+         looping: true, // Android only - API >= 28
+         volume: 1, // Android only - API >= 28
+         asAlarm: true, // Android only - all APIs
+       );
                 Route route = MaterialPageRoute(
                     builder: (context) =>
                         ChiamatainArrivo( "ChiamataN" + chiamata.id_azienda.toString() + user.id.toString(), //da nome canale univoco,

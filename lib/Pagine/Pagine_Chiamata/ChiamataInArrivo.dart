@@ -4,6 +4,7 @@ import 'package:everstream/Pagine/Pagine_Live/Call.dart';
 import 'package:everstream/Tipi/Utente.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 class ChiamatainArrivo  extends StatelessWidget{
   Utente user;
@@ -12,6 +13,7 @@ class ChiamatainArrivo  extends StatelessWidget{
   ChiamatainArrivo( String idChiamata,Utente user,){
     this.user=user;
     this.idChiamata=idChiamata;
+
   }
   build(BuildContext context){
     return SafeArea(
@@ -110,6 +112,7 @@ class ChiamatainArrivo  extends StatelessWidget{
   }
 
   rispondi(BuildContext context) {
+    fermaSuoneria();
     Navigator.pop(context);
     Route route = MaterialPageRoute(
         builder: (context) =>
@@ -118,6 +121,10 @@ class ChiamatainArrivo  extends StatelessWidget{
   }
 
   declina(BuildContext context) {
+    fermaSuoneria();
     Navigator.pop(context);
+  }
+  fermaSuoneria(){
+    FlutterRingtonePlayer.stop();
   }
 }

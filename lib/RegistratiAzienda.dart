@@ -675,6 +675,7 @@ class RegistratiAzienda extends StatelessWidget {
     controller.AddAzienda(controllerNome.text,controllerEmail.text,
         controllerCitta.text, controllerProvincia.text, controllerPartitaIva.text,
         controllerTipologia.text,controllerPassword.text, controllerUser.text);
+
     Navigator.pop(context);
     Navigator.pop(context);
   }

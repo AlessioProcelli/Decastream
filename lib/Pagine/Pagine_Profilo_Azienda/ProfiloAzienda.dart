@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:everstream/Metodi/Metodi_Grafici.dart';
+import 'package:everstream/Tipi/Orario_Lavorativo.dart';
 import 'package:everstream/Widget/Input_Widget/Input_Box.dart';
 import 'package:everstream/Widget/Input_Widget/Input_Hashtag.dart';
+import 'package:everstream/Widget/Input_Widget/Input_Time.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
@@ -275,20 +277,11 @@ class ProfiloAzienda extends StatelessWidget {
 
                                 ///Orari
                                 Container(
+
                                   margin: EdgeInsets.only(
                                       top: RicalcoloHeight(10.0, context)),
-                                  child: SingleChildScrollView(
-                                      child: Text(
-                                    'Giovedì	09–21\nVenerdì	09–21\nSabato	chiuso\nDomenica	chiuso\nLunedì	chiuso\nMartedì	chiuso\nMercoledì	09–21\n',
-                                    style: TextStyle(
-                                      fontFamily: 'MADE TOMMY',
-                                      fontSize: RicalcoloWidth(13.0, context),
-                                      color: const Color(0xff000000),
-                                      fontWeight: FontWeight.w300,
-                                      height: 1,
-                                    ),
-                                    textAlign: TextAlign.left,
-                                  )),
+                                  child: Input_Time(controller.database.orario_lavorativo),
+
                                 ),
                               ],
                             ),
