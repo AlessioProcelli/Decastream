@@ -1,8 +1,5 @@
 
 import 'package:everstream/GraphicsObject.dart';
-import 'package:everstream/GraphicsInterface.dart';
-import 'package:everstream/Metodi/Metodi_Grafici.dart';
-import 'package:everstream/Metodi/Ridimensiona.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../GraphicsObject.dart';

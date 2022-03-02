@@ -159,20 +159,19 @@ class Controller {
 
   Future<void> updateUser(String nome, String cognome, String username,
       String email, String cellulare, File foto_profilo) async {
+    Utente user=database.activeUser as Utente;
     if (foto_profilo != null) {
       String fileName = Path.basename(foto_profilo.path);
-      fileName = database.currentUser.id.toString() +
-          fileName; //compone id+nomefotocarticata//
+      fileName =user.id.toString() + fileName; //compone id+nomefotocarticata//
       await database.AddFoto(fileName, foto_profilo);
-      database.currentUser.foto_profilo =
-          await database.getPathFotoProfilo(fileName);
+      user.foto_profilo = await database.getPathFotoProfilo(fileName);
     }
-    database.currentUser.cellulare = cellulare;
-    database.currentUser.nome = nome;
-    database.currentUser.cognome = cognome;
-    database.currentUser.username = username;
-    database.currentUser.email = email;
-    database.updateUser();
+    user.cellulare = cellulare;
+    user.nome = nome;
+    user.cognome = cognome;
+    user.username = username;
+    user.email = email;
+    database.updateUtente();
   }
 
   Future<void> UpdateAzienda(

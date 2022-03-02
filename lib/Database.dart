@@ -353,24 +353,25 @@ class Database {
     return url;
   }
 
-  Future<void> updateUser() async {
+  Future<void> updateUtente() async {
     //fa update del utente in base a le modifiche apportate in locale a quello corrente
     String documentid;
+    Utente changingUtente=activeUser as Utente;
     QuerySnapshot query = await FirebaseFirestore.instance.collection('utenti').
-    where('id', isEqualTo: currentUser.id).get();
+    where('id', isEqualTo: changingUtente.id).get();
     documentid=query.docs.first.id;
     String pathFotoProfilo;
-    pathFotoProfilo = await getPathFotoProfilo(currentUser.foto_profilo);
+    pathFotoProfilo = await getPathFotoProfilo(changingUtente.foto_profilo);
     FirebaseFirestore.instance.collection('utenti')
         .doc(documentid)
         .update({
       'Foto_Profilo': pathFotoProfilo,
-      'Nome': currentUser.nome,
-      'Cognome': currentUser.cognome,
-      'Email': currentUser.email,
-      'Username': currentUser.username,
-      'Password': currentUser.password,
-      'Cellulare': currentUser.cellulare})
+      'Nome': changingUtente.nome,
+      'Cognome': changingUtente.cognome,
+      'Email': changingUtente.email,
+      'Username': changingUtente.username,
+      'Password': changingUtente.password,
+      'Cellulare': changingUtente.cellulare})
         .then((value) => print("User Updated"))
         .catchError((error) => print("Failed to update user: $error"));
   }

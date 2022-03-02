@@ -1,21 +1,26 @@
+import 'package:everstream/GraphicsInterface.dart';
 import 'package:everstream/Tipi/Utente.dart';
+import 'package:everstream/Widget/ButtonPrimary.dart';
 import 'package:everstream/Widget/Input_Widget/Input_Row_Box.dart';
 import 'package:everstream/Metodi/Metodi_Grafici.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
+import '../../GraphicsObject.dart';
 import '../../main.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:everstream/Metodi/Ridimensiona.dart';
 import 'ProfiloUtente.dart';
 
-class Profiloutentemodifica extends StatelessWidget {
+class Profiloutentemodifica extends StatelessWidget implements GraphicsInterface{
   Profiloutente profilo;
+  BuildContext context;
   Divider row_divider = Divider(color: Colors.black);
-  Utente current_user = controller.database.currentUser;
-  String url = controller.database.currentUser.foto_profilo;
+  Utente currentUser = controller.database.activeUser as Utente;
   File NuovaFoto = null;
   bool changed = false;
+  ButtonPrimary fatto;
+  ButtonPrimary annulla;
   Input_Row_Box input_cognome;
   Input_Row_Box input_nome;
   Input_Row_Box input_username;
@@ -24,15 +29,20 @@ class Profiloutentemodifica extends StatelessWidget {
 
   Profiloutentemodifica(Profiloutente profilo) {
     this.profilo = profilo;
-    input_cognome = Input_Row_Box(current_user.cognome);
-    input_nome = Input_Row_Box(current_user.nome);
-    input_username = Input_Row_Box(current_user.username);
-    input_numero = Input_Row_Box(current_user.cellulare);
-    input_email = Input_Row_Box(current_user.email);
+    input_cognome = Input_Row_Box(currentUser.cognome);
+    input_nome = Input_Row_Box(currentUser.nome);
+    input_username = Input_Row_Box(currentUser.username);
+    input_numero = Input_Row_Box(currentUser.cellulare);
+    input_email = Input_Row_Box(currentUser.email);
+    fatto=new ButtonPrimary("Conferma");
+    fatto.addObserver(this);
+    annulla=new ButtonPrimary("Annulla");
+    annulla.addObserver(this);
   }
 
   @override
   Widget build(BuildContext context) {
+    this.context=context;
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xffffffff),
@@ -86,26 +96,8 @@ class Profiloutentemodifica extends StatelessWidget {
                         Container(
                           width: RicalcoloWidth(64.0, context),
                           height: RicalcoloHeight(31.0, context),
-                          child: AspectRatio(
-                            aspectRatio: 2 / 1,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                changeConfirmed(context);
-                              },
-                              style: Primary_Button_Style(),
-                              child: FittedBox(
-                                fit: BoxFit.cover,
-                                child: Text(
-                                  'Fatto',
-                                  style: My_Text_Style(
-                                      RicalcoloWidth(10.5, context),
-                                      Color(0xffffffff)),
-                                  textAlign: TextAlign.left,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                          child:fatto
+                        )
                       ],
                     ),
                   ),
@@ -124,7 +116,7 @@ class Profiloutentemodifica extends StatelessWidget {
                           borderRadius: BorderRadius.circular(27.0),
                           image: DecorationImage(
                             image:
-                            changed ? FileImage(NuovaFoto) : NetworkImage(url),
+                            changed ? FileImage(NuovaFoto) : NetworkImage(currentUser.foto_profilo),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -193,7 +185,7 @@ class Profiloutentemodifica extends StatelessWidget {
     }
   }
 
-  Future<void> changeConfirmed(BuildContext context) async {
+  Future<void> changeConfirmed() async {
     await controller.updateUser(
         input_nome.getText(),
         input_cognome.getText(),
@@ -205,9 +197,17 @@ class Profiloutentemodifica extends StatelessWidget {
     profilo.replaceInfo();
     Navigator.pop(context);
   }
+
+  @override
+  update(GraphicsObject obj) {
+    if(obj==fatto) {
+      changeConfirmed();
+
+    }
+    else {
+      Navigator.pop(context);
+    }
+
+  }
 }
 
-const String _svg_luz5b =
-    '<svg viewBox="-1.5 247.5 377.0 137.0" ><path transform="translate(0.5, 290.5)" d="M 0 0 L 375 0" fill="none" fill-opacity="0.5" stroke="#000000" stroke-width="2" stroke-opacity="0.5" stroke-miterlimit="4" stroke-linecap="butt" /><path transform="translate(-1.5, 247.5)" d="M 0 0 L 375 0" fill="none" fill-opacity="0.5" stroke="#000000" stroke-width="2" stroke-opacity="0.5" stroke-miterlimit="4" stroke-linecap="butt" /><path transform="translate(0.5, 337.5)" d="M 0 0 L 375 0" fill="none" fill-opacity="0.5" stroke="#000000" stroke-width="2" stroke-opacity="0.5" stroke-miterlimit="4" stroke-linecap="butt" /><path transform="translate(0.5, 384.5)" d="M 0 0 L 375 0" fill="none" fill-opacity="0.5" stroke="#000000" stroke-width="2" stroke-opacity="0.5" stroke-miterlimit="4" stroke-linecap="butt" /></svg>';
-const String _svg_a951mw =
-    '<svg viewBox="156.5 644.5 7.0 7.0" ><path transform="translate(156.5, 644.5)" d="M 0 0 L 7 7" fill="none" stroke="#ffffff" stroke-width="1.600000023841858" stroke-miterlimit="4" stroke-linecap="round" /><path transform="translate(156.5, 644.5)" d="M 7 0 L 0 7" fill="none" stroke="#ffffff" stroke-width="1.600000023841858" stroke-miterlimit="4" stroke-linecap="round" /></svg>';

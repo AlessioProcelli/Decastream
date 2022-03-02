@@ -11,7 +11,7 @@ class OrarioLavorativo{
     this.idAzienda=idAzienda;
   }
   OrarioLavorativo.query(QueryDocumentSnapshot result){
-    idAzienda=result[ 'id'];
+    idAzienda=result['id'];
     orari[0]= new Orario(Giorni_Settimana.Lunedi, result['Lunedi_Apertura'], result['Lunedi_Chiusura']);
     orari[1]= new Orario(Giorni_Settimana.Martedi, result['Martedi_Apertura'], result['Martedi_Chiusura']);
     orari[2]= new Orario(Giorni_Settimana.Mercoledi, result['Mercoledi_Apertura'], result['Mercoledi_Chiusura']);

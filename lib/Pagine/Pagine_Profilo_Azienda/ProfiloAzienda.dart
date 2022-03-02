@@ -1,24 +1,20 @@
 import 'dart:io';
 import 'package:everstream/Metodi/Metodi_Grafici.dart';
-import 'package:everstream/Tipi/OrarioLavorativo.dart';
-import 'package:everstream/Widget/Input_Widget/Input_Box.dart';
+import 'package:everstream/Tipi/Azienda.dart';
 import 'package:everstream/Widget/Input_Widget/Input_Hashtag.dart';
 import 'package:everstream/Widget/Input_Widget/Input_Time.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:flutter/material.dart';
 import 'package:adobe_xd/pinned.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:everstream/Metodi/Ridimensiona.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:video_player/video_player.dart';
 import '../../Pop_Up/PopupVideoAzienda.dart';
 import '../../main.dart';
 
 class ProfiloAzienda extends StatelessWidget {
+  Azienda currentAzienda=controller.database.activeUser as Azienda;
   VideoPlayerScreen popup = VideoPlayerScreen();
   bool watchVideo = false;
   File new_foto_profilo = null; //foto di appoggio
@@ -26,32 +22,28 @@ class ProfiloAzienda extends StatelessWidget {
   bool on_modifica = false; //per abilitare la modifica;
   bool changed_profilo = false; // se cè stato cambiamento
   bool changed_copertina = false;
-  String foto_profilo = controller.database.currentAzienda.img_profilo;
-  String foto_copertina = controller.database.currentAzienda.img_copertina;
-  final controllerIndirizzo =
-      TextEditingController(text: "via monte napoleone(inserisci qui)");
-  final controllerDescrizione = TextEditingController(
-      text: controller.database.currentAzienda.descrizione);
-  final controllerFollower = TextEditingController(
-      text: controller.database.currentAzienda.follower.toString());
-  final controllerNome = TextEditingController(
-      text: controller.database.currentAzienda.nome_azienda);
-Input_Time inputTime=Input_Time(controller.database.orario_lavorativo);
-  Input_Hashtag hashbox1 = Input_Hashtag(
-      controller.database.aziendaHashtagList[0].immagine_hashtag,
-      controller.database.aziendaHashtagList[0].nome);
-  Input_Hashtag hashbox2 = Input_Hashtag(
-      controller.database.aziendaHashtagList[1].immagine_hashtag,
-      controller.database.aziendaHashtagList[1].nome);
-  Input_Hashtag hashbox3 = Input_Hashtag(
-      controller.database.aziendaHashtagList[2].immagine_hashtag,
-      controller.database.aziendaHashtagList[2].nome);
-  Input_Hashtag hashbox4 = Input_Hashtag(
-      controller.database.aziendaHashtagList[3].immagine_hashtag,
-      controller.database.aziendaHashtagList[3].nome);
+  TextEditingController controllerIndirizzo;
+  TextEditingController controllerDescrizione ;
+  TextEditingController controllerFollower ;
+  TextEditingController controllerNome;
+  Input_Time inputTime;
+  Input_Hashtag hashbox1;
+  Input_Hashtag hashbox2;
+  Input_Hashtag hashbox3;
+  Input_Hashtag hashbox4;
   double icon_dimension = 40;
+  BuildContext context;
 
   ProfiloAzienda() {
+    controllerIndirizzo = TextEditingController(text:"Via monte napoleone");
+    controllerDescrizione = TextEditingController(text:currentAzienda.descrizione);
+    controllerFollower = TextEditingController(text: currentAzienda.follower.toString());
+    controllerNome = TextEditingController(text:currentAzienda.nome_azienda);
+    inputTime=Input_Time(currentAzienda.orarioLavorativo);
+    hashbox1 = Input_Hashtag(currentAzienda.hashtagList[0].immagine_hashtag, currentAzienda.hashtagList[0].nome);
+    hashbox2 = Input_Hashtag(currentAzienda.hashtagList[1].immagine_hashtag, currentAzienda.hashtagList[1].nome);
+    hashbox3 = Input_Hashtag(currentAzienda.hashtagList[2].immagine_hashtag, currentAzienda.hashtagList[2].nome);
+    hashbox4 = Input_Hashtag(currentAzienda.hashtagList[3].immagine_hashtag, currentAzienda.hashtagList[3].nome);
     controller.database.listenChiamate();
   }
 
@@ -59,7 +51,7 @@ Input_Time inputTime=Input_Time(controller.database.orario_lavorativo);
   Widget build(BuildContext context) {
   // fix me:  popup.init();
     controller.setCurrentContext(context);
-
+    this.context=context;
     return SafeArea(
         child: Scaffold(
             backgroundColor: const Color(0xffffffff),
@@ -93,7 +85,7 @@ Input_Time inputTime=Input_Time(controller.database.orario_lavorativo);
                                 image: DecorationImage(
                                   image: changed_copertina
                                       ? FileImage(new_foto_copertina)
-                                      : NetworkImage(foto_copertina),
+                                      : NetworkImage(currentAzienda.img_copertina),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -166,19 +158,7 @@ Input_Time inputTime=Input_Time(controller.database.orario_lavorativo);
                                 ],
                               ),
                               child: TextButton(
-                                onPressed: () {
-                                  if (on_modifica == false) {
-                                    on_modifica = true;
-                                  } else {
-                                    on_modifica = false;
-                                    ChangedConfirmed(context);
-                                  }
-                                  hashbox1.setModify(on_modifica);
-                                  hashbox2.setModify(on_modifica);
-                                  hashbox3.setModify(on_modifica);
-                                  hashbox4.setModify(on_modifica);
-                                  rebuildAllChildren(context);
-                                },
+                                onPressed:modifica
                               ),
                             ),
                           ]),
@@ -258,7 +238,7 @@ Input_Time inputTime=Input_Time(controller.database.orario_lavorativo);
                                     Text(
                                       'Fasce Orarie',
                                       style: My_Bold_Text(
-                                          RicalcoloWidth(14.0, context),
+                                          RicalcoloWidth(16.0, context),
                                           Color(0xff000000)),
                                     ),
                                     Container(
@@ -438,7 +418,7 @@ Input_Time inputTime=Input_Time(controller.database.orario_lavorativo);
                                   image: DecorationImage(
                                     image: changed_profilo
                                         ? FileImage(new_foto_profilo)
-                                        : new NetworkImage(foto_profilo),
+                                        : new NetworkImage(currentAzienda.img_profilo),
                                     fit: BoxFit.cover,
                                   ),
                                   border: Border.all(
@@ -593,6 +573,22 @@ Input_Time inputTime=Input_Time(controller.database.orario_lavorativo);
         hashbox2.getText(),
         hashbox3.getText(),
         hashbox4.getText());
+  }
+
+  void modifica() {
+      if (on_modifica == false) {
+        on_modifica = true;
+      } else {
+        on_modifica = false;
+        ChangedConfirmed(context);
+      }
+      hashbox1.setModify(on_modifica);
+      hashbox2.setModify(on_modifica);
+      hashbox3.setModify(on_modifica);
+      hashbox4.setModify(on_modifica);
+      inputTime.setModify(on_modifica);
+      rebuildAllChildren(context);
+
   }
 }
 
