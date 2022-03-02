@@ -1,8 +1,10 @@
 
+import 'package:everstream/GraphicsInterface.dart';
 import 'package:everstream/Metodi/Metodi_Grafici.dart';
 import 'package:everstream/Pagine/Main_Page.dart';
 import 'package:everstream/Pagine/Pagine_Profilo_Azienda/ProfiloAzienda.dart';
 import 'package:everstream/SceltaAccount.dart';
+import 'package:everstream/Widget/ButtonPrimary.dart';
 import 'package:everstream/Widget/Input_Widget/Input_Box.dart';
 import 'package:flutter/material.dart';
 import 'package:everstream/Metodi/Ridimensiona.dart';
@@ -10,17 +12,20 @@ import 'package:everstream/main.dart';
 
 
 
-class Accedi extends StatelessWidget {
+class Accedi extends StatelessWidget implements GraphicsInterface {
   /*sono i controller delle TEXTEDITFORM servono per avere riferimenti ai campi e prenderci il testo */
+  ButtonPrimary button;
   Input_Box input_username = Input_Box(261.0, 41.0, "Nome utente o email");
   Input_Box input_password = Input_Box(261.0, 41.0, "Password", true);
+  BuildContext _context;
 
-  Accedi({
-    Key key,
-  }) : super(key: key);
+  Accedi(){
+    button=ButtonPrimary(this,"ACCEDI");
+  }
 
   @override
   Widget build(BuildContext context) {
+    _context=context;
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xffffffff),
@@ -111,20 +116,7 @@ class Accedi extends StatelessWidget {
                         EdgeInsets.only(top: RicalcoloHeight(55.0, context)),
                     width: RicalcoloWidth(126.0, context),
                     height: RicalcoloHeight(42.0, context),
-                    child:AspectRatio(
-                      aspectRatio: 3 / 1,
-                      child:ElevatedButton(
-                      onPressed: () {
-                        login(context);
-                      },
-                      style: Primary_Button_Style(),
-                      child: Text(
-                        'ACCEDI',
-                        style: My_Text_Style(RicalcoloWidth(16.0, context),  Color(0xffffffff)),
-                        textAlign: TextAlign.left,
-                      ),
-                    ),
-                  ),
+                    child:button,
                   ),
 
                   ///Invito Registrazione
@@ -176,13 +168,11 @@ class Accedi extends StatelessWidget {
     );
   }
 
-  Future<void> login(BuildContext context) async {
+  Future<void> login() async {
     bool correct = await controller.LoginIsCorrect(
         input_username.getText(), input_password.getText());
     if (correct) {
-      Route route;
-        route = MaterialPageRoute(builder: (context) => Main_Page());
-      Navigator.pushNamed(context, "/mainPage");
+      Navigator.pushNamed(_context, "/mainPage");
     }
 
   }
@@ -190,6 +180,11 @@ class Accedi extends StatelessWidget {
   void registrazione(BuildContext context) {
     Route route = MaterialPageRoute(builder: (context) => SceltaAccount());
     Navigator.push(context, route);
+  }
+
+  @override
+  notifica() {
+  login();
   }
 
 

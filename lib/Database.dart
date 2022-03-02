@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:everstream/Tipi/Hashtag.dart';
 import 'package:everstream/Tipi/Indirizzo.dart';
 import 'package:everstream/Tipi/OrarioLavorativo.dart';
+import 'package:everstream/User.dart';
 import 'package:everstream/main.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -21,8 +22,10 @@ import 'Tipi/Utente.dart';
 import 'dart:core';
 
 class Database {
+  static Database _istance;
   BuildContext currentcontext;
   var chiamate;
+  User activeUser;
   CollectionReference users; //riferimento a tabella database
   Utente currentUser; //usati per memorizzare credenziali di chi fa accesso
   OrarioLavorativo orario_lavorativo; //orario lavorativo aziende
@@ -32,8 +35,15 @@ class Database {
   Offerta current_Offerta;
   bool thereisOfferta=false;
 
-  Database() {
-    init(); //inizializzazione a invocazione costruttore
+  static Database getDatabaseIstance(){
+    if(_istance==null){
+      _istance=new Database._private();
+    }
+    return _istance;
+  }
+
+  Database._private(){
+     init();
   }
 
 
@@ -197,9 +207,9 @@ class Database {
         .catchError((error) => print("Failed to add messaggio: $error"));
   }
 
-  void setcurrentUser(Utente user) {
-    this.currentUser = user;
-    this.isAzienda = false;
+  void setActiveUser(User user) {
+    this.activeUser = user;
+
   }
 
   void setCurrentAzienda(Azienda azienda, List<Hashtag> list) {
@@ -330,17 +340,7 @@ class Database {
   }
 
 
-  Future<List<Hashtag>> getHashtagList() async {
-    List<Hashtag> list = [];
-    QuerySnapshot query = await FirebaseFirestore.instance.collection('Hashtag')
-        .get();
-    query.docs.forEach((element) {
-      list.add(new Hashtag(element ["id_Azienda"], element ["Nome"],
-          element ["Immagine_Hashtag"], element ["id"]));
-    }
-    );
-    return list;
-  }
+
 
   Future<String> getPathFotoProfilo(String nome) async {
     String url = nome;
@@ -505,22 +505,11 @@ class Database {
     where('Username', isEqualTo: username).get();
     if (query.docs.isNotEmpty) {
       QueryDocumentSnapshot first = query.docs.first;
-      user = new Utente(
-          first["Nome"],
-          first["Cognome"],
-          first["Data_Nascita"],
-          first ["Sesso"],
-          first ["Id_luogo"],
-          first["Email"],
-          first["Username"],
-          first ["Password"],
-          first["id"],
-          first ["Foto_Profilo"],
-          first ["Cellulare"]);
+      user = new Utente.query(first);
     }
-
     return user;
   }
+
   Future<Utente> findUserById(int id) async {
     Utente user = null;
     QuerySnapshot query = await FirebaseFirestore.instance.collection('utenti').
@@ -547,27 +536,11 @@ class Database {
   Future<Azienda> findAzienda(String username) async {
     Azienda company = null;
     QuerySnapshot query = await FirebaseFirestore.instance.collection('Aziende')
-        .
-    where('Username', isEqualTo: username)
-        .get();
+        .where('Username', isEqualTo: username).get();
     if (query.docs.isNotEmpty) {
       QueryDocumentSnapshot first = query.docs.first;
-      company = new Azienda(
-          first ["Nome_Azienda"],
-          first ["Id_Indirizzo"],
-          first ["Partita_Iva"],
-          first ["Tipologia_Azienda"],
-          first ["Email"],
-          first ["Username"],
-          first ["Password"],
-          first ["Img_Copertina"],
-          first ["Img_Profilo"],
-          first ["Descrizione"],
-          first ["Follower"],
-          first ["id"],
-          first ["Img_Secondaria"]);
+      company = new Azienda.query(first);
     }
-
     return company;
   }
 
@@ -605,8 +578,7 @@ class Database {
     QuerySnapshot query = await FirebaseFirestore.instance.collection('Hashtag')
     .where('id_Azienda',isEqualTo: id).get();
     query.docs.forEach((element) {
-      list.add(new Hashtag(element ["id_Azienda"], element ["Nome"],
-          element ["Immagine_Hashtag"], element ["id"]));
+      list.add(new Hashtag.query(element));
     }
     );
     return list;
@@ -652,22 +624,15 @@ class Database {
         .catchError((error) => print("Failed to add Orario: $error"));
     return id;
   }
-  Future<OrarioLavorativo> findOrarioList(int id) async {
-    OrarioLavorativo o;
+  Future<OrarioLavorativo> findOrarioLavorativo(int id) async {
+    OrarioLavorativo orario;
     QuerySnapshot query = await FirebaseFirestore.instance.collection('Orari')
         .where('id_Azienda',isEqualTo: id).get();
     if (query.docs.isNotEmpty) {
       QueryDocumentSnapshot first = query.docs.first;
-      o=new OrarioLavorativo(first[ 'id']);
-      o.addGiorno(Giorni_Settimana.Lunedi, first['Lunedi_Apertura'], first['Lunedi_Chiusura']);
-      o.addGiorno(Giorni_Settimana.Martedi, first['Martedi_Apertura'], first['Martedi_Chiusura']);
-      o.addGiorno(Giorni_Settimana.Mercoledi, first['Mercoledi_Apertura'], first['Mercoledi_Chiusura']);
-      o.addGiorno(Giorni_Settimana.Giovedi, first['Giovedi_Apertura'], first['Giovedi_Chiusura']);
-      o.addGiorno(Giorni_Settimana.Venerdi, first['Venerdi_Apertura'], first['Venerdi_Chiusura']);
-      o.addGiorno(Giorni_Settimana.Sabato, first['Sabato_Apertura'], first['Sabato_Chiusura']);
-      o.addGiorno(Giorni_Settimana.Domenica, first['Domenica_Apertura'], first['Domenica_Chiusura']);
+      orario=new OrarioLavorativo.query(first);
     }
-    return o;
+    return orario;
   }
 
 

@@ -1,4 +1,7 @@
-class Utente {
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:everstream/User.dart';
+
+class Utente extends User{
   int id;
   String foto_profilo;
   String nome;
@@ -25,6 +28,19 @@ class Utente {
     this.foto_profilo=foto_profilo;
     this.cellulare=cellulare;
 
+  }
+  Utente.query(QueryDocumentSnapshot result){
+    this.nome=result["Nome"];
+    this.cognome=result["Cognome"];
+    this.data=result["Data_Nascita"];
+    this.genere=result ["Sesso"];
+    this.id_Luogo=result ["Id_luogo"];
+    this.email=result["Email"];
+    this.username=result["Username"];
+    this.password =result ["Password"];
+    this.id=result["id"];
+    this.foto_profilo=result ["Foto_Profilo"];
+    this.cellulare= result ["Cellulare"];
   }
 
 

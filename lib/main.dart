@@ -8,13 +8,11 @@ import 'Database.dart';
 import 'Pagine/Pagine_Accesso/Accedi.dart';
 
 
-Database _database;
+
 Controller controller;
 
 Future<void> main()  async {
-
-_database= new Database();
-controller=new Controller(_database);
+controller=Controller.getControlleristance();
 
 /*runApp(MyLogo());*/
 

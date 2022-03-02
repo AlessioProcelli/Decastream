@@ -22,9 +22,16 @@ import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 class Controller {
   Database database;
+  static Controller _istance;
 
-  Controller( Database database) {
-    this.database = database;
+  static Controller getControlleristance(){
+      if(_istance==null){
+        _istance= new Controller._private();
+      }
+      return _istance;
+  }
+   Controller._private()  {
+    this.database = Database.getDatabaseIstance();
   }
 
   Future<void> AddUtente(
@@ -103,38 +110,33 @@ class Controller {
   Future<bool> LoginIsCorrect(String username, String password) async {
     bool trovato = false;
     database.isAzienda = false;
-    Utente user = await database.findUser(username);
-
+    Utente utente = await database.findUser(username);
     ///Confronto utente recuperato con la password
-    if (user != null) {
-      if (user.password.compareTo(password) == 0) {
+    if (utente != null) {
+      if (utente.password.compareTo(password) == 0) {
         trovato = true;
-        database.setcurrentUser(user);
+        database.setActiveUser(utente);
       }
     }
 
     ///se esito negativo cerca tra le aziende
     if (trovato == false) {
       Azienda azienda = await database.findAzienda(username);
-      List<Hashtag> list = await database
-          .getHashtagList(); //prende list hashtag per recuperare quelli aziendali
-
       if (azienda != null) {
         if (azienda.password.compareTo(password) == 0) {
           trovato = true;
-          database.currentAzienda = azienda;
-          database.isAzienda = true;
+          database.setActiveUser(azienda);
           List<Hashtag> hashlist = await database.findCompanyHashtag(
               azienda.id);
-          list.forEach((hashtag) {
-            database.aziendaHashtagList.add(hashtag);
+          hashlist.forEach((hashtag) {
+            azienda.hashtagList.add(hashtag);
           });
-          database.orario_lavorativo =await database.findOrarioList(azienda.id);
+          azienda.orarioLavorativo =await database.findOrarioLavorativo(azienda.id);
+          database.setActiveUser(azienda);
         }
       }
     }
       return trovato;
-
   }
 
   Future<bool> getChat(String id_utente, List<String> listchat) async {

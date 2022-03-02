@@ -36,7 +36,7 @@ class ProfiloAzienda extends StatelessWidget {
       text: controller.database.currentAzienda.follower.toString());
   final controllerNome = TextEditingController(
       text: controller.database.currentAzienda.nome_azienda);
-
+Input_Time inputTime=Input_Time(controller.database.orario_lavorativo);
   Input_Hashtag hashbox1 = Input_Hashtag(
       controller.database.aziendaHashtagList[0].immagine_hashtag,
       controller.database.aziendaHashtagList[0].nome);
@@ -280,7 +280,7 @@ class ProfiloAzienda extends StatelessWidget {
 
                                   margin: EdgeInsets.only(
                                       top: RicalcoloHeight(10.0, context)),
-                                  child: Input_Time(controller.database.orario_lavorativo),
+                                  child: inputTime,
 
                                 ),
                               ],

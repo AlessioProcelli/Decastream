@@ -1,20 +1,23 @@
+import 'package:everstream/GraphicsInterface.dart';
+import 'package:everstream/IconChange.dart';
 import 'package:everstream/Pagine/Main_Page.dart';
 import 'package:flutter/material.dart';
 import 'package:everstream/Metodi/Ridimensiona.dart';
 
-class Menu extends StatelessWidget {
-  Main_Page padre;
-  bool cerca = false;
-  bool acquisti = false;
-  bool messaggi = false;
-  bool profilo = true;
+class Menu extends StatelessWidget  {
+  GraphicsInterface page;
+  IconChange cerca;
+  IconChange acquisti;
+  IconChange messaggi ;
+  IconChange profilo ;
   static const double icon_dimension = 40;
 
-  Menu(
-    Main_Page padre, {
-    Key key,
-  }) : super(key: key) {
-    this.padre = padre;
+  Menu(GraphicsInterface padre) {
+    this.page = padre;
+    cerca = IconChange(this,'assets/image/cerca.png','assets/image/cercaRED.png');
+    acquisti=IconChange(this,'assets/image/acquisti.png','assets/image/acquistiRED.png');
+    messaggi=IconChange(this,'assets/image/messaggi.png','assets/image/messaggiRED.png');
+    profilo=IconChange(this,'assets/image/profilo.png','assets/image/profiloRED.png',true);
   }
 
   @override
@@ -25,128 +28,46 @@ class Menu extends StatelessWidget {
         Container(
           width: RicalcoloWidth(icon_dimension, context),
           height: RicalcoloHeight(icon_dimension, context),
-          child: AspectRatio(
-            aspectRatio: 1 / 1,
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: cerca
-                      ? AssetImage('assets/image/cercaRED.png')
-                      : AssetImage('assets/image/cerca.png'),
-                  fit: BoxFit.fill,
-                ),
-              ),
-              child: TextButton(
-                onPressed: () => {setCurrentActive(1, context)},
-              ),
-            ),
-          ),
+          child: cerca
         ),
 
         Container(
           width: RicalcoloWidth(icon_dimension, context),
           height: RicalcoloHeight(icon_dimension, context),
-          child: AspectRatio(
-            aspectRatio: 1 / 1,
-            child: Container(
-              width: RicalcoloWidth(icon_dimension, context),
-              height: RicalcoloWidth(icon_dimension, context),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: acquisti
-                      ? AssetImage('assets/image/acquistiRED.png')
-                      : AssetImage('assets/image/acquisti.png'),
-                  fit: BoxFit.fill,
-                ),
-              ),
-              child: TextButton(
-                onPressed: () => {
-                  //Cerca
-                  //setCurrentActive(2,context)
-                },
-              ),
-            ),
-          ),
+          child:acquisti
         ),
 
         // Adobe XD layer: 'messaggi@4x' (shape)
         Container(
           width: RicalcoloWidth(icon_dimension, context),
           height: RicalcoloHeight(icon_dimension, context),
-          child: AspectRatio(
-            aspectRatio: 1 / 1,
-            child: Container(
-              width: RicalcoloWidth(icon_dimension, context),
-              height: RicalcoloWidth(icon_dimension, context),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: messaggi
-                      ? AssetImage('assets/image/messaggiRED.png')
-                      : AssetImage('assets/image/messaggi.png'),
-                  fit: BoxFit.fill,
-                ),
-              ),
-              child: TextButton(
-                onPressed: () => {
-                  // setCurrentActive(3,context)
-                },
-              ),
-            ),
-          ),
+          child: messaggi
         ),
         Container(
           width: RicalcoloWidth(icon_dimension, context),
           height: RicalcoloHeight(icon_dimension, context),
-          child: AspectRatio(
-            aspectRatio: 1 / 1,
-            child: Container(
-              width: RicalcoloWidth(icon_dimension, context),
-              height: RicalcoloWidth(icon_dimension, context),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: profilo
-                      ? AssetImage('assets/image/profiloRED.png')
-                      : AssetImage('assets/image/profilo.png'),
-                  fit: BoxFit.fill,
-                ),
-              ),
-              child: TextButton(
-                onPressed: () => {setCurrentActive(4, context)},
-              ),
-            ),
-          ),
+          child:profilo
         ),
       ],
     );
   }
 
-  void setCurrentActive(int i, BuildContext context) {
-    cerca = false;
-    acquisti = false;
-    messaggi = false;
-    profilo = false;
-    switch (i) {
-      case 1:
-        cerca = true;
-        break;
-      case 2:
-        acquisti = true;
-        break;
-      case 3:
-        messaggi = true;
-        break;
-      case 4:
-        profilo = true;
-        break;
-    }
-    padre.change();
-    rebuildAllChildren(context);
-  }
+
 
   int getCurrentActive() {
-    if (cerca) return 1;
-    if (acquisti) return 2;
-    if (messaggi) return 3;
-    if (profilo) return 4;
+    if (cerca.isActive) return 1;
+    if (acquisti.isActive) return 2;
+    if (messaggi.isActive) return 3;
+    if (profilo.isActive) return 4;
+  }
+
+
+  changeActive(IconChange active) {
+cerca.setCeck(false);
+acquisti.setCeck(false);
+messaggi.setCeck(false);
+profilo.setCeck(false);
+active.setCeck(true);
+page.notifica();
   }
 }

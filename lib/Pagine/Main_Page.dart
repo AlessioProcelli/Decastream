@@ -1,6 +1,8 @@
 
+import 'package:everstream/GraphicsInterface.dart';
 import 'package:everstream/Metodi/Ridimensiona.dart';
 import 'package:everstream/Pagine/Pagine_Profilo_Azienda/ProfiloAzienda.dart';
+import 'package:everstream/Tipi/Azienda.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../Widget/Menu.dart';
@@ -9,18 +11,18 @@ import '../main.dart';
 import 'Pagine_Cerca/PaginaCerca.dart';
 import 'Pagine_Profilo_Utente/ProfiloUtente.dart';
 
-class Main_Page extends StatelessWidget {
+class Main_Page extends StatelessWidget implements GraphicsInterface {
   BuildContext context;
-  final Widget paginaCerca=PaginaCerca();
+  final Widget paginaCerca= new PaginaCerca();
   Widget paginaProfilo;
   Menu menu;
 
   Main_Page()  {
     menu = new Menu(this);
-    if(controller.database.isAzienda){
-      paginaProfilo= ProfiloAzienda();
+    if(controller.database.activeUser is Azienda){
+      paginaProfilo= new ProfiloAzienda();
     }else {
-      paginaProfilo= Profiloutente();
+      paginaProfilo= new Profiloutente();
     }
   }
 
@@ -60,7 +62,9 @@ class Main_Page extends StatelessWidget {
     }
   }
 
-  void change() {
+
+  @override
+  notifica() {
     rebuildAllChildren(context);
   }
 }
