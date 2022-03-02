@@ -18,7 +18,8 @@ class Main_Page extends StatelessWidget implements GraphicsInterface {
   Menu menu;
 
   Main_Page()  {
-    menu = new Menu(this);
+    menu = new Menu();
+    menu.addObserver(this);
     if(controller.database.activeUser is Azienda){
       paginaProfilo= new ProfiloAzienda();
     }else {
@@ -64,7 +65,7 @@ class Main_Page extends StatelessWidget implements GraphicsInterface {
 
 
   @override
-  notifica() {
+  update(GraphicsInterface) {
     rebuildAllChildren(context);
   }
 }

@@ -1,5 +1,6 @@
 
 import 'package:everstream/GraphicsInterface.dart';
+import 'package:everstream/GraphicsObject.dart';
 import 'package:everstream/Metodi/Metodi_Grafici.dart';
 import 'package:everstream/Pagine/Main_Page.dart';
 import 'package:everstream/Pagine/Pagine_Profilo_Azienda/ProfiloAzienda.dart';
@@ -20,7 +21,8 @@ class Accedi extends StatelessWidget implements GraphicsInterface {
   BuildContext _context;
 
   Accedi(){
-    button=ButtonPrimary(this,"ACCEDI");
+    button=ButtonPrimary("ACCEDI");
+    button.addObserver(this);
   }
 
   @override
@@ -183,7 +185,7 @@ class Accedi extends StatelessWidget implements GraphicsInterface {
   }
 
   @override
-  notifica() {
+  update(GraphicsObject) {
   login();
   }
 

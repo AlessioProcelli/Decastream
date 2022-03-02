@@ -1,33 +1,34 @@
-import 'dart:ffi';
 import 'dart:io';
 import 'dart:ui';
-
 import 'package:everstream/Tipi/Utente.dart';
+import 'package:everstream/Widget/ButtonIcon.dart';
+import 'package:everstream/Widget/ButtonPrimary.dart';
 import 'package:everstream/main.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:adobe_xd/pinned.dart';
 import 'package:everstream/Metodi/Ridimensiona.dart';
 import '../../Metodi/Metodi_Grafici.dart';
 import 'ProfiloUtente_Modifica.dart';
 
 class Profiloutente extends StatelessWidget {
-  Utente activeUser = controller.database.currentUser;
-  BuildContext thiscontext;
+  Utente activeUser = controller.database.activeUser as Utente;
+  BuildContext context;
   bool changeFotoProfilo = false;
   File fotoCambiata;
   double text_size_box = 15.0;
   double width_size_box = 230.0;
   double height_size_box = 43.0;
+  Size buttonSize;
+   ButtonPrimary bottoneModifica;
 
-  Profiloutente({
-    Key key,
-  }) : super(key: key);
+  Profiloutente(){
+    bottoneModifica=new ButtonPrimary("Modifica",actionForButton);
+  }
 
   @override
   Widget build(BuildContext context) {
-    thiscontext = context;
+    this.context = context;
+    buttonSize=new Size(RicalcoloWidth(width_size_box, context),RicalcoloHeight(height_size_box, context));
     return SafeArea(
       child: SingleChildScrollView(
         child: Stack(
@@ -101,28 +102,7 @@ class Profiloutente extends StatelessWidget {
                     right: RicalcoloWidth(10.0, context)),
                 width: RicalcoloWidth(75.0, context),
                 height: RicalcoloHeight(38.0, context),
-                child: AspectRatio(
-                  aspectRatio: 25 / 16,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Route route = MaterialPageRoute(
-                          builder: (context) => Profiloutentemodifica(this));
-                      Navigator.push(context, route);
-                    },
-                    style: Primary_Button_Style(),
-                    child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: Text(
-                        'Modifica',
-                        style: My_Text_Style(
-                            RicalcoloWidth(
-                                RicalcoloWidth(1000, context), context),
-                            Color(0xffffffff)),
-                        textAlign: TextAlign.left,
-                      ),
-                    ),
-                  ),
-                ),
+                child: bottoneModifica
               ),
             ),
 
@@ -134,142 +114,81 @@ class Profiloutente extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   /// Box VideoChiamate
-                  ElevatedButton.icon(
-                      onPressed: () {
-                        print("Panic");
-                      },
-                      style: My_White_Style(Size(
-                          RicalcoloWidth(width_size_box, context),
-                          RicalcoloHeight(height_size_box, context))),
-                      icon: Image.asset('assets/image/videocameraRED.png'),
-                      label: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text(
-                            'Chiamate effettuate',
-                            style: My_Text_Style2(Colors.black),
-                            textAlign: TextAlign.left,
-                          ))),
+                  Container(
+                      width:RicalcoloWidth(width_size_box, context),
+                      height:RicalcoloHeight(height_size_box, context),
+                      child:ButtonIcon("Chiamate effettuate",'assets/image/videocameraRED.png')
+                  ),
 
                   Padding(
                       padding:
                           EdgeInsets.only(top: RicalcoloHeight(20.0, context))),
 
                   /// Box Lingua
-
-                  ElevatedButton.icon(
-                      onPressed: () {
-                        print("Panic");
-                      },
-                      style: My_White_Style(Size(
-                          RicalcoloWidth(width_size_box, context),
-                          RicalcoloHeight(height_size_box, context))),
-                      icon: Image.asset('assets/image/linguaRED.png'),
-                      label: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text(
-                            'Lingua',
-                            style: My_Text_Style2(Colors.black),
-                          ))),
+                  Container(
+                      width:RicalcoloWidth(width_size_box, context),
+                      height:RicalcoloHeight(height_size_box, context),
+                      child:ButtonIcon("Lingua",'assets/image/linguaRED.png')
+                  ),
 
                   Padding(
                       padding:
                           EdgeInsets.only(top: RicalcoloHeight(20.0, context))),
 
                   /// Box Pagamento
-                  ElevatedButton.icon(
-                      onPressed: () {
-                        print("Panic");
-                      },
-                      style: My_White_Style(Size(
-                          RicalcoloWidth(width_size_box, context),
-                          RicalcoloHeight(height_size_box, context))),
-                      icon: Image.asset('assets/image/carteRED.png'),
-                      label: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text(
-                            'Metodo di pagamento',
-                            style: My_Text_Style2(Colors.black),
-                          ))),
+                  Container(
+                      width:RicalcoloWidth(width_size_box, context),
+                      height:RicalcoloHeight(height_size_box, context),
+                      child:ButtonIcon("Metodo di pagamento",'assets/image/carteRED.png')
+                  ),
 
                   Padding(
                       padding:
                           EdgeInsets.only(top: RicalcoloHeight(20.0, context))),
 
                   /// Box Spedizione
-                  ElevatedButton.icon(
-                      onPressed: () {
-                        print("Panic");
-                      },
-                      style: My_White_Style(Size(
-                          RicalcoloWidth(width_size_box, context),
-                          RicalcoloHeight(height_size_box, context))),
-                      icon: Image.asset('assets/image/homeRED.png'),
-                      label: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text(
-                            'Indirizzo di spedizione',
-                            style: My_Text_Style2(Colors.black),
-                          ))),
+                  Container(
+                      width:RicalcoloWidth(width_size_box, context),
+                      height:RicalcoloHeight(height_size_box, context),
+                      child:ButtonIcon("Indirizzo di spedizione",'assets/image/homeRED.png')
+                  ),
 
                   Padding(
                       padding:
                           EdgeInsets.only(top: RicalcoloHeight(20.0, context))),
 
                   /// Box Privacy
-                  ElevatedButton.icon(
-                      onPressed: () {
-                        print("Panic");
-                      },
-                      style: My_White_Style(Size(
-                          RicalcoloWidth(width_size_box, context),
-                          RicalcoloHeight(height_size_box, context))),
-                      icon: Image.asset('assets/image/privacyRED.png'),
-                      label: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text(
-                            'Privacy e Sicurezza',
-                            style: My_Text_Style2(Colors.black),
-                          ))),
+
+                  Container(
+                    width:RicalcoloWidth(width_size_box, context),
+                    height:RicalcoloHeight(height_size_box, context),
+                    child:ButtonIcon("Privacy e Sicurezza",'assets/image/privacyRED.png')
+                  ),
+
 
                   Padding(
                       padding:
                           EdgeInsets.only(top: RicalcoloHeight(20.0, context))),
 
                   /// Box Notifiche e suoni
-                  ElevatedButton.icon(
-                      onPressed: () {
-                        print("Panic");
-                      },
-                      style: My_White_Style(Size(
-                          RicalcoloWidth(width_size_box, context),
-                          RicalcoloHeight(height_size_box, context))),
-                      icon: Image.asset("assets/image/notificheRED.png"),
-                      label: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text(
-                            'Notifiche e suoni',
-                            style: My_Text_Style2(Colors.black),
-                          ))),
+                  Container(
+                      width:RicalcoloWidth(width_size_box, context),
+                      height:RicalcoloHeight(height_size_box, context),
+                      child:ButtonIcon("Notifiche e suoni",'assets/image/notificheRED.png')
+                  ),
+
 
                   Padding(
                       padding:
                           EdgeInsets.only(top: RicalcoloHeight(20.0, context))),
 
                   /// Box Bisongo di aiuto
-                  ElevatedButton.icon(
-                      onPressed: () {
-                        print("Panic");
-                      },
-                      style: My_White_Style(Size(
-                          RicalcoloWidth(width_size_box, context),
-                          RicalcoloHeight(height_size_box, context))),
-                      icon: Image.asset("assets/image/helpRED.png"),
-                      label: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Text(
-                            'Bisogno di aiuto',
-                            style: My_Text_Style2(Colors.black),
-                          ))),
+                  Container(
+                      width:RicalcoloWidth(width_size_box, context),
+                      height:RicalcoloHeight(height_size_box, context),
+                      child:ButtonIcon("Bisogno di aiuto",'assets/image/helpRED.png')
+                  ),
+
                 ],
               ),
             ),
@@ -280,6 +199,11 @@ class Profiloutente extends StatelessWidget {
   }
 
   replaceInfo() {
-    rebuildAllChildren(thiscontext);
+    rebuildAllChildren(context);
+  }
+  void actionForButton(){
+    Route route = MaterialPageRoute(
+        builder: (context) => Profiloutentemodifica(this));
+    Navigator.push(this.context, route);
   }
 }

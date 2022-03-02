@@ -1,6 +1,8 @@
 
 
+import 'package:everstream/GraphicsObject.dart';
+
 abstract class GraphicsInterface{
 
-notifica();
+update(GraphicsObject);
 }

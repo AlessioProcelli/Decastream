@@ -1,10 +1,11 @@
 import 'package:everstream/GraphicsInterface.dart';
+import 'package:everstream/GraphicsObject.dart';
 import 'package:everstream/IconChange.dart';
 import 'package:everstream/Pagine/Main_Page.dart';
 import 'package:flutter/material.dart';
 import 'package:everstream/Metodi/Ridimensiona.dart';
 
-class Menu extends StatelessWidget  {
+class Menu extends StatelessWidget with GraphicsObject  {
   GraphicsInterface page;
   IconChange cerca;
   IconChange acquisti;
@@ -12,8 +13,7 @@ class Menu extends StatelessWidget  {
   IconChange profilo ;
   static const double icon_dimension = 40;
 
-  Menu(GraphicsInterface padre) {
-    this.page = padre;
+  Menu() {
     cerca = IconChange(this,'assets/image/cerca.png','assets/image/cercaRED.png');
     acquisti=IconChange(this,'assets/image/acquisti.png','assets/image/acquistiRED.png');
     messaggi=IconChange(this,'assets/image/messaggi.png','assets/image/messaggiRED.png');
@@ -68,6 +68,6 @@ acquisti.setCeck(false);
 messaggi.setCeck(false);
 profilo.setCeck(false);
 active.setCeck(true);
-page.notifica();
+notify();
   }
 }
