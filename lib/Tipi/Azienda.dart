@@ -1,11 +1,11 @@
-import 'package:everstream/Tipi/Orario_Lavorativo.dart';
+import 'package:everstream/Tipi/OrarioLavorativo.dart';
 
 class Azienda{
   int id;
-  int id_indirizzo;
+  int idIndirizzo;
   String descrizione;
   String tipologia;
-  List<Orario_Lavorativo> orari;
+  List<OrarioLavorativo> orari;
   String img_copertina;
   String img_profilo;
   String img_secondaria;
@@ -22,7 +22,7 @@ class Azienda{
       int follower=0,int id=0,String img_secondaria="secondariaGenerico.jpg"]
       ){
     this.nome_azienda = nome_azienda;
-    this.id_indirizzo =id_indirizzo;
+    this.idIndirizzo =id_indirizzo;
     this.partita_iva = partita_iva;
     this.email = email;
     this.tipologia=tipologia_azienda;

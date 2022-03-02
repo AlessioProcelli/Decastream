@@ -2,10 +2,10 @@ import 'dart:ffi';
 
 
 
-class Orario_Lavorativo{
+class OrarioLavorativo{
   int idAzienda;
   List<Orario> orari=[];
-  Orario_Lavorativo(int idAzienda){
+  OrarioLavorativo(int idAzienda){
     this.idAzienda=idAzienda;
   }
 

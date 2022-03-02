@@ -3,7 +3,7 @@
 
 
 import 'package:everstream/Metodi/Metodi_Grafici.dart';
-import 'package:everstream/Tipi/Orario_Lavorativo.dart';
+import 'package:everstream/Tipi/OrarioLavorativo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../Metodi/Ridimensiona.dart';
@@ -11,9 +11,9 @@ import '../../Metodi/Ridimensiona.dart';
 
 class Input_Time extends StatelessWidget{
   bool active=false;
-  Orario_Lavorativo orariList;
+  OrarioLavorativo orariList;
 
-  Input_Time( Orario_Lavorativo orariList){
+  Input_Time( OrarioLavorativo orariList){
    this.orariList=orariList;
   }
   Widget build(BuildContext context){

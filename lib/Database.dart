@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:everstream/Tipi/Hashtag.dart';
 import 'package:everstream/Tipi/Indirizzo.dart';
-import 'package:everstream/Tipi/Orario_Lavorativo.dart';
+import 'package:everstream/Tipi/OrarioLavorativo.dart';
 import 'package:everstream/main.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -25,7 +25,7 @@ class Database {
   var chiamate;
   CollectionReference users; //riferimento a tabella database
   Utente currentUser; //usati per memorizzare credenziali di chi fa accesso
-  Orario_Lavorativo orario_lavorativo; //orario lavorativo aziende
+  OrarioLavorativo orario_lavorativo; //orario lavorativo aziende
   Azienda currentAzienda;
   List<Hashtag> aziendaHashtagList = []; //tiene traccia degli hashtag aziendali
   bool isAzienda = false;// per capire qualche schermata porofilo fare visualizzare
@@ -99,7 +99,7 @@ class Database {
     FirebaseFirestore.instance.collection('Aziende').add({
       'id': id,
       'Nome_Azienda': azienda.nome_azienda,
-      'Id_Indirizzo': azienda.id_indirizzo,
+      'Id_Indirizzo': azienda.idIndirizzo,
       'Descrizione': azienda.descrizione,
       'Tipologia_Azienda': azienda.tipologia,
       'Id_Categoria1': null,
@@ -627,7 +627,7 @@ class Database {
       return call;
     }
 
-  Future<int> addOrario(Orario_Lavorativo orarioList) async {
+  Future<int> addOrario(OrarioLavorativo orarioList) async {
     int id = await nextId('Orari');
     FirebaseFirestore.instance.collection('Orari').add({
       'id': id,
@@ -652,13 +652,13 @@ class Database {
         .catchError((error) => print("Failed to add Orario: $error"));
     return id;
   }
-  Future<Orario_Lavorativo> findOrarioList(int id) async {
-    Orario_Lavorativo o;
+  Future<OrarioLavorativo> findOrarioList(int id) async {
+    OrarioLavorativo o;
     QuerySnapshot query = await FirebaseFirestore.instance.collection('Orari')
         .where('id_Azienda',isEqualTo: id).get();
     if (query.docs.isNotEmpty) {
       QueryDocumentSnapshot first = query.docs.first;
-      o=new Orario_Lavorativo(first[ 'id']);
+      o=new OrarioLavorativo(first[ 'id']);
       o.addGiorno(Giorni_Settimana.Lunedi, first['Lunedi_Apertura'], first['Lunedi_Chiusura']);
       o.addGiorno(Giorni_Settimana.Martedi, first['Martedi_Apertura'], first['Martedi_Chiusura']);
       o.addGiorno(Giorni_Settimana.Mercoledi, first['Mercoledi_Apertura'], first['Mercoledi_Chiusura']);

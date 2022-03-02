@@ -1,4 +1,4 @@
-import 'package:everstream/Pagine/Pagine_Cerca/Visualizzatore_Ricerca.dart';
+import 'package:everstream/Pagine/Pagine_Cerca/VisualizzatoreRicerca.dart';
 import 'package:everstream/Metodi/Metodi_Grafici.dart';
 import 'package:flutter/material.dart';
 import 'package:everstream/Metodi/Ridimensiona.dart';
@@ -83,7 +83,7 @@ class PaginaCerca extends StatelessWidget{
               flex: 2,
 
               //griglia aziende
-              child: Visualizzatore_Ricerca(),
+              child: VisualizzatoreRicerca(),
 
             ),
           ],

@@ -3,7 +3,7 @@ import 'package:everstream/Metodi/Ridimensiona.dart';
 import 'package:everstream/Pagine/Pagine_Chiamata/ChiamataInArrivo.dart';
 import 'package:everstream/Tipi/Chiamata.dart';
 import 'package:everstream/Tipi/Hashtag.dart';
-import 'package:everstream/Tipi/Orario_Lavorativo.dart';
+import 'package:everstream/Tipi/OrarioLavorativo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:path/path.dart' as Path;
@@ -87,7 +87,7 @@ class Controller {
   }
 
   addOrario(int id){
-    Orario_Lavorativo orarilist=new Orario_Lavorativo(id);
+    OrarioLavorativo orarilist=new OrarioLavorativo(id);
     orarilist.addGiorno(Giorni_Settimana.Lunedi, 9, 18);
     orarilist.addGiorno(Giorni_Settimana.Martedi, 9, 18);
     orarilist.addGiorno(Giorni_Settimana.Mercoledi, 9, 18);

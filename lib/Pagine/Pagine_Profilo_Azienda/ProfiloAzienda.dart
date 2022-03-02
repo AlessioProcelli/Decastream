@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:everstream/Metodi/Metodi_Grafici.dart';
-import 'package:everstream/Tipi/Orario_Lavorativo.dart';
+import 'package:everstream/Tipi/OrarioLavorativo.dart';
 import 'package:everstream/Widget/Input_Widget/Input_Box.dart';
 import 'package:everstream/Widget/Input_Widget/Input_Hashtag.dart';
 import 'package:everstream/Widget/Input_Widget/Input_Time.dart';

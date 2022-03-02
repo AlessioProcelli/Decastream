@@ -20,13 +20,13 @@ import '../../main.dart';
 //snapshot.data.docs[index]['Nome_Azienda']
 //if(snapshot.data.docs[index]['id'] == aziende.id)
 
-class Visualizzatore_Ricerca extends StatelessWidget {
+class VisualizzatoreRicerca extends StatelessWidget {
   List<Azienda> listA;
   CollectionReference aziende;
   CollectionReference hashtag;
 
   @override
-  Visualizzatore_Ricerca() {
+  VisualizzatoreRicerca() {
     aziende = FirebaseFirestore.instance.collection("Aziende");
     hashtag = FirebaseFirestore.instance.collection("Hashtag");
   }

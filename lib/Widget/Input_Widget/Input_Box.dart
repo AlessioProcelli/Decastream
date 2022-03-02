@@ -6,7 +6,7 @@ import '../../Metodi/Ridimensiona.dart';
 class Input_Box extends StatelessWidget {
   double _width;
   double _height;
-  double _border_radius = 10.0;
+  double _borderRadius = 10.0;
   TextEditingController _controller;
   bool _active = false;
   bool _ispassword;
@@ -27,7 +27,7 @@ class Input_Box extends StatelessWidget {
         aspectRatio: 13 / 2,
         child: Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(_border_radius),
+            borderRadius: BorderRadius.circular(_borderRadius),
             color: const Color(0xffe00a17),
           ),
           child: Container(
@@ -38,7 +38,7 @@ class Input_Box extends StatelessWidget {
               width: RicalcoloWidth(_width, context),
               height: RicalcoloHeight(_height, context),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(_border_radius),
+                borderRadius: BorderRadius.circular(_borderRadius),
                 color: const Color(0xffffffff),
                 boxShadow: [
                   BoxShadow(

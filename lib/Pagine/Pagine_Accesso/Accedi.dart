@@ -14,8 +14,6 @@ class Accedi extends StatelessWidget {
   /*sono i controller delle TEXTEDITFORM servono per avere riferimenti ai campi e prenderci il testo */
   Input_Box input_username = Input_Box(261.0, 41.0, "Nome utente o email");
   Input_Box input_password = Input_Box(261.0, 41.0, "Password", true);
-  bool pressPassword = false;
-  bool pressUser = false;
 
   Accedi({
     Key key,
@@ -117,7 +115,7 @@ class Accedi extends StatelessWidget {
                       aspectRatio: 3 / 1,
                       child:ElevatedButton(
                       onPressed: () {
-                        Login(context);
+                        login(context);
                       },
                       style: Primary_Button_Style(),
                       child: Text(
@@ -135,7 +133,7 @@ class Accedi extends StatelessWidget {
                         EdgeInsets.only(top: RicalcoloHeight(70.0, context)),
                     child: TextButton(
                       onPressed: () {
-                        Registrazione(context);
+                        registrazione(context);
                         ;
                       },
                       child: Text.rich(
@@ -178,7 +176,7 @@ class Accedi extends StatelessWidget {
     );
   }
 
-  Future<void> Login(BuildContext context) async {
+  Future<void> login(BuildContext context) async {
     bool correct = await controller.LoginIsCorrect(
         input_username.getText(), input_password.getText());
     if (correct) {
@@ -189,7 +187,7 @@ class Accedi extends StatelessWidget {
 
   }
 
-  void Registrazione(BuildContext context) {
+  void registrazione(BuildContext context) {
     Route route = MaterialPageRoute(builder: (context) => SceltaAccount());
     Navigator.push(context, route);
   }
