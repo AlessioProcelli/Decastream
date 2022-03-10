@@ -1,20 +1,23 @@
 
+import 'package:everstream/Controller.dart';
+import 'package:everstream/ControllerLogin.dart';
+import 'package:everstream/ControllerLogin.dart';
+import 'package:everstream/ControllerNew.dart';
 import 'package:everstream/GraphicsInterface.dart';
-import 'package:everstream/GraphicsObject.dart';
 import 'package:everstream/Metodi/Metodi_Grafici.dart';
-import 'package:everstream/Pagine/Main_Page.dart';
-import 'package:everstream/Pagine/Pagine_Profilo_Azienda/ProfiloAzienda.dart';
 import 'package:everstream/SceltaAccount.dart';
 import 'package:everstream/Widget/ButtonPrimary.dart';
 import 'package:everstream/Widget/Input_Widget/Input_Box.dart';
 import 'package:flutter/material.dart';
 import 'package:everstream/Metodi/Ridimensiona.dart';
-import 'package:everstream/main.dart';
+
+
+import '../../ControllerLogin.dart';
 
 
 
 class Accedi extends StatelessWidget implements GraphicsInterface {
-  /*sono i controller delle TEXTEDITFORM servono per avere riferimenti ai campi e prenderci il testo */
+  final ControllerLogin controller = new ControllerLogin();
   ButtonPrimary button;
   Input_Box input_username = Input_Box(261.0, 41.0, "Nome utente o email");
   Input_Box input_password = Input_Box(261.0, 41.0, "Password", true);
