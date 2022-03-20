@@ -2,16 +2,15 @@
 import 'package:everstream/GraphicsInterface.dart';
 import 'package:everstream/Metodi/Ridimensiona.dart';
 import 'package:everstream/Pagine/Pagine_Profilo_Azienda/ProfiloAzienda.dart';
-import 'package:everstream/Tipi/Azienda.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../Widget/Menu.dart';
-
-import '../main.dart';
+import 'ControllerMain.dart';
 import 'Pagine_Cerca/PaginaCerca.dart';
 import 'Pagine_Profilo_Utente/ProfiloUtente.dart';
 
 class Main_Page extends StatelessWidget implements GraphicsInterface {
+  ControllerMain controller= new ControllerMain();
   BuildContext context;
   final Widget paginaCerca= new PaginaCerca();
   Widget paginaProfilo;
@@ -20,7 +19,7 @@ class Main_Page extends StatelessWidget implements GraphicsInterface {
   Main_Page()  {
     menu = new Menu();
     menu.addObserver(this);
-    if(controller.database.activeUser is Azienda){
+    if(controller.userIsAzienda()){
       paginaProfilo= new ProfiloAzienda();
     }else {
       paginaProfilo= new Profiloutente();

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:everstream/Tipi/Hashtag.dart';
 import 'package:everstream/Tipi/OrarioLavorativo.dart';
 
-import '../User.dart';
+import 'User.dart';
 
 class Azienda extends User{
   List<Hashtag> hashtagList=[];
@@ -54,6 +54,11 @@ class Azienda extends User{
     this.follower=result ["Follower"];
     this.id=result ["id"];
     this.img_secondaria=result ["Img_Secondaria"];
+  }
+
+  @override
+  int getId() {
+    return id;
   }
 
 

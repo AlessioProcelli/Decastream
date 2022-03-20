@@ -13,6 +13,7 @@ import 'settings.dart';
 import '../../Pop_Up/Pop_Up_Offerte/lancioOfferta.dart';
 import '../../Tipi/Azienda.dart';
 
+
 class Call extends StatefulWidget {
   /// non-modifiable channel name of the page
   final String channelName;

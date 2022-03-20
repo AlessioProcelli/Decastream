@@ -1,8 +1,4 @@
-
-import 'package:everstream/Controller.dart';
-import 'package:everstream/ControllerLogin.dart';
-import 'package:everstream/ControllerLogin.dart';
-import 'package:everstream/ControllerNew.dart';
+import 'package:everstream/Pagine/Pagine_Accesso/ControllerLogin.dart';
 import 'package:everstream/GraphicsInterface.dart';
 import 'package:everstream/Metodi/Metodi_Grafici.dart';
 import 'package:everstream/SceltaAccount.dart';
@@ -10,11 +6,7 @@ import 'package:everstream/Widget/ButtonPrimary.dart';
 import 'package:everstream/Widget/Input_Widget/Input_Box.dart';
 import 'package:flutter/material.dart';
 import 'package:everstream/Metodi/Ridimensiona.dart';
-
-
-import '../../ControllerLogin.dart';
-
-
+import 'ControllerLogin.dart';
 
 class Accedi extends StatelessWidget implements GraphicsInterface {
   final ControllerLogin controller = new ControllerLogin();
@@ -23,152 +15,152 @@ class Accedi extends StatelessWidget implements GraphicsInterface {
   Input_Box input_password = Input_Box(261.0, 41.0, "Password", true);
   BuildContext _context;
 
-  Accedi(){
-    button=ButtonPrimary("ACCEDI");
+  Accedi() {
+    button = ButtonPrimary("ACCEDI");
     button.addObserver(this);
   }
 
   @override
   Widget build(BuildContext context) {
-    _context=context;
+    _context = context;
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xffffffff),
-        body: SingleChildScrollView(child:Stack(
-          children: <Widget>[
-            ///Parte  Rossa in  Alto
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: RicalcoloHeight(348.0, context),
-              decoration: BoxDecoration(
-                color: const Color(0xffe00a17),
+        body: SingleChildScrollView(
+          child: Stack(
+            children: <Widget>[
+              ///Parte  Rossa in  Alto
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: RicalcoloHeight(348.0, context),
+                decoration: BoxDecoration(
+                  color: const Color(0xffe00a17),
+                ),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      ///Logo
+                      Container(
+                          margin: EdgeInsets.only(
+                              top: RicalcoloHeight(32.0, context)),
+                          width: RicalcoloWidth(92.0, context),
+                          height: RicalcoloHeight(112.0, context),
+                          child: AspectRatio(
+                            aspectRatio: 23 / 28,
+                            child: Image.asset("assets/image/logo.png"),
+                          )),
+                      Container(
+                        margin: EdgeInsets.only(
+                            top: RicalcoloHeight(10.0, context)),
+                        child: Text(
+                          'the best fast shop',
+                          style: My_Text_Style(
+                              RicalcoloWidth(15.0, context), Color(0xffffffff)),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ]),
               ),
-              child: Column(
+
+              ///Corpo Centrale
+              Container(
+                margin: EdgeInsets.only(top: RicalcoloHeight(192.0, context)),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(78.0),
+                  color: const Color(0xffffffff),
+                ),
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    ///Logo
+                    ///Titolo
                     Container(
                       margin:
-                          EdgeInsets.only(top: RicalcoloHeight(32.0, context)),
-                      width: RicalcoloWidth(92.0, context),
-                      height: RicalcoloHeight(112.0, context),
-
-                    child: AspectRatio(
-                      aspectRatio: 23 / 28,
-                      child:Image.asset ( "assets/image/logo.png"),)
+                          EdgeInsets.only(top: RicalcoloHeight(87.0, context)),
+                      child: Text('Accedi',
+                          style: My_Text_Style(RicalcoloWidth(30.0, context),
+                              Color(0xff0e1116))),
                     ),
+
+                    /// Username Campo
                     Container(
                       margin:
-                          EdgeInsets.only(top: RicalcoloHeight(10.0, context)),
+                          EdgeInsets.only(top: RicalcoloHeight(40.0, context)),
+                      child: input_username,
+                    ),
+
+                    /// Campo Password
+                    Container(
+                      margin:
+                          EdgeInsets.only(top: RicalcoloHeight(40.0, context)),
+                      child: input_password,
+                    ),
+
+                    Container(
+                      margin:
+                          EdgeInsets.only(top: RicalcoloHeight(15.0, context)),
                       child: Text(
-                        'the best fast shop',
-                        style:My_Text_Style(RicalcoloWidth(15.0, context), Color(0xffffffff)) ,
+                        'Ti sei dimenticato la password?',
+                        style: My_Text_Style(
+                            RicalcoloWidth(10.2, context), Color(0xff0e1116)),
                         textAlign: TextAlign.left,
                       ),
                     ),
-                  ]),
-            ),
 
-            ///Corpo Centrale
-            Container(
-              margin: EdgeInsets.only(top: RicalcoloHeight(192.0, context)),
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(78.0),
-                color: const Color(0xffffffff),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  ///Titolo
-                  Container(
-                    margin:
-                        EdgeInsets.only(top: RicalcoloHeight(87.0, context)),
-                    child: Text(
-                      'Accedi',
-                      style: My_Text_Style(RicalcoloWidth(30.0, context), Color(0xff0e1116))
-
+                    ///Bottone Accedi
+                    Container(
+                      margin:
+                          EdgeInsets.only(top: RicalcoloHeight(55.0, context)),
+                      width: RicalcoloWidth(126.0, context),
+                      height: RicalcoloHeight(42.0, context),
+                      child: button,
                     ),
-                  ),
 
-                  /// Username Campo
-                  Container(
-                    margin:
-                        EdgeInsets.only(top: RicalcoloHeight(40.0, context)),
-                    child: input_username,
-                  ),
-
-                  /// Campo Password
-                  Container(
-                    margin:
-                        EdgeInsets.only(top: RicalcoloHeight(40.0, context)),
-                    child: input_password,
-                  ),
-
-                  Container(
-                    margin:
-                        EdgeInsets.only(top: RicalcoloHeight(15.0, context)),
-                    child: Text(
-                      'Ti sei dimenticato la password?',
-                      style:My_Text_Style(RicalcoloWidth(10.2, context),  Color(0xff0e1116)),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-
-                  ///Bottone Accedi
-                  Container(
-                    margin:
-                        EdgeInsets.only(top: RicalcoloHeight(55.0, context)),
-                    width: RicalcoloWidth(126.0, context),
-                    height: RicalcoloHeight(42.0, context),
-                    child:button,
-                  ),
-
-                  ///Invito Registrazione
-                  Container(
-                    margin:
-                        EdgeInsets.only(top: RicalcoloHeight(70.0, context)),
-                    child: TextButton(
-                      onPressed: () {
-                        registrazione(context);
-                        ;
-                      },
-                      child: Text.rich(
-                        TextSpan(
-                          style: TextStyle(
-                            fontFamily: 'SF Pro Display',
-                            fontSize: RicalcoloWidth(13.0, context),
-                            color: const Color(0xff0e1116),
+                    ///Invito Registrazione
+                    Container(
+                      margin:
+                          EdgeInsets.only(top: RicalcoloHeight(70.0, context)),
+                      child: TextButton(
+                        onPressed: () {
+                          registrazione(context);
+                          ;
+                        },
+                        child: Text.rich(
+                          TextSpan(
+                            style: TextStyle(
+                              fontFamily: 'SF Pro Display',
+                              fontSize: RicalcoloWidth(13.0, context),
+                              color: const Color(0xff0e1116),
+                            ),
+                            children: [
+                              TextSpan(
+                                text: 'Non hai ancora l’account? ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              TextSpan(
+                                text: 'Registrati',
+                                style: TextStyle(
+                                  color: const Color(0xffe00a17),
+                                  fontWeight: FontWeight.w500,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ],
                           ),
-                          children: [
-                            TextSpan(
-                              text: 'Non hai ancora l’account? ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            TextSpan(
-                              text: 'Registrati',
-                              style: TextStyle(
-                                color: const Color(0xffe00a17),
-                                fontWeight: FontWeight.w500,
-                                decoration: TextDecoration.underline,
-                              ),
-                            ),
-                          ],
+                          textHeightBehavior: TextHeightBehavior(
+                              applyHeightToFirstAscent: false),
+                          textAlign: TextAlign.left,
                         ),
-                        textHeightBehavior:
-                            TextHeightBehavior(applyHeightToFirstAscent: false),
-                        textAlign: TextAlign.left,
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
       ),
     );
   }
@@ -179,7 +171,6 @@ class Accedi extends StatelessWidget implements GraphicsInterface {
     if (correct) {
       Navigator.pushNamed(_context, "/mainPage");
     }
-
   }
 
   void registrazione(BuildContext context) {
@@ -189,12 +180,9 @@ class Accedi extends StatelessWidget implements GraphicsInterface {
 
   @override
   update(GraphicsObject) {
-  login();
+    login();
   }
-
-
 }
-
 
 const String _svg_2krf4z =
     '<svg viewBox="0.0 0.0 6.1 6.1" ><path transform="translate(-192.55, -192.54)" d="M 197.5851287841797 192.6689147949219 C 197.4159088134766 192.4996948242188 197.1408233642578 192.4996948242188 196.9716033935547 192.6689147949219 C 196.8023834228516 192.838134765625 196.8023834228516 193.1140747070312 196.9716033935547 193.282470703125 C 197.4627838134766 193.7736206054688 197.7343902587891 194.4270935058594 197.7343902587891 195.1230163574219 C 197.7343902587891 196.5583190917969 196.5663299560547 197.7263488769531 195.1310272216797 197.7263488769531 C 194.4351043701172 197.7263488769531 193.7816314697266 197.4556274414062 193.2904815673828 196.9635620117188 C 193.1212310791016 196.7943725585938 192.8461761474609 196.7943725585938 192.6769256591797 196.9635620117188 C 192.5077362060547 197.1319580078125 192.5077362060547 197.4078979492188 192.6769256591797 197.5771484375 C 193.3312225341797 198.233154296875 194.2033233642578 198.5941467285156 195.1310272216797 198.5941467285156 C 197.0453643798828 198.5941467285156 198.6021575927734 197.037353515625 198.6021575927734 195.123046875 C 198.6021575927734 194.1953430175781 198.2411651611328 193.3232116699219 197.5851287841797 192.6689147949219 Z" fill="#000000" stroke="#0e1116" stroke-width="0.20000000298023224" stroke-miterlimit="4" stroke-linecap="butt" /></svg>';

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:everstream/User.dart';
+import 'package:everstream/Tipi/User.dart';
 
 class Utente extends User{
   int id;
@@ -41,6 +41,11 @@ class Utente extends User{
     this.id=result["id"];
     this.foto_profilo=result ["Foto_Profilo"];
     this.cellulare= result ["Cellulare"];
+  }
+
+  @override
+  int getId() {
+    return id;
   }
 
 

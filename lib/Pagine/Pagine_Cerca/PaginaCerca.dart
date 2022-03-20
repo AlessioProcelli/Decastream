@@ -1,24 +1,25 @@
+import 'package:everstream/GraphicsInterface.dart';
+import 'package:everstream/GraphicsObject.dart';
 import 'package:everstream/Pagine/Pagine_Cerca/VisualizzatoreRicerca.dart';
 import 'package:everstream/Metodi/Metodi_Grafici.dart';
+import 'package:everstream/Widget/ButtonPrimary.dart';
 import 'package:flutter/material.dart';
 import 'package:everstream/Metodi/Ridimensiona.dart';
 
 
+class PaginaCerca extends StatelessWidget implements GraphicsInterface{
+  TextEditingController inputCerca;
+  ButtonPrimary button;
 
-class PaginaCerca extends StatelessWidget{
-
-  //prova con widget GridView
-
-
-  PaginaCerca({
-    Key key,
-  }) : super(key: key);
-
+  PaginaCerca() {
+    inputCerca= new TextEditingController(text: "cerca");
+    button=new ButtonPrimary("Filtra");
+    button.addObserver(this);
+  }
 
   @override
   Widget build(BuildContext context){
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
         body: Column(
           children: <Widget>[
             /// Input Cerca E Bottone Filtra
@@ -39,6 +40,7 @@ class PaginaCerca extends StatelessWidget{
                       height: RicalcoloHeight(30.0, context),
                       color: Colors.white,
                       child: TextFormField(
+                        controller:inputCerca,
                         decoration: InputDecoration(
                           prefixIcon: Icon(
                             Icons.search_outlined,
@@ -54,25 +56,7 @@ class PaginaCerca extends StatelessWidget{
                   Container(
                     width: RicalcoloWidth(64.0, context),
                     height: RicalcoloHeight(31.0, context),
-                    child: AspectRatio(
-                      aspectRatio: 2 / 1,
-                      child:
-                  ElevatedButton(
-                    onPressed: () {
-                      print("ok");
-                    },
-                    style: Primary_Button_Style(),
-                    child:FittedBox(
-                      fit: BoxFit.cover,
-                      child: Text(
-                      'Filtra',
-                      style: My_Text_Style(
-                          RicalcoloWidth(16.0, context), Color(0xffffffff)),
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
-                  ),
-                    ),
+                    child:button
                   ),
                 ],
               ),
@@ -88,10 +72,15 @@ class PaginaCerca extends StatelessWidget{
             ),
           ],
         ),
-      ),
+      );
 
-    );
 
+
+  }
+
+  @override
+  update(GraphicsObject obj) {
+    print("ok");
   }
 }
 

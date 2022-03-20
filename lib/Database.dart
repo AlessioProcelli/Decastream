@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:everstream/Tipi/Hashtag.dart';
 import 'package:everstream/Tipi/Indirizzo.dart';
 import 'package:everstream/Tipi/OrarioLavorativo.dart';
-import 'package:everstream/User.dart';
+import 'package:everstream/Tipi/User.dart';
 import 'package:everstream/main.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';

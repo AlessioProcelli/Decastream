@@ -1,32 +1,23 @@
-
-
-import 'package:adobe_xd/pinned.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:everstream/Metodi/Metodi_Grafici.dart';
 import 'package:everstream/Tipi/Azienda.dart';
-
+import 'package:everstream/Tipi/Hashtag.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:everstream/Controller.dart';
 import 'package:flutter/widgets.dart';
-
-import '../Pagine_Live/Call.dart';
-import '../Pagine_Live/Call.dart';
 import '../../Metodi/Ridimensiona.dart';
-import '../../main.dart';
-
-//snapshot.data.docs[index]['Img_Profilo']
-//snapshot.data.docs[index]['Nome_Azienda']
-//if(snapshot.data.docs[index]['id'] == aziende.id)
+import 'ControllerCerca.dart';
 
 class VisualizzatoreRicerca extends StatelessWidget {
+  ControllerCerca controller;
   List<Azienda> listA;
   CollectionReference aziende;
   CollectionReference hashtag;
 
   @override
   VisualizzatoreRicerca() {
+    controller = new ControllerCerca();
     aziende = FirebaseFirestore.instance.collection("Aziende");
     hashtag = FirebaseFirestore.instance.collection("Hashtag");
   }
@@ -36,10 +27,10 @@ class VisualizzatoreRicerca extends StatelessWidget {
       margin: EdgeInsets.only(
           left: RicalcoloWidth(7.0, context),
           right: RicalcoloWidth(7.0, context)),
-      child: StreamBuilder<QuerySnapshot>(
-          stream: aziende.snapshots(),
+      child: FutureBuilder(
+          future: controller.getAziendeList(),
           builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              (BuildContext context, AsyncSnapshot<List<Azienda>> snapshot) {
             if (snapshot.hasError) {
               return Text('Something went wrong');
             }
@@ -50,293 +41,299 @@ class VisualizzatoreRicerca extends StatelessWidget {
 
             return new GridView.builder(
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                childAspectRatio:23/24,
+                  childAspectRatio: 23 / 24,
                   maxCrossAxisExtent: RicalcoloHeight(280.0, context),
                   crossAxisSpacing: RicalcoloWidth(14.0, context),
                   mainAxisSpacing: RicalcoloWidth(28.0, context)),
-              itemCount: snapshot.data.docs.length,
+              itemCount: snapshot.data.length,
               itemBuilder: (BuildContext ctx, index) {
                 //2 row
 
-               ///bottone visita
-                return  FloatingActionButton(
+                ///bottone visita azienda
+                return FloatingActionButton(
+                  onPressed: () {
+                    visualizzaProfiloAzienda(snapshot.data[index].id, context);
+                  },
 
-                    onPressed: () {
-                  visualizzaProfiloAzienda(
-                      snapshot.data.docs[index]['id'], context);
-                },
                   ///contorno rosso
-                child: Container(
-
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(23.0),
-                    color: const Color(0xffffffff),
-                    border: Border.all(
-                        width: RicalcoloWidth(1.0, context),
-                        color: const Color(0xffe00a17)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0x29000000),
-                        offset: Offset(0.0, RicalcoloHeight(3.0, context)),
-                        blurRadius: 6,
-                      ),
-                    ],
-                  ),
-                  child:
-                SingleChildScrollView(
-                child:Column(
-
-                    children: [
-                      /// BOX Immagine Azienda
-
-                      Stack(children: <Widget>[
-                        /// Immagine Azienda Copertina
-                Container(
-                    width: RicalcoloWidth(172.0, context),
-                      height: RicalcoloHeight(92.0, context),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(22.0),
-                          topRight: Radius.circular(22.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(23.0),
+                      color: const Color(0xffffffff),
+                      border: Border.all(
+                          width: RicalcoloWidth(1.0, context),
+                          color: const Color(0xffe00a17)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0x29000000),
+                          offset: Offset(0.0, RicalcoloHeight(3.0, context)),
+                          blurRadius: 6,
                         ),
-                        image: DecorationImage(
-                          // foto_copertina
-                          image: NetworkImage(
-                              snapshot.data.docs[index]['Img_Copertina']),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                  /// Immagine Azienda Profilo
-                  child:Align(
-                      alignment: AlignmentDirectional.bottomCenter,
-                    child:Container(
-                      width: RicalcoloWidth(35.0, context),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        color: const Color(0xffffffff),
-                        border: Border.all(
-                            width: RicalcoloWidth(1.0, context),
-                            color: const Color(0xffe00a17)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0x29000000),
-                            offset: Offset(0.0, RicalcoloHeight(5.0, context)),
-                            blurRadius: 9,
-                          ),
-                        ],
-                      ),
-                    child:AspectRatio(
-                      aspectRatio: 1/1,
-                      child:Container(
+                      ],
+                    ),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          /// BOX Immagine Azienda
 
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(8.0),
-                            ),
-                            image: DecorationImage(
-                              // foto_copertina
-                              image: NetworkImage(
-                                  snapshot.data.docs[index]['Img_Profilo']),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                  ),
-                  ),
-                  ),
-                ),
-                        /// Box I
-                        Align(
-                          alignment: AlignmentDirectional.topEnd,
-                          child: Container(
-                            margin: EdgeInsets.only(
-                              top: RicalcoloHeight(7.0, context),
-                              right: RicalcoloWidth(7.0, context),
-                            ),
-
-                            child: Icon(
-                              Icons.info_outlined,
-                              color: Colors.black,
-                              size: RicalcoloWidth(15, context),
-                            ),
-                          ),
-                        ),
-
-                      ]),
-
-                      /// Nome Azienda e Valutazione
-                      Container(
-                        margin: EdgeInsets.only(
-                            top: RicalcoloHeight(8.0, context),
-                            right: RicalcoloWidth(10.0, context),
-                            left: RicalcoloWidth(10.0, context),
-                            bottom: RicalcoloHeight(6.0, context)),
-                        child:  Row(
-                          // prima row per nome azienda e stelle
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            ///nome azienda
-                           Container(
-                             width:RicalcoloWidth(100.0, context),
-
-                        child: FittedBox(
-                          fit:BoxFit.scaleDown,
-                          child:
-                            Text(
-                              snapshot.data.docs[index]['Nome_Azienda'],
-                              // max 16 caratteri
-                              style: My_Light_Text(
-                                  RicalcoloWidth(15.0, context), Colors.black),
-                              textAlign: TextAlign.center,
-                            ),
-                        ),
-                           ),
-                            ///valutazione e stelle
-
+                          Stack(children: <Widget>[
+                            /// Immagine Azienda Copertina
                             Container(
-                              margin: EdgeInsets.only(
-                                  top: RicalcoloHeight(3.0, context),
-                                  right: RicalcoloWidth(1.0, context),
-                                  bottom: RicalcoloHeight(1.0, context),
-                                  left: RicalcoloWidth(1.0, context)),
-                              width: RicalcoloWidth(38.0, context),
-                              height: RicalcoloHeight(7.0, context),
+                              width: RicalcoloWidth(172.0, context),
+                              height: RicalcoloHeight(92.0, context),
                               decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(22.0),
+                                  topRight: Radius.circular(22.0),
+                                ),
                                 image: DecorationImage(
-                                  image: const AssetImage(
-                                      "assets/image/stelle.png"),
-                                  fit: BoxFit.fill,
+                                  // foto_copertina
+                                  image: NetworkImage(
+                                      snapshot.data[index].img_copertina),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+
+                              /// Immagine Azienda Profilo
+                              child: Align(
+                                alignment: AlignmentDirectional.bottomCenter,
+                                child: Container(
+                                  width: RicalcoloWidth(35.0, context),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    color: const Color(0xffffffff),
+                                    border: Border.all(
+                                        width: RicalcoloWidth(1.0, context),
+                                        color: const Color(0xffe00a17)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: const Color(0x29000000),
+                                        offset: Offset(
+                                            0.0, RicalcoloHeight(5.0, context)),
+                                        blurRadius: 9,
+                                      ),
+                                    ],
+                                  ),
+                                  child: AspectRatio(
+                                    aspectRatio: 1 / 1,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(8.0),
+                                        ),
+                                        image: DecorationImage(
+                                          // foto_copertina
+                                          image: NetworkImage(
+                                              snapshot.data[index].img_profilo),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ],
-                        ),
-                      ),
 
+                            /// Box I
+                            Align(
+                              alignment: AlignmentDirectional.topEnd,
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                  top: RicalcoloHeight(7.0, context),
+                                  right: RicalcoloWidth(7.0, context),
+                                ),
+                                child: Icon(
+                                  Icons.info_outlined,
+                                  color: Colors.black,
+                                  size: RicalcoloWidth(15, context),
+                                ),
+                              ),
+                            ),
+                          ]),
 
-                      ///Row per Hashtag
+                          /// Nome Azienda e Valutazione
+                          Container(
+                            margin: EdgeInsets.only(
+                                top: RicalcoloHeight(8.0, context),
+                                right: RicalcoloWidth(10.0, context),
+                                left: RicalcoloWidth(10.0, context),
+                                bottom: RicalcoloHeight(6.0, context)),
+                            child: Row(
+                              // prima row per nome azienda e stelle
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                ///nome azienda
+                                Container(
+                                  width: RicalcoloWidth(100.0, context),
+                                  child: FittedBox(
+                                    fit: BoxFit.scaleDown,
+                                    child: Text(
+                                      snapshot.data[index].nome_azienda,
+                                      // max 16 caratteri
+                                      style: My_Light_Text(
+                                          RicalcoloWidth(15.0, context),
+                                          Colors.black),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
 
-                      Row(
-                        children: [
-                          StreamBuilder<QuerySnapshot>(
-                            stream: hashtag.snapshots(),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<QuerySnapshot> snapshotHashtag) {
-                              if (snapshotHashtag.hasError) {
-                                return Text('Something went wrong');
-                              }
+                                ///valutazione e stelle
 
-                              if (snapshotHashtag.connectionState ==
-                                  ConnectionState.waiting) {
-                                return Text("Loading");
-                              }
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      top: RicalcoloHeight(3.0, context),
+                                      right: RicalcoloWidth(1.0, context),
+                                      bottom: RicalcoloHeight(1.0, context),
+                                      left: RicalcoloWidth(1.0, context)),
+                                  width: RicalcoloWidth(38.0, context),
+                                  height: RicalcoloHeight(7.0, context),
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: const AssetImage(
+                                          "assets/image/stelle.png"),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
 
-                              List<QueryDocumentSnapshot> listQ = [];
-                              snapshotHashtag.data.docs.forEach((element) {
-                                if (element["id_Azienda"] ==
-                                    snapshot.data.docs[index]["id"])
-                                  listQ.add(element);
-                              });
+                          ///Row per Hashtag
 
-                              return Container(
-                                alignment: Alignment.center,
-                                width: RicalcoloWidth(169.0, context),
-                                height: RicalcoloHeight(10.0, context),
-                                child: ListView.builder(
-                                    //shrinkWrap: true,
-                                    //physics: NeverScrollableScrollPhysics(),
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: listQ.length,
-                                    itemBuilder:
-                                        (BuildContext context, indexHastag) {
-                                      return
-                                          //riquadro hashtag
-                                         AspectRatio(aspectRatio: 4/1,
-                                             child:Container(
-                                        margin: EdgeInsets.only(
-                                            left:
-                                                RicalcoloWidth(10.0, context)),
-                                        padding: EdgeInsets.only(
-                                            left: RicalcoloWidth(3.0, context),
-                                            right: RicalcoloWidth(3.0, context),
-                                            top: RicalcoloHeight(3.0, context)),
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(4.0),
-                                          color: const Color(0xffffffff),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: const Color(0x3e000000),
-                                              offset: Offset(
-                                                  0.0,
-                                                  RicalcoloHeight(
-                                                      1.0, context)),
-                                              blurRadius: 1,
-                                            ),
-                                          ],
-                                        ),
-                                        child:FittedBox(
-                                          fit: BoxFit.fitWidth,
-                                          child:Text(
-                                          "#" + listQ[indexHastag]["Nome"],
+                          Row(
+                            children: [
+                              FutureBuilder(
+                                future: controller
+                                    .getHastagList(snapshot.data[index].id),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<List<Hashtag>>
+                                        snapshotHashtag) {
+                                  if (snapshotHashtag.hasError) {
+                                    return Text('Something went wrong');
+                                  }
+
+                                  if (snapshotHashtag.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return Text("Loading");
+                                  }
+
+                                  return Container(
+                                    alignment: Alignment.center,
+                                    width: RicalcoloWidth(169.0, context),
+                                    height: RicalcoloHeight(10.0, context),
+                                    child: ListView.builder(
+                                        //shrinkWrap: true,
+                                        //physics: NeverScrollableScrollPhysics(),
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: snapshotHashtag.data.length,
+                                        itemBuilder: (BuildContext context,
+                                            indexHastag) {
+                                          return
+                                              //riquadro hashtag
+                                              AspectRatio(
+                                                  aspectRatio: 4 / 1,
+                                                  child: Container(
+                                                    margin: EdgeInsets.only(
+                                                        left: RicalcoloWidth(
+                                                            10.0, context)),
+                                                    padding: EdgeInsets.only(
+                                                        left: RicalcoloWidth(
+                                                            3.0, context),
+                                                        right: RicalcoloWidth(
+                                                            3.0, context),
+                                                        top: RicalcoloHeight(
+                                                            3.0, context)),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              4.0),
+                                                      color: const Color(
+                                                          0xffffffff),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color: const Color(
+                                                              0x3e000000),
+                                                          offset: Offset(
+                                                              0.0,
+                                                              RicalcoloHeight(
+                                                                  1.0,
+                                                                  context)),
+                                                          blurRadius: 1,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    child: FittedBox(
+                                                      fit: BoxFit.fitWidth,
+                                                      child: Text(
+                                                        "#" +
+                                                            snapshotHashtag
+                                                                .data[
+                                                                    indexHastag]
+                                                                .nome,
+                                                        style: TextStyle(
+                                                          fontFamily:
+                                                              'MADE TOMMY',
+                                                          color: const Color(
+                                                              0xff0e1116),
+                                                          fontWeight:
+                                                              FontWeight.w300,
+                                                        ),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    ),
+                                                  ));
+                                        }),
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+
+                          /// Bottone Chiamata
+                          Align(
+                            alignment: AlignmentDirectional.center,
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                  top: RicalcoloHeight(5.0, context)),
+                              width: RicalcoloWidth(70.0, context),
+                              height: RicalcoloHeight(40.0, context),
+                              child: FittedBox(
+                                fit: BoxFit.contain,
+                                child: ElevatedButton.icon(
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(14),
+                                    ),
+                                    primary: Color(0xff0e1116),
+                                    onPrimary: Colors.white,
+                                    elevation: 8,
+                                  ),
+                                  label: FittedBox(
+                                      fit: BoxFit.contain,
+                                      child: Text('Chiama',
                                           style: TextStyle(
                                             fontFamily: 'MADE TOMMY',
-
-                                            color: const Color(0xff0e1116),
-                                            fontWeight: FontWeight.w300,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),),)
-                                      );
-                                    }),
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-
-                      /// Bottone Chiamata
-                      Align(
-                        alignment: AlignmentDirectional.center,
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              top: RicalcoloHeight(5.0, context)),
-                          width: RicalcoloWidth(70.0, context),
-                          height: RicalcoloHeight(40.0, context),
-                          child: FittedBox(
-                            fit: BoxFit.contain,
-                            child: ElevatedButton.icon(
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(14),
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                          ))),
+                                  onPressed: () {
+                                    chiama(snapshot.data[index].id, context);
+                                  },
+                                  icon: Icon(
+                                    Icons.videocam,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                                primary: Color(0xff0e1116),
-                                onPrimary: Colors.white,
-                                elevation: 8,
-                              ),
-                              label: FittedBox(
-                                  fit: BoxFit.contain,
-                                  child: Text('Chiama',
-                                      style: TextStyle(
-                                        fontFamily: 'MADE TOMMY',
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                      ))),
-                              onPressed: () {
-                                chiama(
-                                    snapshot.data.docs[index]["id"], context);
-                              },
-                              icon: Icon(
-                                Icons.videocam,
-                                color: Colors.white,
                               ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                ),
-                ),
                 );
               },
             );

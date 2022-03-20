@@ -310,11 +310,9 @@ class Controller {
   }
 
   Future<void> ThereIsOfferta() async {
-    print(database.isAzienda);
-    if (!database.isAzienda) {
+    if (!(database.activeUser is Azienda)) {
       //si attiva solo se non è un azienda
       List<Offerta> listofferte = await database.getOfferteList();
-      print(listofferte.length);
       listofferte.forEach((current_offerta) {
         if (current_offerta.id_utente == database.currentUser.id) {
           database.current_Offerta = current_offerta;
@@ -326,13 +324,6 @@ class Controller {
     }
   }
 
-  Future<void> VisualizzaProfiloAzienda(int id, BuildContext context) async {
-    Azienda currentAzienda = await database.findAziendaById(id);
-      List<Hashtag> azienda_hash_list = await database.findCompanyHashtag(id);
-      Route route = MaterialPageRoute(
-          builder: (context) =>
-              ProfiloAzienda_VistaUtente(currentAzienda, azienda_hash_list));
-      Navigator.push(context, route);
-    }
+
 
 }

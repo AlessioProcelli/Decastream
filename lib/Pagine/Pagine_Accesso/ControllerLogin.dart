@@ -1,8 +1,7 @@
 import 'package:everstream/ControllerNew.dart';
-
-import 'Tipi/Azienda.dart';
-import 'Tipi/Hashtag.dart';
-import 'Tipi/Utente.dart';
+import '../../Tipi/Azienda.dart';
+import '../../Tipi/Hashtag.dart';
+import '../../Tipi/Utente.dart';
 
 class ControllerLogin extends ControllerNew {
 
@@ -14,6 +13,7 @@ class ControllerLogin extends ControllerNew {
     bool trovato = false;
     ControllerNew.database.isAzienda = false;
     Utente utente = await ControllerNew.database.findUser(username);
+
     ///Confronto utente recuperato con la password
     if (utente != null) {
       if (utente.password.compareTo(password) == 0) {
@@ -29,12 +29,14 @@ class ControllerLogin extends ControllerNew {
         if (azienda.password.compareTo(password) == 0) {
           trovato = true;
           ControllerNew.database.setActiveUser(azienda);
-          List<Hashtag> hashlist = await ControllerNew.database.findCompanyHashtag(
+          List<Hashtag> hashlist = await ControllerNew.database
+              .findCompanyHashtag(
               azienda.id);
           hashlist.forEach((hashtag) {
             azienda.hashtagList.add(hashtag);
           });
-          azienda.orarioLavorativo =await ControllerNew.database.findOrarioLavorativo(azienda.id);
+          azienda.orarioLavorativo =
+          await ControllerNew.database.findOrarioLavorativo(azienda.id);
           ControllerNew.database.setActiveUser(azienda);
         }
       }
