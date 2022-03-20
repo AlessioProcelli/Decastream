@@ -28,6 +28,9 @@ class Main_Page extends StatelessWidget implements GraphicsInterface {
 
   @override
   Widget build(BuildContext context) {
+    if(controller.userIsAzienda()) {
+      controller.setBaseforCall(context);
+    }
     this.context = context;
     return SafeArea(
       child: Scaffold(

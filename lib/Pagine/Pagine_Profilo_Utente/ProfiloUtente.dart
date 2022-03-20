@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:ui';
+import 'package:everstream/Pagine/Pagine_Profilo_Utente/ControllerUtente.dart';
 import 'package:everstream/Tipi/Utente.dart';
 import 'package:everstream/Widget/ButtonIcon.dart';
 import 'package:everstream/Widget/ButtonPrimary.dart';
@@ -11,7 +12,8 @@ import '../../Metodi/Metodi_Grafici.dart';
 import 'ProfiloUtente_Modifica.dart';
 
 class Profiloutente extends StatelessWidget {
-  Utente activeUser = controller.database.activeUser as Utente;
+  ControllerUtente controller;
+  Utente activeUser;
   BuildContext context;
   bool changeFotoProfilo = false;
   File fotoCambiata;
@@ -23,6 +25,8 @@ class Profiloutente extends StatelessWidget {
 
   Profiloutente(){
     bottoneModifica=new ButtonPrimary("Modifica",actionForButton);
+    controller=new ControllerUtente();
+    activeUser=controller.getActiveUser();
   }
 
   @override

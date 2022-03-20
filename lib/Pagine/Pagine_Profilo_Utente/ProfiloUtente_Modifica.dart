@@ -1,4 +1,5 @@
 import 'package:everstream/GraphicsInterface.dart';
+import 'package:everstream/Pagine/Pagine_Profilo_Utente/ControllerUtente.dart';
 import 'package:everstream/Tipi/Utente.dart';
 import 'package:everstream/Widget/ButtonPrimary.dart';
 import 'package:everstream/Widget/Input_Widget/Input_Row_Box.dart';
@@ -13,10 +14,11 @@ import 'package:everstream/Metodi/Ridimensiona.dart';
 import 'ProfiloUtente.dart';
 
 class Profiloutentemodifica extends StatelessWidget implements GraphicsInterface{
+  ControllerUtente controller;
   Profiloutente profilo;
   BuildContext context;
   Divider row_divider = Divider(color: Colors.black);
-  Utente currentUser = controller.database.activeUser as Utente;
+  Utente currentUser;
   File NuovaFoto = null;
   bool changed = false;
   ButtonPrimary fatto;
@@ -28,6 +30,8 @@ class Profiloutentemodifica extends StatelessWidget implements GraphicsInterface
   Input_Row_Box input_email;
 
   Profiloutentemodifica(Profiloutente profilo) {
+    controller=new ControllerUtente();
+    currentUser=controller.getActiveUser();
     this.profilo = profilo;
     input_cognome = Input_Row_Box(currentUser.cognome);
     input_nome = Input_Row_Box(currentUser.nome);

@@ -11,15 +11,10 @@ import 'ControllerCerca.dart';
 
 class VisualizzatoreRicerca extends StatelessWidget {
   ControllerCerca controller;
-  List<Azienda> listA;
-  CollectionReference aziende;
-  CollectionReference hashtag;
 
   @override
   VisualizzatoreRicerca() {
     controller = new ControllerCerca();
-    aziende = FirebaseFirestore.instance.collection("Aziende");
-    hashtag = FirebaseFirestore.instance.collection("Hashtag");
   }
 
   Widget build(BuildContext context) {

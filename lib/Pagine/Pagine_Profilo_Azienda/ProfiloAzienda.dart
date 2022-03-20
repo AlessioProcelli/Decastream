@@ -12,9 +12,11 @@ import 'package:everstream/Metodi/Ridimensiona.dart';
 import 'package:image_picker/image_picker.dart';
 import '../../Pop_Up/PopupVideoAzienda.dart';
 import '../../main.dart';
+import 'ControllerAzienda.dart';
 
 class ProfiloAzienda extends StatelessWidget {
-  Azienda currentAzienda=controller.database.activeUser as Azienda;
+  ControllerAzienda controller;
+  Azienda currentAzienda;
   VideoPlayerScreen popup = VideoPlayerScreen();
   bool watchVideo = false;
   File new_foto_profilo = null; //foto di appoggio
@@ -35,6 +37,8 @@ class ProfiloAzienda extends StatelessWidget {
   BuildContext context;
 
   ProfiloAzienda() {
+    controller=new ControllerAzienda();
+    currentAzienda=controller.getActiveAzienda();
     controllerIndirizzo = TextEditingController(text:"Via monte napoleone");
     controllerDescrizione = TextEditingController(text:currentAzienda.descrizione);
     controllerFollower = TextEditingController(text: currentAzienda.follower.toString());
@@ -44,13 +48,12 @@ class ProfiloAzienda extends StatelessWidget {
     hashbox2 = Input_Hashtag(currentAzienda.hashtagList[1].immagine_hashtag, currentAzienda.hashtagList[1].nome);
     hashbox3 = Input_Hashtag(currentAzienda.hashtagList[2].immagine_hashtag, currentAzienda.hashtagList[2].nome);
     hashbox4 = Input_Hashtag(currentAzienda.hashtagList[3].immagine_hashtag, currentAzienda.hashtagList[3].nome);
-    controller.database.listenChiamate();
+    controller.ascolta();
   }
 
   @override
   Widget build(BuildContext context) {
   // fix me:  popup.init();
-    controller.setCurrentContext(context);
     this.context=context;
     return SafeArea(
         child: Scaffold(
@@ -559,7 +562,7 @@ class ProfiloAzienda extends StatelessWidget {
   }
 
   ChangedConfirmed(BuildContext context) {
-    controller.UpdateAzienda(
+    controller.updateAzienda(
         new_foto_profilo,
         new_foto_copertina,
         hashbox1.getNewPhoto(),

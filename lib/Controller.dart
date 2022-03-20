@@ -157,89 +157,9 @@ class Controller {
     database.addMessage("Chat" + azienda, messaggio);
   }
 
-  Future<void> updateUser(String nome, String cognome, String username,
-      String email, String cellulare, File foto_profilo) async {
-    Utente user=database.activeUser as Utente;
-    if (foto_profilo != null) {
-      String fileName = Path.basename(foto_profilo.path);
-      fileName =user.id.toString() + fileName; //compone id+nomefotocarticata//
-      await database.AddFoto(fileName, foto_profilo);
-      user.foto_profilo = await database.getPathFotoProfilo(fileName);
-    }
-    user.cellulare = cellulare;
-    user.nome = nome;
-    user.cognome = cognome;
-    user.username = username;
-    user.email = email;
-    database.updateUtente();
-  }
 
-  Future<void> UpdateAzienda(
-      File foto_profilo,
-      File foto_copertina,
-      File foto_hashtag_1,
-      File foto_hashtag_2,
-      File foto_hashtag_3,
-      File foto_hashtag_4,
-      String indirizzo,
-      String descrizione,
-      String nome,
-      String nome_hash_1,
-      String nome_hash_2,
-      String nome_hash_3,
-      String nome_hash_4) async {
-    if (foto_profilo != null) {
-      String fileName = Path.basename(foto_profilo.path);
-      fileName = database.currentAzienda.id.toString() +
-          fileName; //compone id+nomefotocarticata//
-      await database.AddFoto(fileName, foto_profilo);
-      database.currentAzienda.img_profilo = fileName;
-    }
-    if (foto_copertina != null) {
-      String fileName = Path.basename(foto_copertina.path);
-      fileName = database.currentAzienda.id.toString() +
-          fileName; //compone id+nomefotocarticata//
-      await database.AddFoto(fileName, foto_copertina);
-      database.currentAzienda.img_copertina = fileName;
-    }
-    if (foto_hashtag_1 != null) {
-      String fileName = Path.basename(foto_hashtag_1.path);
-      fileName = database.currentAzienda.id.toString() +
-          fileName; //compone id+nomefotocarticata//
-      await database.AddFoto(fileName, foto_hashtag_1);
-      database.aziendaHashtagList[0].immagine_hashtag = fileName;
-    }
-    if (foto_hashtag_2 != null) {
-      String fileName = Path.basename(foto_hashtag_2.path);
-      fileName = database.currentAzienda.id.toString() +
-          fileName; //compone id+nomefotocarticata//
-      await database.AddFoto(fileName, foto_hashtag_2);
-      database.aziendaHashtagList[1].immagine_hashtag = fileName;
-    }
-    if (foto_hashtag_3 != null) {
-      String fileName = Path.basename(foto_hashtag_3.path);
-      fileName = database.currentAzienda.id.toString() +
-          fileName; //compone id+nomefotocarticata//
-      await database.AddFoto(fileName, foto_hashtag_3);
-      database.aziendaHashtagList[2].immagine_hashtag = fileName;
-    }
-    if (foto_hashtag_4 != null) {
-      String fileName = Path.basename(foto_hashtag_4.path);
-      fileName = database.currentAzienda.id.toString() +
-          fileName; //compone id+nomefotocarticata//
-      await database.AddFoto(fileName, foto_hashtag_4);
-      database.aziendaHashtagList[3].immagine_hashtag = fileName;
-    }
 
-    database.aziendaHashtagList[0].nome = nome_hash_1;
-    database.aziendaHashtagList[1].nome = nome_hash_2;
-    database.aziendaHashtagList[2].nome = nome_hash_3;
-    database.aziendaHashtagList[3].nome = nome_hash_4;
-    database.currentAzienda.nome_azienda = nome;
-    database.currentAzienda.descrizione = descrizione;
-    database.UpdateHashtag();
-    database.UpdateAzienda();
-  }
+
 
   void setCurrentContext(BuildContext context) {
     database.currentcontext = context;

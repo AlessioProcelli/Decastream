@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:everstream/AscoltatoreChiamate.dart';
 import 'package:everstream/Tipi/Hashtag.dart';
 import 'package:everstream/Tipi/Indirizzo.dart';
 import 'package:everstream/Tipi/OrarioLavorativo.dart';
@@ -12,6 +13,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'ControllerNew.dart';
 import 'Tipi/Azienda.dart';
 import 'Tipi/Categoria.dart';
 import 'Tipi/Chiamata.dart';
@@ -56,6 +58,9 @@ class Database {
     debugPrint("fatto"); //altrimenti errori panico
   }
 
+  void setCurrentContent(BuildContext context){
+    currentcontext=context;
+  }
   Future <int> addChiamata(Chiamata call) async {
     int id = await nextId('Chiamate');
     FirebaseFirestore.instance.collection('Chiamate').add({
@@ -379,20 +384,21 @@ class Database {
   Future<void> UpdateAzienda() async {
     //fa update del utente in base a le modifiche apportate in locale a quello corrente
     String documentid;
+    Azienda azienda=activeUser as Azienda;
     QuerySnapshot query = await FirebaseFirestore.instance.collection('Aziende')
-        .where('id', isEqualTo: currentAzienda.id).get();
+        .where('id', isEqualTo: azienda.id).get();
         documentid = query.docs.first.id;
     String pathFotoProfilo;
-    pathFotoProfilo = await getPathFotoProfilo(currentAzienda.img_profilo);
+    pathFotoProfilo = await getPathFotoProfilo(azienda.img_profilo);
     String pathFotoCopertina;
-    pathFotoCopertina = await getPathFotoProfilo(currentAzienda.img_copertina);
+    pathFotoCopertina = await getPathFotoProfilo(azienda.img_copertina);
     FirebaseFirestore.instance.collection('Aziende')
         .doc(documentid)
         .update({
       'Img_Profilo': pathFotoProfilo,
       'Img_Copertina': pathFotoCopertina,
-      'Nome_Azienda': currentAzienda.nome_azienda,
-      'Descrizione': currentAzienda.descrizione,
+      'Nome_Azienda': azienda.nome_azienda,
+      'Descrizione': azienda.descrizione,
     })
         .then((value) => print("Azienda Updated"))
         .catchError((error) => print("Failed to update Azienda: $error"));
@@ -400,11 +406,11 @@ class Database {
 
   Future<void> UpdateHashtag() async {
     //fa update del utente in base a le modifiche apportate in locale a quello corrente
-
+    Azienda azienda=activeUser as Azienda;
     QuerySnapshot query = await FirebaseFirestore.instance.collection('Hashtag')
         .get();
 
-    aziendaHashtagList.forEach((hashtag) async {
+    azienda.hashtagList.forEach((hashtag) async {
       String documentid;
       QuerySnapshot query = await FirebaseFirestore.instance.collection('Hashtag')
           .where('id', isEqualTo: hashtag.id).get();
@@ -435,6 +441,13 @@ class Database {
         .snapshots()
         .listen((event) {
       controller.ThereIsCall();
+    });
+  }
+  void AscoltaChiamate(AscoltatoreChiamate listener){
+    chiamate = FirebaseFirestore.instance.collection("Chiamate")
+        .snapshots()
+        .listen((event) {
+      listener.thereisCall();
     });
   }
   void ListenOfferta() {

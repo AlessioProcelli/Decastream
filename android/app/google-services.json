@@ -8,9 +8,45 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:242914433852:android:008dd2a96fa94a05d65c39",
+        "mobilesdk_app_id": "1:242914433852:android:5decbc3cb895b109d65c39",
         "android_client_info": {
-          "package_name": "com.everstream"
+          "package_name": "com.example.android.Decastream"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "242914433852-gvsar2uhivie7bi70cjqut2saq2ofb4j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeoGyfHPBwxOE2PoySxhUE8oNa7WAIpRI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "242914433852-gvsar2uhivie7bi70cjqut2saq2ofb4j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "242914433852-66nt8qdegg68avh2jl6siq2vj5jcab4b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.flutterApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:242914433852:android:58d162ef0eb1acefd65c39",
+        "android_client_info": {
+          "package_name": "com.example.android.app"
         }
       },
       "oauth_client": [
