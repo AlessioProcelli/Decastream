@@ -25,7 +25,7 @@ class ControllerCerca extends ControllerNew {
     await _handleCameraAndMic(Permission.microphone);
     azienda_chiamata= await ControllerNew.database.findAziendaById(id_azienda);
     await ControllerNew.database.addChiamata(
-        new Chiamata(id_azienda, ControllerNew.database.currentUser.id, 10, 11));
+        new Chiamata(id_azienda, ControllerNew.database.activeUser.getId(), 10, 11));
     Route route = MaterialPageRoute(
         builder: (context) => Call(
           channelName: "ChiamataN" +

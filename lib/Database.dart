@@ -493,7 +493,7 @@ class Database {
         .delete();
   }
 
-  Future<void> RemoveChat(String nome) async {
+  Future<void> removeChat(String nome) async {
     FirebaseFirestore.instance.collection(nome).get().then((snapshot) {
       for (DocumentSnapshot doc in snapshot.docs) {
         doc.reference.delete();

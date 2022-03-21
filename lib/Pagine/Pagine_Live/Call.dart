@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../Metodi/Ridimensiona.dart';
 import '../../../main.dart';
+import 'ControllerCall.dart';
 import 'settings.dart';
 import '../../Pop_Up/Pop_Up_Offerte/lancioOfferta.dart';
 import '../../Tipi/Azienda.dart';
@@ -16,6 +17,7 @@ import '../../Tipi/Azienda.dart';
 
 class Call extends StatefulWidget {
   /// non-modifiable channel name of the page
+  ControllerCall controller;
   final String channelName;
   final Utente user;
   Azienda azienda;
@@ -26,7 +28,10 @@ class Call extends StatefulWidget {
   final ClientRole role=ClientRole.Broadcaster;
 
   /// Creates a call page with given channel name.
- Call({Key key, this.channelName,this.user,this.azienda}) : super(key: key);
+ Call({ this.channelName,this.user,this.azienda}) {
+ controller=new ControllerCall();
+
+ }
 
   @override
   CallPageState createState() => CallPageState();
@@ -189,18 +194,16 @@ class CallPageState extends State<Call> {
   }
 
   /// Toolbar layout
-
+///elimina la chat
   void _onCallEnd(BuildContext context) {
     Navigator.pop(context);
-
     final views = _getRenderViews();
-
     if(views.length<2){
-      if(controller.database.isAzienda) {
-        controller.database.RemoveChat("Chat"+controller.database.currentAzienda.username);
+      if(widget.controller.isAzienda()) {
+        widget.controller.removeChat("Chat"+(controller.database.activeUser as Azienda).username);
       }
       else{
-        controller.database.RemoveChat("Chat"+widget.azienda.username);
+        widget.controller.removeChat("Chat"+widget.azienda.username);
       }
     }
   }
